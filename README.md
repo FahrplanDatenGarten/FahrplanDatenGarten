@@ -3,9 +3,9 @@
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
 ## Features
--
--
--
+- Daten aus HAFAS in Datenbank speichern
+- Fahrgastformular aus Eingaben im Webinterface generieren 
+- Statistiken aus Datenbank auswerten
 
 ## Contributors
 - [N0emis](https://github.com/n0emis)
@@ -13,7 +13,7 @@ We  ❤️  Deutsche Bahn
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 - [Anna](https://github.com/maedchenkunst2013)
 ## Used API's
-  -
+  - 
   -
   -
 # Develeopment Setup
