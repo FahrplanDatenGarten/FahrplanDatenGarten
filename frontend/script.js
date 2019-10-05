@@ -94,12 +94,12 @@ function standartdaten() {
 						label: '# bei Berücksichtigen von 5 Minuten',
 						data: [(data.current_journeys - data.journeys_delayed).toFixed(3),data.journeys_delayed.toFixed(3)],
 						backgroundColor: [
-							'rgba(75, 192, 192, 0.2)',
-							'rgba(255, 99, 132, 0.2)'
+							'rgba(50, 192, 50, 0.2)',
+							'rgba(255, 99, 99, 0.2)'
 						],
 						borderColor: [
-							'rgba(75, 192, 192, 1)',
-							'rgba(255, 99, 132, 1)'
+							'rgba(50, 192, 50, 1)',
+							'rgba(255, 99, 99, 1)'
 						],
 						borderWidth: 1
 					}]
