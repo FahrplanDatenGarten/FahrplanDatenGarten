@@ -45,7 +45,6 @@ html, body
     margin: 0.25em
     padding: 1em
     border-radius: 0.1em
-    max-width: 20em
     background-color: $focus-color
     color: $focus-text
 .data
@@ -61,7 +60,7 @@ html, body
     padding: 1em 2em
 .lg-btn
     margin: 1em 3em
-    padding: 1em 3em
+    padding: 1.5em 5em
 .ico-btn, .btn, .full-btn, .lg-btn
     text-decoration: none
     display: block
@@ -69,6 +68,7 @@ html, body
     -moz-transition: all 0.2s ease-out
     -o-transition: all 0.2s ease-out
     transition: all 0.2s ease-out
+    border: 0
     &:active
         transform: scale(1.2)
 .ico-btn
@@ -128,3 +128,12 @@ html, body
     background-color: $focus-color
     color: $focus-text
     padding: 2em 1em
+
+form.form-control
+    display: inline-block
+input.form-control
+        padding: 0.25em
+        margin: 0.5em 1em
+        font-family: 'Noto Sans', sans-serif
+        font-size: 1.25em
+        display: inline-block

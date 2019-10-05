@@ -46,7 +46,6 @@ html, body {
   margin: 0.25em;
   padding: 1em;
   border-radius: 0.1em;
-  max-width: 20em;
   background-color: #ffffff;
   color: #000000;
 }
@@ -70,7 +69,7 @@ html, body {
 
 .lg-btn {
   margin: 1em 3em;
-  padding: 1em 3em;
+  padding: 1.5em 5em;
 }
 
 .ico-btn, .btn, .full-btn, .lg-btn {
@@ -78,6 +77,7 @@ html, body {
   display: block;
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+  border: 0;
 }
 
 .ico-btn:active, .btn:active, .full-btn:active, .lg-btn:active {
@@ -193,5 +193,17 @@ html, body {
   background-color: #ffffff;
   color: #000000;
   padding: 2em 1em;
+}
+
+form.form-control {
+  display: inline-block;
+}
+
+input.form-control {
+  padding: 0.25em;
+  margin: 0.5em 1em;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.25em;
+  display: inline-block;
 }
 /*# sourceMappingURL=style.css.map */
