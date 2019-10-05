@@ -1,6 +1,15 @@
 $(document).ready(function(){
+    load();
+});
+function load(){
     $("#body").hide();
     $("#loading").show();
+    $.ajax({
+        url: $("#content").attr("view"),
+        dataType: 'html'
+    }).done(function(data){
+        $("#content").html(data);
+    });
     var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
     $.ajax({
         url: url,
@@ -22,5 +31,4 @@ $(document).ready(function(){
             $("#body").fadeIn();
         });
     });
-    
-});
+}
