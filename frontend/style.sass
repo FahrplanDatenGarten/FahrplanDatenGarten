@@ -1,6 +1,9 @@
 $background-color: #ffffff
 $background-text: #111111
 $border-color: #000000
+$data-color: rgba(0,0,0,0)
+$data-text: #EE1111
+$primary-color: ##11BBFF
 
 body
     background-color: $background-color
@@ -8,7 +11,7 @@ body
     font-family: 'Noto Sans', sans-serif
 
 .center-nolist
-    display: inline-block
+    display: flex
     list-style-type: none
     margin: 0
     padding: 0
@@ -18,7 +21,7 @@ body
     li
         text-align: center
         vertical-align: top
-        display: inline-block
+        flex: 1 1 1px
 
 .border-box
     border-color: $border-color
@@ -27,3 +30,16 @@ body
     margin: 0.25em
     padding: 1em
     border-radius: 0.1em
+    max-width: 20em
+.data
+    font-size: 2em
+    color: $data-text
+    background-color: $data-color
+    font-style: italic
+.ico-btn
+    text-decoration: none
+@media only screen and (max-width: 600px)
+    .center-nolist
+        flex-direction: column
+    .border-box
+        width: 100%

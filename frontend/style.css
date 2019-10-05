@@ -5,12 +5,12 @@ body {
 }
 
 .center-nolist {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   list-style-type: none;
   margin: 0;
   padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -23,7 +23,9 @@ body {
 .center-nolist li {
   text-align: center;
   vertical-align: top;
-  display: inline-block;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 1px;
+          flex: 1 1 1px;
 }
 
 .border-box {
@@ -33,5 +35,25 @@ body {
   margin: 0.25em;
   padding: 1em;
   border-radius: 0.1em;
+  max-width: 20em;
+}
+
+.data {
+  font-size: 2em;
+  color: #EE1111;
+  background-color: rgba(0, 0, 0, 0);
+  font-style: italic;
+}
+
+@media only screen and (max-width: 600px) {
+  .center-nolist {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .border-box {
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=style.css.map */

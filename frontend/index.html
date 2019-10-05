@@ -9,22 +9,29 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="./script.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
 </head>
 <body>
-    <h1>FahrplanDatenGarten</h1>
+    <header class="header-navigation">
+        <a href="#" class="ico-btn"><span class="mdi mdi-menu mdi-36px"></span></a>
+        <h1>FahrplanDatenGarten</h1>
+    </header>
     <div id="quick-stats">
         <ul class="center-nolist">
             <li class="border-box">
-                <h1>10</h1>
+                <p class="data" id="train-count">10</p>
                 <p>Züge sind verspätet!</p>
             </li>
             <li class="border-box">
-                <h1>10</h1>
-                <p>Züge sind verspätet!</p>
+                <p>Zug Nummer</p>
+                <div class="data">10</div>
+                <p>ist</p>
+                <div class="data">10</div>
+                <p>Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
             </li>
             <li class="border-box">
                 <p>Alle Züge sind durchschnittlich</p>
-                <h1>20</h1>
+                <div class="data">20</div>
                 <p>Minuten zu spät!</p>
             </li>
         </ul>
