@@ -4,8 +4,8 @@
 }
 
 html, body {
-  background-color: #39ff3911;
-  color: #111111;
+  background-color: #eeeeee;
+  color: #333333;
   font-family: 'Noto Sans', sans-serif;
   height: 100%;
   margin: 0;
@@ -40,14 +40,14 @@ html, body {
 }
 
 .border-box {
-  border-color: #000000;
+  border-color: #333333;
   border-width: 0.05em;
+  border-radius: 2em;
   border-style: solid;
   margin: 0.25em;
   padding: 1em;
-  border-radius: 0.1em;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #222222;
+  color: #eeeeee;
 }
 
 .data {
@@ -97,17 +97,17 @@ html, body {
 
 .btn-primary {
   color: #000000;
-  background-color: #11BBFF;
+  background-color: #881111;
 }
 
 .btn-primary:hover {
   color: #000000;
-  background-color: #88FFAA;
+  background-color: #EE1111;
 }
 
 .btn-active {
   color: #000000;
-  background-color: #88FFAA;
+  background-color: #EE1111;
 }
 
 .round {
@@ -115,12 +115,12 @@ html, body {
 }
 
 .btn-transparent:hover {
-  color: #000000;
+  color: #333333;
   background-color: #aaaaaa;
 }
 
 .no-link {
-  color: #111111;
+  color: #333333;
   text-decoration: none;
 }
 
@@ -190,8 +190,8 @@ html, body {
 .side-nav {
   margin: 0;
   margin-right: 1em;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #222222;
+  color: #eeeeee;
   padding: 2em 1em;
 }
 
@@ -205,5 +205,8 @@ input.form-control {
   font-family: 'Noto Sans', sans-serif;
   font-size: 1.25em;
   display: inline-block;
+  background-color: #eeeeee;
+  color: #333333;
+  border: 0;
 }
 /*# sourceMappingURL=style.css.map */
