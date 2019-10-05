@@ -1,5 +1,6 @@
 import datetime
 
+import pytz
 from django.core.management.base import BaseCommand
 from core.models import Agency, Source, Stop, StopName, StopID, Journey, JourneyStop
 
@@ -22,7 +23,7 @@ class Command(BaseCommand):
                                          agency=agency)
         JourneyStop.objects.create(stop=stop,
                                    journey=journey,
-                                   planned_arrival_time=datetime.datetime(2019, 9, 12, 12, 00),
-                                   actual_arrival_time=datetime.datetime(2019, 9, 12, 17, 00),
-                                   planned_departure_time=datetime.datetime(2019, 9, 12, 13, 00),
-                                   actual_departure_time=datetime.datetime(2019, 9, 12, 20, 00))
+                                   planned_arrival_time=datetime.datetime(2019, 9, 12, 12, 00, tzinfo=pytz.utc),
+                                   actual_arrival_time=datetime.datetime(2019, 9, 12, 17, 00, tzinfo=pytz.utc),
+                                   planned_departure_time=datetime.datetime(2019, 9, 12, 13, 00, tzinfo=pytz.utc),
+                                   actual_departure_time=datetime.datetime(2019, 9, 12, 20, 00, tzinfo=pytz.utc))
