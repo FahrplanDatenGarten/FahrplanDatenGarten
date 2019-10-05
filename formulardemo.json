@@ -1,10 +1,14 @@
 {
-	"trainid": "ICE123",
+
 	"date": "2019-10-05",
 	"startstation": "Berlin HBH",
 	"endstation": "München HBH",
 	"starttime": "14:55",
 	"endtime": "18:40",
-	
+	"arrivaldate": "2019-10-05",
+	"arrivaltrain":"ICE123",
+	"arrivaltime":"18:20",
+	"firsttrainid": "ICE123",
+	"firsttraintime":"14:55"
 
 }
