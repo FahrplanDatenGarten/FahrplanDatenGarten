@@ -12,14 +12,11 @@ def get_demojson(request):
     return HttpResponse(demoJson)
 
 def convert_toJson(request):
-
+	current_journeys = models.Journey.objects.filter(stop__journeystop__actual_departure_time__lte = datetime.datetime.now(),stop__journeystop__actual_arrival_time__gte = datetime.datetime.now())
 
 	returnDict = {
-		"current_journeys":  models.Journey.objects.filter(stop__journeystop__actual_departure_time__lte = datetime.datetime.now(),stop__journeystop__actual_arrival_time__gte = datetime.datetime.now()).count(),
-
-		
-		                  
-		#"journeys_delayed": ANZAHL DER VERSPÄTETEN ZÜGE
+		"current_journeys":  current_journeys.count(),
+		"journeys_delayed": current_journeysv
 		"biggest_delay": None
 
 
