@@ -41,10 +41,20 @@ function formular() {
 	if (zugformular.length) {
 		console.log("test");
 		zugformular.closest('form').on('submit', function (e) {
-
-			console.log("Hello");
 			e.preventDefault();
-
+			var daten = {};
+			daten.date = $("input[name='date']").val();
+			daten.startstation = $("input[name='startstation']").val();
+			daten.endstation = $("input[name='endstation']").val();
+			daten.starttime = $("input[name='starttime']").val();
+			daten.endtime = $("input[name='endtime']").val();
+			daten.arrivaldate = $("input[name='arrivaldate']").val();
+			daten.arrivaltrain = $("input[name='arrivaltrain']").val();
+			daten.arrivaltime = $("input[name='arrivaltime']").val();
+			daten.firsttrainid = $("input[name='firsttrainid']").val();
+			daten.firsttraintime = $("input[name='firsttraintime']").val();
+			
+			console.log(daten);
 		});
 	}
 
