@@ -11,10 +11,6 @@ We  ❤️  Deutsche Bahn
 - [Felix](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 
-
-## Contributing
-To contribute to this project create a pull request which will then be merged only by the main [contributors](#contributors) so that we have at least some control over the current version of the code in this master branch
-
 ## Additional Links
 
 ## Set up the VEnv:
