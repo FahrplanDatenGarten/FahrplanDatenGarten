@@ -20,10 +20,12 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .flex-list li {
-  vertical-align: top;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 1px;
           flex: 1 1 1px;
@@ -48,8 +50,16 @@ body {
   font-style: italic;
 }
 
-.ico-btn {
+.btn {
+  margin: 1em 3em;
+  padding: 0.25em;
+}
+
+.ico-btn, .btn {
   text-decoration: none;
+}
+
+.ico-btn {
   margin: 1em;
   padding: 0.3em 0.1em;
 }
@@ -68,17 +78,17 @@ body {
   border-radius: 1em;
 }
 
-.transparent {
+.btn-transparent {
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
 }
 
-.transparent:hover {
+.btn-transparent:hover {
   color: #000000;
   background-color: #aaaaaa;
 }
 
-.transparent:active {
+.btn-transparent:active {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
 }
@@ -99,8 +109,8 @@ body {
   padding: 0.25em;
 }
 
-@media only screen and (max-width: 600px) {
-  .center-nolist {
+@media only screen and (max-width: 800px) {
+  .flex-list {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -153,5 +163,7 @@ body {
 .side-nav {
   margin: 0;
   margin-right: 1em;
+  background-color: #ffffff;
+  color: #000000;
 }
 /*# sourceMappingURL=style.css.map */
