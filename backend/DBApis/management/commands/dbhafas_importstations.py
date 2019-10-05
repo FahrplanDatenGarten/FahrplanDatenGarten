@@ -13,7 +13,7 @@ class Command(BaseCommand):
         parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2017_09.csv')
 
     def handle(self, *args, **options):
-        source, _ = Source.objects.get_or_create(name='DBHafas')
+        source, _ = Source.objects.get_or_create(name='DBApis')
 
         r = requests.get(options.get('csv-url'))
         r.encoding = 'utf-8'
