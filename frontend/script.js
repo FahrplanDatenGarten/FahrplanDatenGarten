@@ -16,7 +16,7 @@ function load() {
         })
             .done(function (data) {
                 console.log(data);
-                var currentdelayed = data.journeys_delayed;
+                var averagejourneys = data.average_journeys;
                 var mostNumber = data.biggest_delay[0].name;
                 var mostMinutes = data.biggest_delay[0].delay;
                 var currentaverage = data.average_delay;
