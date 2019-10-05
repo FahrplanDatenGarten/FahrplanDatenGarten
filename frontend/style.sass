@@ -1,7 +1,45 @@
 $background-color: #ffffff
 $background-text: #111111
+$border-color: #000000
+$data-color: rgba(0,0,0,0)
+$data-text: #EE1111
+$primary-color: ##11BBFF
 
 body
     background-color: $background-color
     color: $background-text
+    font-family: 'Noto Sans', sans-serif
 
+.center-nolist
+    display: flex
+    list-style-type: none
+    margin: 0
+    padding: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    li
+        text-align: center
+        vertical-align: top
+        flex: 1 1 1px
+
+.border-box
+    border-color: $border-color
+    border-width: 0.05em
+    border-style: solid
+    margin: 0.25em
+    padding: 1em
+    border-radius: 0.1em
+    max-width: 20em
+.data
+    font-size: 2em
+    color: $data-text
+    background-color: $data-color
+    font-style: italic
+.ico-btn
+    text-decoration: none
+@media only screen and (max-width: 600px)
+    .center-nolist
+        flex-direction: column
+    .border-box
+        width: 100%

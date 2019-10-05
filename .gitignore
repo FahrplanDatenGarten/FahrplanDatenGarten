@@ -83,7 +83,7 @@ target/
 
 # pyenv
 .python-version
-
+.env
 .venv
 
 # pipenv
