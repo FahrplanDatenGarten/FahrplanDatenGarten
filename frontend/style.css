@@ -1,7 +1,15 @@
-body {
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
   background-color: #39ff3911;
   color: #111111;
   font-family: 'Noto Sans', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .center-vertical {
@@ -55,8 +63,26 @@ body {
   padding: 0.25em;
 }
 
-.ico-btn, .btn {
+.full-btn {
+  width: 100%;
+  padding: 1em 2em;
+}
+
+.lg-btn {
+  margin: 1em 3em;
+  padding: 1em 3em;
+}
+
+.ico-btn, .btn, .full-btn, .lg-btn {
   text-decoration: none;
+  display: block;
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.ico-btn:active, .btn:active, .full-btn:active, .lg-btn:active {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .ico-btn {
@@ -69,28 +95,28 @@ body {
   margin: 1em;
 }
 
-.primary {
+.btn-primary {
   color: #000000;
   background-color: #11BBFF;
+}
+
+.btn-primary:hover {
+  color: #000000;
+  background-color: #88FFAA;
+}
+
+.btn-active {
+  color: #000000;
+  background-color: #88FFAA;
 }
 
 .round {
   border-radius: 1em;
 }
 
-.btn-transparent {
-  -webkit-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-}
-
 .btn-transparent:hover {
   color: #000000;
   background-color: #aaaaaa;
-}
-
-.btn-transparent:active {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
 }
 
 .no-link {
@@ -158,6 +184,7 @@ body {
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
+  min-height: 100%;
 }
 
 .side-nav {
