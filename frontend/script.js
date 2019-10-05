@@ -92,7 +92,7 @@ function standartdaten() {
 					labels: ['Pünktlich', 'Zu spät'],
 					datasets: [{
 						label: '# bei Berücksichtigen von 5 Minuten',
-						data: [data.journeys_delayed.toFixed(3), (data.current_journeys - data.journeys_delayed).toFixed(3)],
+						data: [(data.current_journeys - data.journeys_delayed).toFixed(3),data.journeys_delayed.toFixed(3)],
 						backgroundColor: [
 							'rgba(75, 192, 192, 0.2)',
 							'rgba(255, 99, 132, 0.2)'
