@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         agency = Agency.objects.update_or_create(name="DB")
-        source = Source.objects.update_or_create(name="DBHafas")
+        source = Source.objects.update_or_create(name="DBApis")
         stop = Stop.objects.update_or_create(ifopt="de:05315:11201")
         StopName.objects.update_or_create(stop=stop,
                                 name="Köln Hbf",
