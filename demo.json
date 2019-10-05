@@ -1,0 +1,17 @@
+{
+  "current_journeys": 43,
+  "journeys_delayed": 42,
+  "biggest_delay": [
+    {
+      "name": "ICE692",
+      "plannedDepature": "2019-10-05T10:22:00.000Z",
+      "actualDepature": "2019-10-05T10:29:00.000Z",
+      "delay": 7,
+      "date": "2019-10-05T10:22:17.000Z",
+      "id": "a456/bbQ",
+      "source": "DB HAFAS",
+      "agency": "DB"
+    }
+  ],
+  "average_delay": 4.52
+}
