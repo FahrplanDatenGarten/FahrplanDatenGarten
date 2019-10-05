@@ -41,8 +41,6 @@ function standartdaten() {
             dataType: 'json'
         })
         .done(function(data) {
-h
-
             //standarddaten
             var averagejourneys = data.average_journeys;
             var mostNumber = data.biggest_delay[0].name;
