@@ -3,7 +3,10 @@ $background-text: #111111
 $border-color: #000000
 $data-color: rgba(0,0,0,0)
 $data-text: #EE1111
-$primary-color: ##11BBFF
+$primary-color: #11BBFF
+$primary-text: #000000
+$transparent-color: #aaaaaa
+$transparnet-text: #000000
 
 body
     background-color: $background-color
@@ -38,6 +41,32 @@ body
     font-style: italic
 .ico-btn
     text-decoration: none
+    margin: 0.5em
+    padding: 0.3em 0.1em
+.icon
+    padding: 0.25em
+    margin: 1em
+.primary
+    color: $primary-text
+    background-color: $primary-color
+.round
+    border-radius: 1em
+.transparent
+    -webkit-transition: background-color 2s ease-out
+    -moz-transition: background-color 2s ease-out
+    -o-transition: background-color 2s ease-out
+    transition: background-color 2s ease-out
+    &:hover
+        color: $transparnet-text
+        background-color: $transparent-color
+.no-link
+    color: $background-text
+    text-decoration: none
+.header-navigation
+    display: flex
+    align-items: center
+    margin: 0.25em
+    padding: 0.25em
 @media only screen and (max-width: 600px)
     .center-nolist
         flex-direction: column

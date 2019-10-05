@@ -45,6 +45,52 @@ body {
   font-style: italic;
 }
 
+.ico-btn {
+  text-decoration: none;
+  margin: 0.5em;
+  padding: 0.3em 0.1em;
+}
+
+.icon {
+  padding: 0.25em;
+  margin: 1em;
+}
+
+.primary {
+  color: #000000;
+  background-color: #11BBFF;
+}
+
+.round {
+  border-radius: 1em;
+}
+
+.transparent {
+  -webkit-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
+}
+
+.transparent:hover {
+  color: #000000;
+  background-color: #aaaaaa;
+}
+
+.no-link {
+  color: #111111;
+  text-decoration: none;
+}
+
+.header-navigation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.25em;
+  padding: 0.25em;
+}
+
 @media only screen and (max-width: 600px) {
   .center-nolist {
     -webkit-box-orient: vertical;
