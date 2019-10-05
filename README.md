@@ -8,11 +8,13 @@ We  ❤️  Deutsche Bahn
 -
 
 ## Contributors
-- [Simeon/N0emis](https://github.com/n0emis)
-- [Felix](https://github.com/fanselMansel)
+- [N0emis](https://github.com/n0emis)
+- [FänselMänsel](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 
 ## Used API's
+
+# Develeopment Setup
 
 ## Set up the VEnv:
 ```
