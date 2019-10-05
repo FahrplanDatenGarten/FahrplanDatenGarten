@@ -20,6 +20,7 @@ class StopID(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     source_stop_id = models.CharField(max_length=255)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
+    source_stop_id_type = models.CharField(max_length=255, null=True)
 
 class Journey(models.Model):
     name = models.CharField(max_length=255)

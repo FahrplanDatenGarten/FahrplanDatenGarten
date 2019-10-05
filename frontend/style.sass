@@ -5,15 +5,24 @@ $data-color: rgba(0,0,0,0)
 $data-text: #EE1111
 $primary-color: #11BBFF
 $primary-text: #000000
+$active-color: #88FFAA
+$active-text: #000000
 $transparent-color: #aaaaaa
 $transparent-text: #000000
 $focus-color: #ffffff
 $focus-text: #000000
 
-body
+
+*
+    box-sizing: border-box
+
+html, body
     background-color: $background-color
     color: $background-text
     font-family: 'Noto Sans', sans-serif
+    height: 100%
+    margin: 0
+    padding: 0
 
 .center-vertical
     vertical-align: center
@@ -47,29 +56,42 @@ body
 .btn
     margin: 1em 3em
     padding: 0.25em
-.ico-btn, .btn
+.full-btn
+    width: 100%
+    padding: 1em 2em
+.lg-btn
+    margin: 1em 3em
+    padding: 1em 3em
+.ico-btn, .btn, .full-btn, .lg-btn
     text-decoration: none
+    display: block
+    -webkit-transition: all 0.2s ease-out
+    -moz-transition: all 0.2s ease-out
+    -o-transition: all 0.2s ease-out
+    transition: all 0.2s ease-out
+    &:active
+        transform: scale(1.2)
 .ico-btn
     margin: 1em
     padding: 0.3em 0.1em
 .icon
     padding: 0.25em
     margin: 1em
-.primary
+.btn-primary
     color: $primary-text
     background-color: $primary-color
+    &:hover
+        color: $active-text
+        background-color: $active-color
+.btn-active
+    color: $active-text
+    background-color: $active-color        
 .round
     border-radius: 1em
 .btn-transparent
-    -webkit-transition: all 0.2s ease-out
-    -moz-transition: all 0.2s ease-out
-    -o-transition: all 0.2s ease-out
-    transition: all 0.2s ease-out
     &:hover
         color: $transparent-text
         background-color: $transparent-color
-    &:active
-        transform: scale(1.2)
 .no-link
     color: $background-text
     text-decoration: none
@@ -99,9 +121,10 @@ body
     display: flex
     flex-direction: row
     align-items: stretch
+    min-height: 100%
 .side-nav
     margin: 0
     margin-right: 1em
     background-color: $focus-color
     color: $focus-text
-    
+    padding: 2em 1em
