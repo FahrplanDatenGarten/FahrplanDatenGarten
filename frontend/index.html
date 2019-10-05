@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,34 +9,44 @@
     <link rel="stylesheet" href="./style.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="./script.js"></script>
+    <script src="./jquery.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
 </head>
+
 <body>
-    <header class="header-navigation">
-        <a href="#" class="ico-btn transparent no-link round"><span class="mdi mdi-menu icon mdi-36px"></span></a>
-        <h1>FahrplanDatenGarten</h1>
-    </header>
-    <div id="quick-stats">
-        <h2>Quick statistics</h2>
-        <ul class="flex-list top-vertical content-center center">
-            <li class="border-box">
-                <p class="data" id="train-count">ERROR</p>
-                <p>Züge sind verspätet!</p>
-            </li>
-            <li class="border-box">
-                <p>Zug Nummer</p>
-                <div id="most-number" class="data">ERROR</div>
-                <p>ist</p>
-                <div id="most-minutes" class="data">ERROR</div>
-                <p>Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
-            </li>
-            <li class="border-box">
-                <p>Alle Züge sind durchschnittlich</p>
-                <div id="average" class="data">ERROR</div>
-                <p>Minuten zu spät!</p>
-            </li>
-        </ul>
+    <div id="loading">
+        Loading...
+    </div>
+    <div id="body">
+        <div class="side-nav" class="float-left">
+            <a href="./views/home.html">Home</a>
+            <a href="./views/home.html">Form</a>
+        </div>
+        <div id="content" view="./views/home.html">
+                <div id="quick-stats">
+                    <h2>Quick statistics</h2>
+                    <ul class="flex-list top-vertical content-center center">
+                        <li class="border-box">
+                            <p class="data" id="train-count">ERROR</p>
+                            <p>Züge sind verspätet!</p>
+                        </li>
+                        <li class="border-box">
+                            <p>Zug Nummer</p>
+                            <div id="most-number" class="data">ERROR</div>
+                            <p>ist</p>
+                            <div id="most-minutes" class="data">ERROR</div>
+                            <p>Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
+                        </li>
+                        <li class="border-box">
+                            <p>Alle Züge sind durchschnittlich</p>
+                            <div id="average" class="data">ERROR</div>
+                            <p>Minuten zu spät!</p>
+                        </li>
+                    </ul>
+                </div>
+        </div>
     </div>
 </body>
+
 </html>
