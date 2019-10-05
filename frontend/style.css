@@ -1,5 +1,5 @@
 body {
-  background-color: #ffffff;
+  background-color: #eeeeee;
   color: #111111;
   font-family: 'Noto Sans', sans-serif;
 }
@@ -36,6 +36,8 @@ body {
   padding: 1em;
   border-radius: 0.1em;
   max-width: 20em;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .data {
