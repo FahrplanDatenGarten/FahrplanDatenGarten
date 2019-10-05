@@ -69,7 +69,7 @@ function formular() {
 function standartdaten() {
 	if (!$("#train-percentage-chart").length)
 		return;
-	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
+	var url = "http://localhost:8000/verspaeti/";
 	$.ajax({
 			url: url,
 			dataType: 'json'
