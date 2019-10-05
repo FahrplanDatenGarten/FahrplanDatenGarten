@@ -9,4 +9,8 @@ pip install -r requirements.txt
 ```
 ## Set up the database:
 Change the `DATABASE_URL` in `.env` basend on the `.env.example` and https://github.com/jacobian/dj-database-url.
-Now run `source .env`
+Now run
+```
+source .env
+python manage.py migrate
+```
