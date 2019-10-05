@@ -1,5 +1,16 @@
 $(document).ready(function () {
     load();
+	console.log("123");
+	var zugformular = $("#zugformular");
+	if (zugformular.length){
+		console.log("test");
+		zugformular.closest('form').on('submit', function(e){
+	
+			console.log("Hello");
+			e.preventDefault();
+			
+		});
+	}
 });
 function load() {
     $("#body").hide();
@@ -44,5 +55,6 @@ function load() {
                 });
             });
     });
+	
 
 }
