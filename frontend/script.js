@@ -61,6 +61,8 @@ function formular() {
 }
 
 function standartdaten() {
+	if(!$("#train-percentage-chart").length)
+		return;
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
 		url: url,
@@ -75,7 +77,7 @@ function standartdaten() {
 			var currentaverage = data.average_delay;
 			var averagejourneys = data.journeys_delayed / data.current_journeys;
 			averagejourneys = (averagejourneys * 100).toFixed(2);
-			new Chart($('#train-procent-chart')[0].getContext("2d"), {
+			new Chart($('#train-percentage-chart')[0].getContext("2d"), {
 				type: 'pie',
 				data: {
 					labels: ['Pünktlich', 'Zu spät'],
