@@ -4,8 +4,8 @@
 }
 
 html, body {
-  background-color: #eeeeee;
-  color: #333333;
+  background-color: #333333;
+  color: #eeeeee;
   font-family: 'Noto Sans', sans-serif;
   height: 100%;
   margin: 0;
@@ -97,17 +97,17 @@ html, body {
 
 .btn-primary {
   color: #000000;
-  background-color: #881111;
+  background-color: #EE1111;
 }
 
 .btn-primary:hover {
-  color: #000000;
-  background-color: #EE1111;
+  color: #eeeeee;
+  background-color: #881111;
 }
 
 .btn-active {
-  color: #000000;
-  background-color: #EE1111;
+  color: #eeeeee;
+  background-color: #881111;
 }
 
 .round {
@@ -115,12 +115,12 @@ html, body {
 }
 
 .btn-transparent:hover {
-  color: #333333;
+  color: #000000;
   background-color: #aaaaaa;
 }
 
 .no-link {
-  color: #333333;
+  color: #eeeeee;
   text-decoration: none;
 }
 
@@ -205,8 +205,8 @@ input.form-control {
   font-family: 'Noto Sans', sans-serif;
   font-size: 1.25em;
   display: inline-block;
-  background-color: #eeeeee;
-  color: #333333;
+  background-color: #333333;
+  color: #eeeeee;
   border: 0;
 }
 /*# sourceMappingURL=style.css.map */
