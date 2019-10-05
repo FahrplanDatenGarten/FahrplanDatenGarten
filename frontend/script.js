@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    $("#body").hide();
+    $("#loading").show();
     var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
     $.ajax({
         url: url,
@@ -15,6 +17,10 @@ $(document).ready(function(){
         $("#most-number").text(mostNumber);
         $("#most-minutes").text(mostMinutes);
         $("#average").text(average);
+
+        $("#loading").fadeOut(function(){
+            $("#body").fadeIn();
+        });
     });
     
 });
