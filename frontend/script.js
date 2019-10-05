@@ -21,7 +21,8 @@ function load() {
                 var mostMinutes = data.biggest_delay[0].delay;
                 var currentaverage = data.average_delay;
                 var averagejourneys = data.journeys_delayed / data.current_journeys;
-			averagejourneys = Math.round(averagejourneys*100);
+			averagejourneys = (averagejourneys*100).toFixed(2);
+			
                 
 			    $("#train-count").text(averagejourneys + "%");
                 $("#most-number").text(mostNumber);
