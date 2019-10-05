@@ -13,7 +13,7 @@ class Agency(models.Model):
 class StopName(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    source = models.CharField(max_length=255)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE)
     priority = models.IntegerField(default=0)
 
 class StopID(models.Model):
