@@ -1,6 +1,18 @@
-![](https://jhbadge.com/?evt=ber&year=2019)
-
 # FahrplanDatenGarten
+We  ❤️  Deutsche Bahn
+## Features
+- Hier könnte ihre Werbung stehen!
+
+
+## Contributors
+- [Simeon/N0emis](https://github.com/marvinborner)
+- [Felix](https://github.com/fanselMansel)
+
+
+## Contributing
+To contribute to this project create a pull request which will then be merged only by the main [contributors](#contributors) so that we have at least some control over the current version of the code in this master branch
+
+## Additional Links
 
 ## Set up the VEnv:
 ```
