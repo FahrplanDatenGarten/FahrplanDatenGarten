@@ -3,15 +3,16 @@
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
 ## Features
-- Hier könnte ihre Werbung stehen!
-
+-
+-
+-
 
 ## Contributors
-- [Simeon/N0emis](https://github.com/marvinborner)
+- [Simeon/N0emis](https://github.com/n0emis)
 - [Felix](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 
-## Additional Links
+## Used API's
 
 ## Set up the VEnv:
 ```
