@@ -36,10 +36,8 @@ function pageload() {
 }
 
 function formular() {
-	console.log("123");
 	var zugformular = $("#zugformular");
 	if (zugformular.length) {
-		console.log("test");
 		zugformular.closest('form').on('submit', function (e) {
 			e.preventDefault();
 			var daten = {};
@@ -67,7 +65,6 @@ function standartdaten() {
 		dataType: 'json'
 	})
 		.done(function (data) {
-			console.log(data);
 			//standarddaten
 			var averagejourneys = data.average_journeys;
 			var mostNumber = data.biggest_delay[0].name;
