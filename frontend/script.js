@@ -52,6 +52,13 @@ function formular() {
 			daten.arrivaltime = $("input[name='arrivaltime']").val();
 			daten.firsttrainid = $("input[name='firsttrainid']").val();
 			daten.firsttraintime = $("input[name='firsttraintime']").val();
+			$.ajax({
+				url: "",
+				method: "POST",
+				data: data
+			}).done(function (data) {
+				console.log("Formular gesendet");
+			});
 
 
 		});
