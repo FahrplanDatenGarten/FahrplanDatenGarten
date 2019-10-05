@@ -71,7 +71,7 @@ function standartdaten() {
 					labels: ['Pünktlich', 'Zu spät'],
 					datasets: [{
 						label: '# bei Berücksichtigen von 5 Minuten',
-						data: [averagejourneys, 100 - averagejourneys],
+						data: [data.journeys_delayed, data.current_journeys - data.journeys_delayed],
 						backgroundColor: [
 							'rgba(75, 192, 192, 0.2)',
 							'rgba(255, 99, 132, 0.2)'
@@ -82,25 +82,22 @@ function standartdaten() {
 						],
 						borderWidth: 1
 					}]
-				}
-			});
-			new Chart($('#train-absolute-chart')[0].getContext("2d"), {
-				type: 'pie',
-				data: {
-					labels: ['Pünktlich', 'Zu spät'],
-					datasets: [{
-						label: '# bei Berücksichtigen von 5 Minuten',
-						data: [averagejourneys, 100 - averagejourneys],
-						backgroundColor: [
-							'rgba(75, 192, 192, 0.2)',
-							'rgba(255, 99, 132, 0.2)'
-						],
-						borderColor: [
-							'rgba(75, 192, 192, 1)',
-							'rgba(255, 99, 132, 1)'
-						],
-						borderWidth: 1
-					}]
+				},options:{
+					tooltips: {
+						callbacks: {
+						  label: function(tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+							var total = meta.total;
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = parseFloat((currentValue/total*100).toFixed(1));
+							return currentValue + ' (' + percentage + '%)';
+						  },
+						  title: function(tooltipItem, data) {
+							return data.labels[tooltipItem[0].index];
+						  }
+						}
+					  },
 				}
 			});
 			$("#most-number").text(mostNumber);
