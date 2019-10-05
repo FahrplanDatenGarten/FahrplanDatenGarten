@@ -1,13 +1,20 @@
 $(document).ready(function(){
-    var url = "https://gist.githubusercontent.com/planetoftheweb/4069235/raw/0ca9457d10f9ff0be578a699954910d7d6626726/sampledata.json";
+    var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
     $.ajax({
         url: url,
         dataType: 'json'
     })
     .done(function(data){
         console.log(data);
-        var bio = data.speakers[0].bio;
-        console.log(bio);
-        
+        var delayed = data.journeys_delayed;
+        var mostNumber = data.biggest_delay[0].name;
+        var mostMinutes = data.biggest_delay[0].delay;
+        var average = data.average_delay;
+        //console.log(bio);
+        $("#train-count").text(delayed);
+        $("#most-number").text(mostNumber);
+        $("#most-minutes").text(mostMinutes);
+        $("#average").text(average);
     });
+    
 });
