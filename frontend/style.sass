@@ -1,17 +1,4 @@
-$background-color: #39ff3911
-$background-text: #111111
-$border-color: #000000
-$data-color: rgba(0,0,0,0)
-$data-text: #EE1111
-$primary-color: #11BBFF
-$primary-text: #000000
-$active-color: #88FFAA
-$active-text: #000000
-$transparent-color: #aaaaaa
-$transparent-text: #000000
-$focus-color: #ffffff
-$focus-text: #000000
-
+@import './styles/dark.sass'
 
 *
     box-sizing: border-box
@@ -41,10 +28,10 @@ html, body
 .border-box
     border-color: $border-color
     border-width: 0.05em
+    border-radius: 2em
     border-style: solid
     margin: 0.25em
     padding: 1em
-    border-radius: 0.1em
     background-color: $focus-color
     color: $focus-text
 .data
@@ -137,3 +124,6 @@ input.form-control
         font-family: 'Noto Sans', sans-serif
         font-size: 1.25em
         display: inline-block
+        background-color: $background-color
+        color: $background-text
+        border: 0

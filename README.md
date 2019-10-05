@@ -19,3 +19,13 @@ python manage.py migrate
 ```
 python manage.py dbhafas_importstations
 ```
+
+## Themes
+
+There are 4 themes to choose:
+* Dark (`@import './styles/dark'`)
+* Dark-Mixed (`@import './styles/dark-mixed'`)
+* Light (`@import './styles/light'`)
+* Light-Mixed (`@import './styles/light-mixed'`)
+
+Change the imports in the `frontend/style.sass` to the new import statements and compile the sass!

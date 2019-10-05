@@ -67,7 +67,7 @@ function formular() {
 }
 
 function standartdaten() {
-	if(!$("#train-percentage-chart").length)
+	if (!$("#train-percentage-chart").length)
 		return;
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
@@ -76,20 +76,23 @@ function standartdaten() {
 		})
 		.done(function (data) {
 
+
 			//standarddaten
 			var averagejourneys = data.average_journeys;
 			var mostNumber = data.biggest_delay[0].name;
 			var mostMinutes = data.biggest_delay[0].delay;
-			var currentaverage = data.average_delay;
+			var currentaverage = data.average_delay * 60;
+			var currentaverageminutes = Math.floor(currentaverage / 60);
+			var currentaverageseconds = currentaverage- currentaverageminutes * 60;
 			var averagejourneys = data.journeys_delayed / data.current_journeys;
-			averagejourneys = (averagejourneys * 100).toFixed(2);
+			averagejourneys = averagejourneys * 100;
 			new Chart($('#train-percentage-chart')[0].getContext("2d"), {
 				type: 'pie',
 				data: {
 					labels: ['Pünktlich', 'Zu spät'],
 					datasets: [{
 						label: '# bei Berücksichtigen von 5 Minuten',
-						data: [data.journeys_delayed, data.current_journeys - data.journeys_delayed],
+						data: [data.journeys_delayed.toFixed(3), (data.current_journeys - data.journeys_delayed).toFixed(3)],
 						backgroundColor: [
 							'rgba(75, 192, 192, 0.2)',
 							'rgba(255, 99, 132, 0.2)'
@@ -109,7 +112,7 @@ function standartdaten() {
 								var meta = dataset._meta[Object.keys(dataset._meta)[0]];
 								var total = meta.total;
 								var currentValue = dataset.data[tooltipItem.index];
-								var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+								var percentage = parseFloat((currentValue / total * 100).toFixed(3));
 								return currentValue + ' (' + percentage + '%)';
 							},
 							title: function (tooltipItem, data) {
@@ -120,7 +123,8 @@ function standartdaten() {
 				}
 			});
 			$("#most-number").text(mostNumber);
-			$("#most-minutes").text(mostMinutes);
-			$("#average").text(currentaverage);
+			$("#most-minutes").text(mostMinutes.toFixed(3));
+			$("#average-minutes").text(currentaverageminutes.toFixed(3));
+			$("#average-seconds").text(currentaverageseconds.toFixed(3));
 		});
 }
