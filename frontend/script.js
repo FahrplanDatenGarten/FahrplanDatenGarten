@@ -29,6 +29,16 @@ function load(){
 
         $("#loading").fadeOut(function(){
             $("#body").fadeIn();
+            
+            
+            $(".ajax-link").each(function(){
+                $(this).click(function(event){
+                    $("#content").attr("view",$(this).attr("href"));
+                    load();
+                    event.preventDefault();
+                    return false;
+                });
+            });
         });
     });
 }
