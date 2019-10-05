@@ -16,7 +16,7 @@ def convert_toJson(request):
 
 	returnDict = {
 		"current_journeys":  current_journeys.count(),
-		"journeys_delayed": current_journeysv
+		#"journeys_delayed": current_journeys
 		"biggest_delay": None
 
 
