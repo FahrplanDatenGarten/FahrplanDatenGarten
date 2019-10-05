@@ -87,8 +87,8 @@ function standartdaten() {
                 }
             });
             $("#most-number").text(mostNumber);
-            $("#most-minutes").text(mostMinutes.toFixed(3));
+            $("#most-minutes").text(mostMinutes);
             $("#average-minutes").text(currentaverageminutes);
-            $("#average-seconds").text(currentaverageseconds.toFixed(3));
+            $("#average-seconds").text(currentaverageseconds.toFixed(2));
         });
 }
