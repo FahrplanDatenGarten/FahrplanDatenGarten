@@ -67,7 +67,7 @@ function formular() {
 }
 
 function standartdaten() {
-	if(!$("#train-percentage-chart").length)
+	if (!$("#train-percentage-chart").length)
 		return;
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
@@ -75,6 +75,7 @@ function standartdaten() {
 			dataType: 'json'
 		})
 		.done(function (data) {
+
 
 			//standarddaten
 			var averagejourneys = data.average_journeys;
