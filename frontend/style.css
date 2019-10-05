@@ -66,13 +66,18 @@ body {
 }
 
 .transparent {
-  -webkit-transition: background-color 2s ease-out;
-  transition: background-color 2s ease-out;
+  -webkit-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 
 .transparent:hover {
   color: #000000;
   background-color: #aaaaaa;
+}
+
+.transparent:active {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 .no-link {
