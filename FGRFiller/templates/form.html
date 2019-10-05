@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+
+{% include 'header.html' %}
+
+<body>
+    <div class="flex-column">
+            <div class="side-nav">
+                <h1>Ihre Fahrgastrechte</h1>
+                {% load static %}
+                <img src="{% static "Fahrplan-Garten-Daten-Logo.png" %}" width="200" height="200">
+                <br>
+                <a class="ajax-link full-btn btn-primary" href="/verspaeti">Home</a>
+                <a class="ajax-link full-btn btn-active" href="/fgr">Form</a>
+        </div>
+        <div id="quick-stats" class="full-width center">
+            <h2>Form</h2>
+
+    		<form class="border-box form-control center" action="/fgr/pdf" method="post">
+                {% csrf_token %}
+    			<label for="date">Reisedatum:</label>
+    			<input class="form-control" type="date" name="date" id="date"><br>
+    			<label for="startstation">Bahnhof Start:</label>
+    			<input class="form-control" type="text" name="startstation" id="startstation"><br>
+    			<label for="endstation">Bahnhof Ende:</label>
+    			<input class="form-control" type="text" name="endstation" id="endstation"><br>
+    			<label for="starttime">Abfahrt laut Fahrplan:</label>
+    			<input class="form-control" type="time" name="starttime" id="starttime"><br>
+    			<label for="endtime">Ankunf laut Fahrplan:</label>
+    			<input class="form-control" type="time" name="endtime" id="endtime"><br>
+    			<label for="arrivaldate">Angekommen bin ich am:</label>
+    			<input class="form-control" type="date" name="arrivaldate" id="arrivaldate"><br>
+    			<label for="arrivaltrain">Mit Zug</label>
+    			<input class="form-control" type="text" name="arrivaltrain" id="arrivaltrain"><br>
+    			<label for="arrivaltime">um</label>
+    			<input class="form-control" type="time" name="arrivaltime" id="arrivaltime"><br>
+    			<label for="firsttrainid">Erster verspäteter Zug:</label>
+    			<input class="form-control" type="text" name="firsttrainid" id="firsttrainid"><br>
+    			<label for="firsttraintime">Abfahrt laut Fahrplan</label>
+    			<input class="form-control" type="time" name="firsttraintime" id="firsttraintime"><br>
+    			<br>
+    			<input type="submit" class="full-btn btn-primary" id="zugformular2">
+    		</form>
+        </div>
+    </div>
+</body>

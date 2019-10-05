@@ -1,4 +1,4 @@
-django==2.2.6
+django
 dj_database_url
 requests
 fdfgen==0.16.1
