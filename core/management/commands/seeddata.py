@@ -9,9 +9,15 @@ class Command(BaseCommand):
     help = "Seeds (fake) data in database"
 
     def handle(self, *args, **options):
+<<<<<<< HEAD:core/management/commands/seeddata.py
         agency,_ = Agency.objects.update_or_create(name="DB")
         source,_ = Source.objects.update_or_create(name="DBApis")
         stop,_ = Stop.objects.update_or_create(ifopt="de:05315:11201")
+=======
+        agency, _ = Agency.objects.update_or_create(name="DB")
+        source, _ = Source.objects.update_or_create(name="DBApis")
+        stop, _ = Stop.objects.update_or_create(ifopt="de:05315:11201")
+>>>>>>> Add DBHafas; seeddata: bugfix:backend/core/management/commands/seeddata.py
         StopName.objects.update_or_create(stop=stop,
                                 name="Köln Hbf",
                                 source=source,
