@@ -11,7 +11,7 @@ We  ❤️  Deutsche Bahn
 - [N0emis](https://github.com/n0emis)
 - [FänselMänsel](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
-
+- [Anna](https://github.com/maedchenkunst2013)
 ## Used API's
   -
   -
@@ -48,4 +48,4 @@ There are 4 themes to choose:
 * Light (`@import './styles/light'`)
 * Light-Mixed (`@import './styles/light-mixed'`)
 
-Change the imports in the `frontend/style.sass` to the new import statements and compile the sass!
+Change the imports in the `frontend/style.sass` and compile sass!
