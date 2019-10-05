@@ -19,7 +19,7 @@ function load() {
 }
 
 function pageload() {
-	$("#loading").fadeOut(function () {
+	$("#loading").delay(500).fadeOut(function () {
 		$("#body").fadeIn();
 
 
