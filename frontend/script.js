@@ -63,9 +63,9 @@ function formular() {
 function standartdaten() {
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
-			url: url,
-			dataType: 'json'
-		})
+		url: url,
+		dataType: 'json'
+	})
 		.done(function (data) {
 			console.log(data);
 			//standarddaten
@@ -75,9 +75,44 @@ function standartdaten() {
 			var currentaverage = data.average_delay;
 			var averagejourneys = data.journeys_delayed / data.current_journeys;
 			averagejourneys = (averagejourneys * 100).toFixed(2);
-
-
-			$("#train-count").text(averagejourneys + "%");
+			new Chart($('#train-procent-chart')[0].getContext("2d"), {
+				type: 'pie',
+				data: {
+					labels: ['Pünktlich', 'Zu spät'],
+					datasets: [{
+						label: '# bei Berücksichtigen von 5 Minuten',
+						data: [averagejourneys, 100 - averagejourneys],
+						backgroundColor: [
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(255, 99, 132, 0.2)'
+						],
+						borderColor: [
+							'rgba(75, 192, 192, 1)',
+							'rgba(255, 99, 132, 1)'
+						],
+						borderWidth: 1
+					}]
+				}
+			});
+			new Chart($('#train-absolute-chart')[0].getContext("2d"), {
+				type: 'pie',
+				data: {
+					labels: ['Pünktlich', 'Zu spät'],
+					datasets: [{
+						label: '# bei Berücksichtigen von 5 Minuten',
+						data: [averagejourneys, 100 - averagejourneys],
+						backgroundColor: [
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(255, 99, 132, 0.2)'
+						],
+						borderColor: [
+							'rgba(75, 192, 192, 1)',
+							'rgba(255, 99, 132, 1)'
+						],
+						borderWidth: 1
+					}]
+				}
+			});
 			$("#most-number").text(mostNumber);
 			$("#most-minutes").text(mostMinutes);
 			$("#average").text(currentaverage);
