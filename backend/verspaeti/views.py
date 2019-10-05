@@ -16,9 +16,9 @@ def get_demojson(request):
 def convert_toJson(request):
 	
 	current_journeys = models.Journey.objects.filter(
-		stop__journeystop__actual_departure_time__lte = datetime.datetime.now(),
+		stop__journeystop__actual_departure_time__lte = datetime.datetime.now()).filter(
 		stop__journeystop__actual_arrival_time__gte = datetime.datetime.now()
-	)
+	).distinct()
 	current_stops = models.JourneyStop.objects.filter(journey__in = current_journeys)
 	delayed_stops = []
 	for stop in current_stops: 
