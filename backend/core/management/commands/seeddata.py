@@ -9,15 +9,15 @@ class Command(BaseCommand):
     help = "Seeds (fake) data in database"
 
     def handle(self, *args, **options):
-        agency = Agency.objects.create(name="DB")
-        source = Source.objects.create(name="DB HAFAS")
-        stop = Stop.objects.create(ifopt="de:05315:11201")
-        StopName.objects.create(stop=stop,
+        agency = Agency.objects.update_or_create(name="DB")
+        source = Source.objects.update_or_create(name="DBHafas")
+        stop = Stop.objects.update_or_create(ifopt="de:05315:11201")
+        StopName.objects.update_or_create(stop=stop,
                                 name="Köln Hbf",
                                 source=source,
                                 priority=1)
-        StopID.objects.create(stop=stop, source_stop_id="asd/123a",
-                              source=source)
+        StopID.objects.update_or_create(stop=stop, source_stop_id="8000207",
+                              source=source, source_stop_id_type="EVA")
         journey = Journey.objects.create(name="ICE 557", date=datetime.datetime.now(),
                                          journey_id="123jd213/12312hd", source=source,
                                          agency=agency)

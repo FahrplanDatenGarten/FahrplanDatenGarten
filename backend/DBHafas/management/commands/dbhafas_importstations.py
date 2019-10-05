@@ -27,4 +27,4 @@ class Command(BaseCommand):
                 continue
             stop,_ = Stop.objects.get_or_create(ifopt=row['IFOPT'])
             StopName.objects.get_or_create(name=row['NAME'], stop=stop, source=source)
-            StopID.objects.get_or_create(stop=stop, source_stop_id=row['\ufeffEVA_NR'], source=source)
+            StopID.objects.get_or_create(stop=stop, source_stop_id=row['\ufeffEVA_NR'], source=source, source_stop_id_type="EVA")
