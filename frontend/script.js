@@ -124,7 +124,7 @@ function standartdaten() {
 			});
 			$("#most-number").text(mostNumber);
 			$("#most-minutes").text(mostMinutes.toFixed(3));
-			$("#average-minutes").text(currentaverageminutes.toFixed(3));
+			$("#average-minutes").text(currentaverageminutes);
 			$("#average-seconds").text(currentaverageseconds.toFixed(3));
 		});
 }
