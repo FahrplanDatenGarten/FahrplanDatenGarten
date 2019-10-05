@@ -15,16 +15,17 @@ body
     color: $background-text
     font-family: 'Noto Sans', sans-serif
 
-.center-nolist
+.center-vertical
+    vertical-align: center
+.top-vertical
+    vertical-align: top
+.flex-list
     display: flex
     list-style-type: none
     margin: 0
     padding: 0
     display: flex
-    justify-content: center
-    align-items: center
     li
-        text-align: center
         vertical-align: top
         flex: 1 1 1px
 
@@ -45,7 +46,7 @@ body
     font-style: italic
 .ico-btn
     text-decoration: none
-    margin: 0.5em
+    margin: 1em
     padding: 0.3em 0.1em
 .icon
     padding: 0.25em
@@ -78,3 +79,7 @@ body
         flex-direction: column
     .border-box
         width: 100%
+.center
+    text-align: center
+.content-center
+    justify-content: center
