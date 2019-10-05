@@ -8,15 +8,15 @@ $(document).ready(function(){
     })
     .done(function(data){
         console.log(data);
-        var delayed = data.journeys_delayed;
+        var currentdelayed = data.journeys_delayed;
         var mostNumber = data.biggest_delay[0].name;
         var mostMinutes = data.biggest_delay[0].delay;
-        var average = data.average_delay;
+        var currentaverage = data.average_delay;
         //console.log(bio);
-        $("#train-count").text(delayed);
+        $("#train-count").text(currentdelayed);
         $("#most-number").text(mostNumber);
         $("#most-minutes").text(mostMinutes);
-        $("#average").text(average);
+        $("#average").text(currentaverage);
 
         $("#loading").fadeOut(function(){
             $("#body").fadeIn();
