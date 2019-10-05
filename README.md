@@ -1,9 +1,5 @@
 # FahrplanDatenGarten
 
-## What is it?
-
-A program which save the delay from the trains in a database and you can get the statistics from the frontend.
-
 ## Set up the VEnv:
 ```
 cd backend
@@ -17,4 +13,9 @@ Now run
 ```
 source .env
 python manage.py migrate
+```
+
+## Import Stations from DB
+```
+python manage.py dbhafas_importstations
 ```

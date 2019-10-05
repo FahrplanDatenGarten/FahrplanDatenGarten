@@ -9,7 +9,7 @@ class Source(models.Model):
 
 class Agency(models.Model):
     name = models.CharField(max_length=255)
-    
+
 class StopName(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
