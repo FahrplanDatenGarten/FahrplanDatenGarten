@@ -1,7 +1,29 @@
 $background-color: #ffffff
 $background-text: #111111
+$border-color: #000000
 
 body
     background-color: $background-color
     color: $background-text
+    font-family: 'Noto Sans', sans-serif
 
+.center-nolist
+    display: inline-block
+    list-style-type: none
+    margin: 0
+    padding: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    li
+        text-align: center
+        vertical-align: top
+        display: inline-block
+
+.border-box
+    border-color: $border-color
+    border-width: 0.05em
+    border-style: solid
+    margin: 0.25em
+    padding: 1em
+    border-radius: 0.1em
