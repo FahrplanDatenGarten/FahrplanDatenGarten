@@ -52,6 +52,13 @@ function formular() {
 			daten.arrivaltime = $("input[name='arrivaltime']").val();
 			daten.firsttrainid = $("input[name='firsttrainid']").val();
 			daten.firsttraintime = $("input[name='firsttraintime']").val();
+			$.ajax({
+				url: "",
+				method: "POST",
+				data: data
+			}).done(function (data) {
+				console.log("Formular gesendet");
+			});
 
 
 		});
@@ -60,7 +67,7 @@ function formular() {
 }
 
 function standartdaten() {
-	if(!$("#train-percentage-chart").length)
+	if (!$("#train-percentage-chart").length)
 		return;
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
@@ -68,6 +75,7 @@ function standartdaten() {
 			dataType: 'json'
 		})
 		.done(function (data) {
+
 
 			//standarddaten
 			var averagejourneys = data.average_journeys;
