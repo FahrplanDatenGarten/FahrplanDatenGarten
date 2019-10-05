@@ -38,6 +38,7 @@ function pageload() {
 function formular() {
 	var zugformular = $("#zugformular");
 	if (zugformular.length) {
+		console.log("test");
 		zugformular.closest('form').on('submit', function (e) {
 			e.preventDefault();
 			var daten = {};
@@ -51,8 +52,8 @@ function formular() {
 			daten.arrivaltime = $("input[name='arrivaltime']").val();
 			daten.firsttrainid = $("input[name='firsttrainid']").val();
 			daten.firsttraintime = $("input[name='firsttraintime']").val();
-			
-			console.log(daten);
+
+
 		});
 	}
 
@@ -61,10 +62,11 @@ function formular() {
 function standartdaten() {
 	var url = "https://raw.githubusercontent.com/Jugendhackt/FahrplanDatenGarten/master/demo.json";
 	$.ajax({
-		url: url,
-		dataType: 'json'
-	})
+			url: url,
+			dataType: 'json'
+		})
 		.done(function (data) {
+
 			//standarddaten
 			var averagejourneys = data.average_journeys;
 			var mostNumber = data.biggest_delay[0].name;
@@ -89,22 +91,23 @@ function standartdaten() {
 						],
 						borderWidth: 1
 					}]
-				},options:{
+				},
+				options: {
 					tooltips: {
 						callbacks: {
-						  label: function(tooltipItem, data) {
-							var dataset = data.datasets[tooltipItem.datasetIndex];
-							var meta = dataset._meta[Object.keys(dataset._meta)[0]];
-							var total = meta.total;
-							var currentValue = dataset.data[tooltipItem.index];
-							var percentage = parseFloat((currentValue/total*100).toFixed(1));
-							return currentValue + ' (' + percentage + '%)';
-						  },
-						  title: function(tooltipItem, data) {
-							return data.labels[tooltipItem[0].index];
-						  }
+							label: function (tooltipItem, data) {
+								var dataset = data.datasets[tooltipItem.datasetIndex];
+								var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+								var total = meta.total;
+								var currentValue = dataset.data[tooltipItem.index];
+								var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+								return currentValue + ' (' + percentage + '%)';
+							},
+							title: function (tooltipItem, data) {
+								return data.labels[tooltipItem[0].index];
+							}
 						}
-					  },
+					},
 				}
 			});
 			$("#most-number").text(mostNumber);
