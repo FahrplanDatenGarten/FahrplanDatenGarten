@@ -42,7 +42,7 @@ python manage.py dbhafas_importstations
 ```
 python manage.py runserver
 ```
-The Webserver now runs under http://localhost:8000/ 
+The Webserver now runs under http://127.0.0.1:8000/verspaeti/
 
 ## Themes
 
