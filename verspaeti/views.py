@@ -32,7 +32,7 @@ def convert_toJson(request):
      			"source": stop.journey.source.name,
      			"agency": stop.journey.agency.name
 		}
-	delayed_stops = list(sorted(delayed_stops.values(),key = lambda d : d['delay'],reverse=True))
+	delayed_stops = list(x for x in sorted(delayed_stops.values(),key = lambda d : d['delay'],reverse=True) if x['delay'] >= 5)
 	returnDict = {
 		"current_journeys":  current_journeys.count(),
 		"journeys_delayed": len({d['name'] for d in delayed_stops}),
