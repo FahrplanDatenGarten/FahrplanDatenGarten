@@ -8,10 +8,11 @@ We  ❤️  Deutsche Bahn
 - Statistiken aus Datenbank auswerten
 
 ## Contributors
-- [N0emis](https://github.com/n0emis)
+- [n0emis](https://github.com/n0emis)
 - [FänselMänsel](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 - [Anna](https://github.com/maedchenkunst2013)
+- [LabCode](https://github.com/labcode-de)
 ## Used API's
   - HAFAS
 # Develeopment Setup
