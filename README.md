@@ -13,9 +13,7 @@ We  ❤️  Deutsche Bahn
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
 - [Anna](https://github.com/maedchenkunst2013)
 ## Used API's
-  - 
-  -
-  -
+  - HAFAS
 # Develeopment Setup
 
 
@@ -41,7 +39,7 @@ python manage.py dbhafas_importstations
 
 ## Themes
 
-There are 4 themes to choose:
+There are four different themes to choose from:
 * Dark (`@import './styles/dark'`)
 * Dark-Mixed (`@import './styles/dark-mixed'`)
 * Light (`@import './styles/light'`)
