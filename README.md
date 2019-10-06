@@ -38,6 +38,12 @@ python manage.py migrate
 python manage.py dbhafas_importstations
 ```
 
+# Start Webserver
+```
+python manage.py runserver
+```
+The Webserver now runs under http://localhost:8000/ 
+
 ## Themes
 
 There are four different themes to choose from:
