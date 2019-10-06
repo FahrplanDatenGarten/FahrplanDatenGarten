@@ -3,15 +3,22 @@
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
 ## Features
-- Hier könnte ihre Werbung stehen!
-
+- Daten aus HAFAS in Datenbank speichern
+- Fahrgastformular aus Eingaben im Webinterface generieren 
+- Statistiken aus Datenbank auswerten
 
 ## Contributors
-- [Simeon/N0emis](https://github.com/marvinborner)
-- [Felix](https://github.com/fanselMansel)
+- [N0emis](https://github.com/n0emis)
+- [FänselMänsel](https://github.com/fanselMansel)
 - [CodeDoctorDE](https://github.com/CodeDoctorDE) / [Gitlab](https://gitlab.com/CodeDoctorDE)
+- [Anna](https://github.com/maedchenkunst2013)
+## Used API's
+  - 
+  -
+  -
+# Develeopment Setup
 
-## Additional Links
+
 
 ## Set up the VEnv:
 ```
@@ -41,4 +48,4 @@ There are 4 themes to choose:
 * Light (`@import './styles/light'`)
 * Light-Mixed (`@import './styles/light-mixed'`)
 
-Change the imports in the `frontend/style.sass` to the new import statements and compile the sass!
+Change the imports in the `frontend/style.sass` and compile sass!
