@@ -10,9 +10,10 @@ from core import models
 
 def get_demojson(request):
     fobj = open("../demo.json")
-    demoJson=fobj.readlines()
+    demoJson = fobj.readlines()
     fobj.close()
     return JsonResponse(demoJson)
+
 
 def convert_toJson(request):
 	current_journeys = models.Journey.objects.filter(
@@ -40,7 +41,6 @@ def convert_toJson(request):
 		"average_delay": (sum([d['delay'] for d in delayed_stops]) / len(delayed_stops)) if delayed_stops else None
 	}
 
-	return JsonResponse(returnDict,encoder=DjangoJSONEncoder)
 
 class IndexView(TemplateView):
     template_name = 'templates/index.html'

@@ -89,6 +89,6 @@ function standartdaten() {
             $("#most-number").text(mostNumber);
             $("#most-minutes").text(mostMinutes);
             $("#average-minutes").text(currentaverageminutes);
-            $("#average-seconds").text(currentaverageseconds.toFixed(2));
+            $("#average-seconds").text(currentaverageseconds);
         });
 }

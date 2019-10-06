@@ -3,9 +3,9 @@
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
 ## Features
-- Daten aus HAFAS in Datenbank speichern
-- Fahrgastformular aus Eingaben im Webinterface generieren 
-- Statistiken aus Datenbank auswerten
+-
+-
+-
 
 ## Contributors
 - [n0emis](https://github.com/n0emis)
@@ -35,7 +35,12 @@ python manage.py migrate
 
 ## Import Stations from DB
 ```
-python manage.py dbhafas_importstations
+python manage.py dbapis_importstations
+```
+
+## Import Timetable from DB
+```
+python manage.py dbapis_timetable {IfOpt}
 ```
 
 ## Start Webserver

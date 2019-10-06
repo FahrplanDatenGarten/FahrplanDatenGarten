@@ -33,7 +33,7 @@ class Journey(models.Model):
 class JourneyStop(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-    planned_arrival_time = models.DateTimeField()
-    planned_departure_time = models.DateTimeField()
-    actual_arrival_time = models.DateTimeField()
-    actual_departure_time = models.DateTimeField()
+    planned_arrival_time = models.DateTimeField(null=True)
+    planned_departure_time = models.DateTimeField(null=True)
+    actual_arrival_time = models.DateTimeField(null=True)
+    actual_departure_time = models.DateTimeField(null=True)

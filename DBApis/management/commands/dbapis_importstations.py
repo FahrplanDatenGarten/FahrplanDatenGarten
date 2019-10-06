@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand, CommandError
-from core.models import Stop, StopID, StopName, Source
+from core.models import Stop, StopID, StopName, Source, Agency
 import csv
 import io
 import requests
@@ -13,7 +13,8 @@ class Command(BaseCommand):
         parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2017_09.csv')
 
     def handle(self, *args, **options):
-        source, _ = Source.objects.get_or_create(name='DBApis')
+        agency, _ = Agency.objects.get_or_create(name="DB")
+        source, _ = Source.objects.get_or_create(name="DBApis")
 
         r = requests.get(options.get('csv-url'))
         r.encoding = 'utf-8'
