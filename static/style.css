@@ -192,6 +192,20 @@ html, body {
   min-height: 100%;
 }
 
+.flex-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  min-height: 100%;
+}
+
 .side-nav {
   margin: 0;
   margin-right: 1em;
@@ -204,7 +218,7 @@ form.form-control {
   display: inline-block;
 }
 
-input.form-control {
+input.form-control, select.form-control {
   padding: 0.25em;
   margin: 0.5em 1em;
   font-family: 'Noto Sans', sans-serif;

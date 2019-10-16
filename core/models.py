@@ -16,6 +16,12 @@ class StopName(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     priority = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ["-priority"]
+
+    def __str__(self):
+        return self.name
+
 class StopID(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     source_stop_id = models.CharField(max_length=255)
@@ -37,3 +43,6 @@ class JourneyStop(models.Model):
     planned_departure_time = models.DateTimeField(null=True)
     actual_arrival_time = models.DateTimeField(null=True)
     actual_departure_time = models.DateTimeField(null=True)
+
+    class Meta:
+        ordering = ["planned_arrival_time"]
