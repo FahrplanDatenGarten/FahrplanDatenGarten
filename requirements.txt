@@ -4,3 +4,5 @@ requests
 fdfgen==0.16.1
 npyscreen==4.10.5
 beautifulsoup4>=4.4.0
+flake8
+isort

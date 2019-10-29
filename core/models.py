@@ -2,13 +2,29 @@ from django.db import models
 
 # Create your models here.
 class Stop(models.Model):
-    ifopt = models.CharField(max_length=255, primary_key=True)
+    pass
+
+class StopIDKind(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Source(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
 class Agency(models.Model):
     name = models.CharField(max_length=255)
+    used_id_kind = models.ManyToManyField(StopIDKind, blank=True)
+
+    class Meta:
+        verbose_name_plural = "agencies"
+
+    def __str__(self):
+        return self.name
 
 class StopName(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
@@ -24,9 +40,23 @@ class StopName(models.Model):
 
 class StopID(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
-    source_stop_id = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE, blank=True, null=True)
+    kind = models.ForeignKey(StopIDKind, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class StopLocation(models.Model):
+    stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
+    country = models.CharField(max_length=255, blank=True, null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    source_stop_id_type = models.CharField(max_length=255, null=True)
+    priority = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["-priority"]
 
 class Journey(models.Model):
     name = models.CharField(max_length=255)
@@ -35,6 +65,9 @@ class Journey(models.Model):
     journey_id = models.CharField(max_length=255)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class JourneyStop(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)

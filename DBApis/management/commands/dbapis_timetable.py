@@ -22,8 +22,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         stop = Stop.objects.filter(ifopt=options['ifopt']).first()
         bahnapi = BahnAPI()
-        agency=Agency.objects.filter(name="DB").first()
-        stopID = StopID.objects.filter(stop=stop, source_stop_id_type="EVA").first()
+        agency=Agency.objects.filter(name="db").first()
+        stopID = StopID.objects.filter(stop=stop, source_stop_id_type="eva").first()
         # res = bahnapi.stationBoard("Berlin Hbf", duration=40)
         res = bahnapi.stationBoard(stopID.source_stop_id, duration=90)
         if len(res['svcResL']) != 0:
