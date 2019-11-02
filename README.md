@@ -17,10 +17,12 @@ We  ❤️  Deutsche Bahn
   - HAFAS
 # Develeopment Setup
 
-
-
-## Set up the VEnv:
+## Install Debian Requirements
+```bash
+sudo apt install python3-dev python3-wheel
 ```
+## Set up the VEnv:
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
