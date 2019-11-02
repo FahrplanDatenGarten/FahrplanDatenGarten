@@ -2,7 +2,11 @@ from django.db import models
 
 # Create your models here.
 class Stop(models.Model):
-    pass
+    def __str__(self):
+        if not self.stopname_set.first() is None:
+            return self.stopname_set.first().name
+        else:
+            return "Stop{}".format(self.pk)
 
 class StopIDKind(models.Model):
     name = models.CharField(max_length=255, unique=True)

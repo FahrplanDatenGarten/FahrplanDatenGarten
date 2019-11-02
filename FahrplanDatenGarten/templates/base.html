@@ -14,7 +14,7 @@
     {% endcompress %}
     <script src="{% static "jquery.js" %}"></script>
     <script src="{% static "script.js" %}"></script>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link href="{% static "roboto/roboto.css" %}" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico" %}">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
@@ -35,11 +35,11 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a class="navbar-item {% if request.resolver_match.namespace == "verspaeti" %}is-active{% endif %}" href="{% url "verspaeti:index" %}">
                 Home
             </a>
 
-            <a class="navbar-item">
+            <a class="navbar-item{% if request.resolver_match.namespace == "fgrfiller" %} is-active{% endif %}" href="{% url "fgrfiller:index" %}">
                 Fahrgastrechte
             </a>
         </div>

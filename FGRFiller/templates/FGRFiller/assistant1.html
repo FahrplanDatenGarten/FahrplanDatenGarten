@@ -1,29 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2 class="is-size-1-fullhd">Fahrgastrechte</h2>
-
-    <form id="assistant-form2" class="border-box form-control center" action="{% url 'fgrfiller:assistant_2' %}" method="post">
-        <h3>Ausfüllassistent - Stationen auswählen</h3>
-        <p>
-            Gewählte Verbindung: {{ journey.name }} - {{ journey.date }}
-            <a href="{% url 'fgrfiller:index' %}">ändern</a>
-        </p>
-        {% csrf_token %}
-        <label for="startstation">Startbahnhof</label>
-        <select class="form-control" id="startstation" name="startstation" form="assistant-form2">
-            {% for station in journey.stop.all %}
-                <option value="{{ station.pk }}" {% if forloop.first %}selected{% endif %}>{{ station.stopname_set.all.first.name }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="endstation">Zielbahnhof</label>
-        <select class="form-control" id="endstation" name="endstation" form="assistant-form2">
-            {% for station in journey.stop.all %}
-                <option value="{{ station.pk }}"{% if forloop.last %} selected{% endif %}>{{ station.stopname_set.all.first.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="hidden" name="journey" id="journey" value="{{ journey.pk }}">
-        <input type="submit" class="full-btn btn-primary" id="submit" value="Weiter">
-    </form>
+    <h1 class="title is-1 has-text-centered">Fahrgastrechte</h1>
+    <br>
+    <div class="columns">
+        <div class="column card is-6 is-offset-3">
+            <div class="card-header">
+                <p class="card-header-title">Ausfüllassistent - Zug auswählen</p>
+            </div>
+            <div class="card-content">
+                <form id="assistant-form2" class="border-box form-control center"
+                      action="{% url 'fgrfiller:assistant_2' %}" method="post">
+                    <p>
+                        Gewählte Verbindung: {{ journey.name }} - {{ journey.date }}
+                        <a href="{% url 'fgrfiller:index' %}">ändern</a>
+                    </p>
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label">Startbahnhof:</label>
+                        <div class="select">
+                            <select name="startstation" form="assistant-form2">
+                                {% for station in journey.stop.all %}
+                                    <option value="{{ station.pk }}"
+                                            {% if forloop.first %}selected{% endif %}>{{ station.stopname_set.all.first.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Zielbahnhof:</label>
+                        <div class="select">
+                            <select name="endstation" form="assistant-form2">
+                                {% for station in journey.stop.all %}
+                                    <option value="{{ station.pk }}"{% if forloop.last %}
+                                            selected{% endif %}>{{ station.stopname_set.all.first.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="journey" id="journey" value="{{ journey.pk }}">
+                    <button class="button is-primary" type="submit">Weiter</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
