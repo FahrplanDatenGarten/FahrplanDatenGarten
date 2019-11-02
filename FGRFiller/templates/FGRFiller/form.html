@@ -1,48 +1,114 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Fahrgastrechte</h2>
-
-    <form id="assistant-form" class="border-box form-control center top-vertical" action="{% url 'fgrfiller:assistant_1' %}" method="post">
-        <h3>Ausfüllassistent - Zug auswählen</h3>
-        <p>Achtung: Zur Zeit werden nur Verbindungen ohne umstieg unterstützt!</p>
-        {% csrf_token %}
-        <label for="date">Reisedatum:</label>
-    	<input class="form-control" type="date" name="date" id="date"><br>
-        <div class="flex-column">
-            <label for="traintype">Zug</label>
-            <select class="form-control" id="traintype" name="traintype" form="assistant-form">
-                <option value="IC">IC</option>
-                <option value="ICE">ICE</option>
-            </select>
-            <input class="form-control" type="number" name="trainnum" id="trainnum"><br>
+    <h2 class="is-size-1-fullhd has-text-centered">Fahrgastrechte</h2>
+    <br>
+    <div class="columns">
+        <div class="column card is-5">
+            <div class="card-header">
+                <p class="card-header-title">Ausfüllassistent - Zug auswählen</p>
+            </div>
+            <div class="card-content">
+                <form id="assistant-form" class="" action="{% url 'fgrfiller:assistant_1' %}" method="post">
+                    <div class="notification is-warning">
+                        Zur Zeit werden nur Verbindungen ohne Umstieg unterstützt!
+                    </div>
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label">Reisedatum:</label>
+                        <div class="control">
+                            <input type="date" name="date" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Zugtyp:</label>
+                        <div class="select">
+                            <select name="traintype">
+                                <option value="ICE">ICE</option>
+                                <option value="IC">IC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Zugnummer:</label>
+                        <div class="control">
+                            <input type="text" name="trainnum" class="input">
+                        </div>
+                    </div>
+                    <button class="button is-primary" type="submit">Weiter</button>
+                </form>
+            </div>
         </div>
-        <input type="submit" class="full-btn btn-primary" id="submit" value="Weiter">
-    </form>
-    <form id="full-form" class="border-box form-control center top-vertical" action="{% url 'fgrfiller:pdf' %}" method="post">
-        <h3>Manuell Eintragen</h3>
-        {% csrf_token %}
-    	<label for="date">Reisedatum:</label>
-    	<input class="form-control" type="date" name="date" id="date"><br>
-    	<label for="startstation">Startbahnhof:</label>
-    	<input class="form-control" type="text" name="startstation" id="startstation"><br>
-    	<label for="endstation">Endbahnhof:</label>
-    	<input class="form-control" type="text" name="endstation" id="endstation"><br>
-    	<label for="starttime">Abfahrt laut Fahrplan:</label>
-    	<input class="form-control" type="time" name="starttime" id="starttime"><br>
-    	<label for="endtime">Ankunft laut Fahrplan:</label>
-    	<input class="form-control" type="time" name="endtime" id="endtime"><br>
-    	<label for="arrivaldate">Echte Ankunft:</label>
-    	<input class="form-control" type="date" name="arrivaldate" id="arrivaldate"><br>
-    	<label for="arrivaltrain">Zug:</label>
-    	<input class="form-control" type="text" name="arrivaltrain" id="arrivaltrain"><br>
-    	<label for="arrivaltime">Uhrzeit:</label>
-    	<input class="form-control" type="time" name="arrivaltime" id="arrivaltime"><br>
-    	<label for="firsttrainid">Erster verspäteter Zug:</label>
-    	<input class="form-control" type="text" name="firsttrainid" id="firsttrainid"><br>
-    	<label for="firsttraintime">Abfahrt des ersten verspäteten Zugs:</label>
-    	<input class="form-control" type="time" name="firsttraintime" id="firsttraintime"><br>
-    	<br>
-    	<input type="submit" class="full-btn btn-primary" id="submit">
-    </form>
+        <div class="column card is-5 is-offset-2">
+            <div class="card-header">
+                <p class="card-header-title">Manuell ausf&uuml;llen</p>
+            </div>
+            <div class="card-content">
+                <form id="full-form" class="border-box form-control center top-vertical"
+                      action="{% url 'fgrfiller:pdf' %}"
+                      method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label">Reisedatum:</label>
+                        <div class="control">
+                            <input type="date" name="date" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Startbahnhof:</label>
+                        <div class="control">
+                            <input type="text" class="input" name="startstation">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Endbahnhof:</label>
+                        <div class="control">
+                            <input type="text" class="input" name="endstation">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Abfahrt laut Fahrplan:</label>
+                        <div class="control">
+                            <input type="time" class="input" name="starttime">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Ankunft laut Fahrplan:</label>
+                        <div class="control">
+                            <input type="time" class="input" name="endtime">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Echtes Ankunftsdatum:</label>
+                        <div class="control">
+                            <input type="date" name="arrivaldate" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Zug:</label>
+                        <div class="control">
+                            <input type="text" name="arrivaltrain" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Uhrzeit:</label>
+                        <div class="control">
+                            <input type="time" name="arrivaltime" class="input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Erster versp&auml;teter Zug:</label>
+                        <input type="text" name="firsttrainid" class="input">
+                    </div>
+                    <div class="field">
+                        <label class="label">Abfahrt des ersten versp&auml;teten Zugs:</label>
+                        <input type="time" class="input" name="firsttraintime">
+                    </div>
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Abschicken</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -96,10 +96,8 @@ class Command(BaseCommand):
                     ids[agency.name] = id
                     if stop is None:
                         stop = Stop.objects.filter(
-                            stopid=StopID.objects.filter(
-                                name=id,
-                                kind__in=agency.used_id_kind.all()
-                            ).first()
+                            stopid__name=id,
+                            stopid__kind__in=agency.used_id_kind.all()
                         ).first()
             if stop is None:
                 stop = Stop()

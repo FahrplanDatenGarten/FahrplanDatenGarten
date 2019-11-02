@@ -1,7 +1,7 @@
 .DS_Store
 DBApis/migrations/python3*/
 
-*.sqlite
+*.sqlite*
 
 # Created by https://www.gitignore.io/api/django
 # Edit at https://www.gitignore.io/?templates=django
@@ -128,3 +128,4 @@ dmypy.json
 # End of https://www.gitignore.io/api/django
 
 .idea
+CACHE

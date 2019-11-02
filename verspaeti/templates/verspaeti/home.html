@@ -1,25 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Quick statistics</h2>
-    <ul class="flex-list top-vertical content-center center">
-        <li class="border-box">
-            Verspätungen heute:
-            <canvas id="train-percentage-chart" width="400" height="400"></canvas>
-        </li>
-        <li class="border-box">
-            <p>Zug Nummer</p>
-            <div id="most-number" class="data">ERROR</div>
-            <p>ist</p>
-            <div id="most-minutes" class="data">ERROR</div>
-            <p>Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
-        </li>
-        <li class="border-box">
-            <p>Alle Züge sind durchschnittlich</p>
-            <div class="data">
-                <span id="average-minutes">ERROR</span>:<span id="average-seconds">ERROR</span>
+    <h2 class="is-size-1-fullhd has-text-centered">Statistik</h2>
+    <br>
+    <div class="columns">
+        <div class="column card is-3 is-offset-1">
+            <div class="card-header">
+                <p class="card-header-title">Versp&auml;tung heute</p>
             </div>
-            <p>Minuten zu spät!</p>
-        </li>
-    </ul>
+            <div class="card-content">
+                <ul class="flex-list top-vertical content-center center">
+                    <li class="border-box">
+                        <canvas id="train-percentage-chart" width="400" height="400"></canvas>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="column card is-3 is-offset-1">
+            <div class="card-header">
+                <div class="card-header-title">H&ouml;chste Versp&auml;tung heute</div>
+            </div>
+            <div class="card-content">
+                <p>Zug Nummer</p>
+                <div id="most-number" class="data">ERROR</div>
+                <p>ist</p>
+                <div id="most-minutes" class="data">ERROR</div>
+                <p>Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
+            </div>
+        </div>
+        <div class="column card is-3 is-offset-1">
+            <div class="card-header">
+                <div class="card-header-title">H&ouml;chste Versp&auml;tung heute</div>
+            </div>
+            <div class="card-content">
+                <p>Alle Z&uuml;ge sind durchschnittlich</p>
+                <div class="data">
+                    <span id="average-minutes">ERROR</span>:<span id="average-seconds">ERROR</span>
+                </div>
+                <p>Minuten zu spät!</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}
