@@ -3,7 +3,7 @@ from zipfile import ZipFile
 from django.http import HttpResponse
 from core import models
 from django.core.cache import cache
-import csv,io,random
+import csv,io
 # Create your views here.
 
 def agencyexport():
@@ -58,7 +58,7 @@ def tripexport():
     writer.writeheader()
 
     for journey in models.Journey.objects.all():
-        writer.writerow({'route_id': journey.journey_id, 'service_id': 'todo', 'trip_id': journey.journey_id})
+        writer.writerow({'route_id': journey.journey_id, 'service_id': journey.date, 'trip_id': journey.journey_id})
 
     return output.getvalue()
 
