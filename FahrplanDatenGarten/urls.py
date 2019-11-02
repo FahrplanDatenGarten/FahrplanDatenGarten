@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('verspaeti/', include('verspaeti.urls', namespace='verspaeti')),
     path('fgr/', include('FGRFiller.urls', namespace='fgrfiller')),
+    path('gtfs/', include('gtfs.urls', namespace='gtfs')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
