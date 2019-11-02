@@ -3,9 +3,9 @@ dj-database-url==0.5.0
 requests==2.22.0
 fdfgen==0.16.1
 npyscreen==4.10.5
-beautifulsoup4=4.8.1
-flake8==3,7.9
+beautifulsoup4==4.8.1
+flake8==3.7.9
 isort==4.3.21
 django_compressor==2.3
 django-libsass==0.7
-pycrypto==2.6.1
+pycryptodome==3.9.1
