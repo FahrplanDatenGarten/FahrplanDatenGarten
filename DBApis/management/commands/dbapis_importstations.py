@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand, CommandError
-from core.models import Stop, StopID, StopName, Source, Agency
+from core.models import Stop, StopID, StopIDKind, StopName, Source, Agency
 import csv
 import io
 import requests
@@ -13,8 +13,8 @@ class Command(BaseCommand):
         parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2017_09.csv')
 
     def handle(self, *args, **options):
-        agency, _ = Agency.objects.get_or_create(name="DB")
-        source, _ = Source.objects.get_or_create(name="DBApis")
+        agency, _ = Agency.objects.get_or_create(name="db")
+        source, _ = Source.objects.get_or_create(name="dbapis")
 
         r = requests.get(options.get('csv-url'))
         r.encoding = 'utf-8'
@@ -24,8 +24,21 @@ class Command(BaseCommand):
         csv_file.seek(0)
         reader = csv.DictReader(csv_file, delimiter=';')
         for row in reader:
-            if row['IFOPT'] is '':
+            if row['\ufeffEVA_NR'] is '':
                 continue
-            stop,_ = Stop.objects.get_or_create(ifopt=row['IFOPT'])
+            stop = Stop.objects.filter(
+                stopid__name=row['\ufeffEVA_NR'],
+                stopid__kind__in=agency.used_id_kind.all()
+            ).first()
+            if stop is None:
+                stop = Stop()
+                stop.save()
             StopName.objects.get_or_create(name=row['NAME'], stop=stop, source=source)
-            StopID.objects.get_or_create(stop=stop, source_stop_id=row['\ufeffEVA_NR'], source=source, source_stop_id_type="EVA")
+            StopID.objects.get_or_create(
+                stop=stop,
+                name=row['\ufeffEVA_NR'],
+                source=source,
+                kind=StopIDKind.objects.filter(
+                    name='eva'
+                ).first()
+            )

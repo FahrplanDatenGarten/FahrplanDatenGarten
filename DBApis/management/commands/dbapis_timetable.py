@@ -17,23 +17,29 @@ class Command(BaseCommand):
     help = 'Imports the Timetable from DB API'
 
     def add_arguments(self, parser):
-        parser.add_argument('ifopt', nargs='?', type=str)
+        parser.add_argument('name', nargs='?', type=str)
 
     def handle(self, *args, **options):
-        stop = Stop.objects.filter(ifopt=options['ifopt']).first()
+        stop = Stop.objects.filter(stopname__name=options['name']).first()
         bahnapi = BahnAPI()
-        agency=Agency.objects.filter(name="DB").first()
-        stopID = StopID.objects.filter(stop=stop, source_stop_id_type="EVA").first()
+        db=Agency.objects.filter(name="db").first()
+        dbapis=Source.objects.filter(name="dbapis").first()
+        stopID = StopID.objects.filter(stop=stop, kind__name="eva").first()
         # res = bahnapi.stationBoard("Berlin Hbf", duration=40)
-        res = bahnapi.stationBoard(stopID.source_stop_id, duration=90)
+        res = bahnapi.stationBoard(stop.stopname_set.filter(source__name='dbapis').first().name, duration=90)
         if len(res['svcResL']) != 0:
             if 'jnyL' in res['svcResL'][0]['res']:
                 journeys = res['svcResL'][0]['res']['jnyL']
                 for journey in journeys:
                     journeyDetails = bahnapi.journeyDetails(journey['jid'])['svcResL'][0]['res']
                     date=datetime.datetime.strptime(journeyDetails['journey']['date'], "%Y%m%d")
-                    dbJourney, _ = Journey.objects.update_or_create(name=journeyDetails['common']['prodL'][0]['name'], date=date, journey_id=journey['jid'], source=Source.objects.filter(name="DBApis").first(),
-                    agency=Agency.objects.filter(name="DB").first())
+                    dbJourney, _ = Journey.objects.update_or_create(
+                        name=journeyDetails['common']['prodL'][0]['name'],
+                        date=date,
+                        journey_id=journey['jid'],
+                        source=dbapis,
+                        agency=db
+                    )
                     stops = journeyDetails['journey']['stopL']
                     for stop in stops:
                         if stop.get("dTimeS") is not None:
@@ -59,7 +65,10 @@ class Command(BaseCommand):
                             aTimeR = None
 
                         name = journeyDetails['common']['locL'][stop['locX']]['name']
-                        dbStopName = StopName.objects.filter(name=name).first()
+                        dbStopName = StopName.objects.filter(
+                            name=name,
+                            source=dbapis
+                        ).first()
                         if (dbStopName is None):
                             print("The Stop {} could not be found!".format(name))
                         else:
@@ -110,8 +119,8 @@ class BahnAPI():
         response = self.cleanResponse(search_request.json())
         return response
 
-    def stationBoard(self, station, start_datetime=datetime.datetime.now(), duration=60):
-        station = self.searchLocation(station)[0]
+    def stationBoard(self, stationName, start_datetime=datetime.datetime.now(), duration=60):
+        station = self.searchLocation(stationName)[0]
         data = {"svcReqL": [
             {
              "meth": "StationBoard",
