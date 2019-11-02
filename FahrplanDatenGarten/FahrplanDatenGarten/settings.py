@@ -135,3 +135,14 @@ COMPRESS_PRECOMPILERS = [
     ('text/x-scss', 'django_libsass.SassCompiler'),
 ]
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
+
+# Celery configuration
+# https://docs.celeryproject.org/en/latest/userguide/configuration.html
+
+CELERY_RESULT_BACKEND = 'redis://localhost/0'
+if os.environ.get('CELERY_RESULT_BACKEND'):
+    CELERY_RESULT_BACKEND=os.environ['CELERY_RESULT_BACKEND']
+
+CELERY_BROKER_URL = 'redis://localhost/0'
+if os.environ.get('CELERY_BROKER_URL'):
+    CELERY_BROKER_URL=os.environ['CELERY_BROKER_URL']
