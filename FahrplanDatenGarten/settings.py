@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'DBApis',
     'FGRFiller',
     'verspaeti',
+    'gtfs'
 ]
 
 MIDDLEWARE = [
