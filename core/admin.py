@@ -25,5 +25,18 @@ class StopAdmin(admin.ModelAdmin):
     def primary_stop_location(self, obj):
         return obj.stoplocation_set.first()
 
+class JourneystopAdminInline(admin.TabularInline):
+    model = JourneyStop
+    #fields = ('primary_stop_name', 'planned_arrival_time', 'planned_departure_time', 'actual_arrival_time', 'actual_departure_time')
+    fields = ('stop', 'planned_arrival_time', 'planned_departure_time', 'actual_arrival_time', 'actual_departure_time')
+    #readonly_fields = ('primary_stop_name', )
+
+    def primary_stop_name(self, obj):
+        return obj.stop.stopname_set.first().name
+
+class JourneyAdmin(admin.ModelAdmin):
+    inlines = (JourneystopAdminInline, )
+
 admin.site.register(Stop, StopAdmin)
-admin.site.register([StopID, StopIDKind, StopName, StopLocation, Source, Agency, Journey, JourneyStop])
+admin.site.register(Journey, JourneyAdmin)
+admin.site.register([StopID, StopIDKind, StopName, StopLocation, Source, Agency])
