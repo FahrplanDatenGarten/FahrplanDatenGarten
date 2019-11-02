@@ -1,0 +1,5 @@
+---
+- name: Install redis
+  apt:
+    pkg: ['redis']
+    state: present

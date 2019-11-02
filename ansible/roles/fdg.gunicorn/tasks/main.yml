@@ -1,0 +1,5 @@
+---
+- name: Install gunicorn
+  pip:
+    name: gunicorn==19.9.0
+    state: present

@@ -1,0 +1,35 @@
+user www-data;
+worker_processes  1;
+error_log  stderr error;
+events {
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    include /etc/nginx/conf.d/*.conf;
+    server_tokens off;
+    server {
+      listen 80;
+      listen [::]:80;
+      server_name jhulm19.labcode.party;
+      root /var/www/html;
+      return 301 https://$host$request_uri;
+  }
+
+  server {
+      listen 443 ssl http2;
+      listen [::]:443 ssl http2;
+      server_name jhulm19.labcode.party;
+
+      root /var/www/labcode.de/cdn.labcode.de;
+      add_header X-XSS-Protection "1; mode=block";
+      access_log  off;
+      error_log off;
+
+      ssl_certificate /etc/letsencrypt/live/jhulm19.labcode.party/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/jhulm19.labcode.party/privkey.pem;
+  }
+}
