@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'DBApis',
     'FGRFiller',
     'verspaeti',
+    'compressor'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATICFILES_FINDERS = [
+    'compressor.finders.CompressorFinder'
+]
+
+# Added SCSS to Compress
+COMPRESS_PRECOMPILERS = [
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+]
+COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
