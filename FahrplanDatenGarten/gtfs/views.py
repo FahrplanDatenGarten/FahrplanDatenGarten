@@ -83,6 +83,9 @@ def stoptimesexport():
             departure_time = (stoptimes.planned_departure_time.date() - stoptimes.journey.first_date().date()).days * 24
             departure_time = "{:02}:{:02}:{:02}".format(departure_time + stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute, stoptimes.planned_departure_time.second)
 
+        arrival_time = arrival_time or departure_time
+        departure_time = departure_time or arrival_time
+
         writer.writerow({'trip_id': stoptimes.journey.journey_id, 'arrival_time': arrival_time, 'departure_time': departure_time,'stop_id': stoptimes.stop.id,'stop_sequence': i})
 
     return output.getvalue()
