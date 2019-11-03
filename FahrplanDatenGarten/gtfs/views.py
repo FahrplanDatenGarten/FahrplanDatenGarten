@@ -45,7 +45,8 @@ def routesexport():
     writer.writeheader()
 
     for journey in models.Journey.objects.all():
-        writer.writerow({'route_id': journey.journey_id, 'agency_id': journey.agency.id, 'route_short_name': journey.name, 'route_type': 2})
+        if journey.name:
+            writer.writerow({'route_id': journey.journey_id, 'agency_id': journey.agency.id, 'route_short_name': journey.name, 'route_type': 2})
 
     return output.getvalue()
 
@@ -58,7 +59,8 @@ def tripexport():
     writer.writeheader()
 
     for journey in models.Journey.objects.all():
-        writer.writerow({'route_id': journey.journey_id, 'service_id': journey.date, 'trip_id': journey.journey_id})
+        if journey.name:
+            writer.writerow({'route_id': journey.journey_id, 'service_id': journey.date, 'trip_id': journey.journey_id})
 
     return output.getvalue()
 
