@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../', 'db.sqlite3'),
     }
 }
 if os.environ.get('DATABASE_URL'):
@@ -146,3 +146,5 @@ if os.environ.get('CELERY_RESULT_BACKEND'):
 CELERY_BROKER_URL = 'redis://localhost/0'
 if os.environ.get('CELERY_BROKER_URL'):
     CELERY_BROKER_URL=os.environ['CELERY_BROKER_URL']
+
+CELERY_TASK_SERIALIZER = 'json'

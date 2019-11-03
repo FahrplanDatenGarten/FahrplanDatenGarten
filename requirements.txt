@@ -11,3 +11,4 @@ django-libsass==0.7
 pycryptodome==3.9.1
 celery==4.3.0
 redis
+pytz
