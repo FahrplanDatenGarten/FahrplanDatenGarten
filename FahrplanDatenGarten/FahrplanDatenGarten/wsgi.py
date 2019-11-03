@@ -8,9 +8,7 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
-
 import dotenv
-
 
 dotenv.read_dotenv(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env'), override=True)
 

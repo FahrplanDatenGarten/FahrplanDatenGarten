@@ -1,6 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 import os
+import dotenv
 from celery import Celery
+
+dotenv.read_dotenv(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env'), override=True)
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FahrplanDatenGarten.settings')
