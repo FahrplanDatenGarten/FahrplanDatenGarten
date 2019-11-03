@@ -73,6 +73,9 @@ class Journey(models.Model):
     def __str__(self):
         return self.name
 
+    def first_date(self):
+        return sorted(self.journeystop_set.all(), key=lambda x: x.earlier_time())[0].earlier_time()
+
 class JourneyStop(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
@@ -83,3 +86,10 @@ class JourneyStop(models.Model):
 
     class Meta:
         ordering = ["planned_arrival_time"]
+
+    def earlier_time(self):
+        if self.planned_arrival_time:
+            return self.planned_arrival_time
+
+        if self.planned_departure_time:
+            return self.planned_departure_time

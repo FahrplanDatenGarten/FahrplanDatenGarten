@@ -71,7 +71,17 @@ def stoptimesexport():
     writer.writeheader()
 
     for i,stoptimes in enumerate(models.JourneyStop.objects.all()):
-        writer.writerow({'trip_id': stoptimes.journey.journey_id, 'arrival_time': stoptimes.planned_arrival_time, 'departure_time': stoptimes.planned_departure_time,'stop_id': stoptimes.stop.id,'stop_sequence': i})
+        arrival_time = None
+        if stoptimes.planned_arrival_time:
+            arrival_time = (stoptimes.planned_arrival_time.date() - stoptimes.journey.first_date().date()).days * 24
+            arrival_time = "{:02}:{:02}:{:02}".format(arrival_time, stoptimes.planned_arrival_time.hour, stoptimes.planned_arrival_time.minute)
+
+        departure_time = None
+        if stoptimes.planned_departure_time:
+            departure_time = (stoptimes.planned_departure_time.date() - stoptimes.journey.first_date().date()).days * 24
+            departure_time = "{:02}:{:02}:{:02}".format(departure_time, stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute)
+
+        writer.writerow({'trip_id': stoptimes.journey.journey_id, 'arrival_time': arrival_time, 'departure_time': departure_time,'stop_id': stoptimes.stop.id,'stop_sequence': i})
 
     return output.getvalue()
 
@@ -82,11 +92,14 @@ def calendardatesexport():
     writer = csv.DictWriter(output, fieldnames=fieldnames)
 
     writer.writeheader()
+    services = set()
     for departure_date,arrival_date in models.JourneyStop.objects.all().values_list('planned_departure_time','planned_arrival_time'):
         if departure_date:
-            writer.writerow({'service_id': departure_date.date(), 'date': departure_date.date().strftime("%Y%m%d"), 'exception_type': 1})
+            services.add((departure_date.strftime("%Y-%m-%d"), departure_date.strftime("%Y%m%d")))
         if arrival_date:
-            writer.writerow({'service_id': arrival_date.date(), 'date': arrival_date.date().strftime("%Y%m%d"), 'exception_type': 1})
+            services.add((arrival_date.strftime("%Y-%m-%d"), arrival_date.strftime("%Y%m%d")))
+    for i,d in services:
+        writer.writerow({'service_id': i, 'date': d, 'exception_type': 1})
     return output.getvalue()
 
 def gtfsexport(request):
