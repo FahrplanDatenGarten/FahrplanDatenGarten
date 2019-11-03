@@ -15,7 +15,7 @@ def agencyexport():
     writer.writeheader()
 
     for agency in models.Agency.objects.all():
-        writer.writerow({'agency_id': agency.id, 'agency_name': agency.name, 'agency_url': '', 'agency_timezone': 'Europe/Berlin'})
+        writer.writerow({'agency_id': agency.id, 'agency_name': agency.name, 'agency_url': 'http://localhost', 'agency_timezone': 'Europe/Berlin'})
     return output.getvalue()
 
 def stopexport():
