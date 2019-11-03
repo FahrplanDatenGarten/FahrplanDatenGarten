@@ -76,12 +76,12 @@ def stoptimesexport():
         arrival_time = None
         if stoptimes.planned_arrival_time:
             arrival_time = (stoptimes.planned_arrival_time.date() - stoptimes.journey.first_date().date()).days * 24
-            arrival_time = "{:02}:{:02}:{:02}".format(arrival_time, stoptimes.planned_arrival_time.hour, stoptimes.planned_arrival_time.minute)
+            arrival_time = "{:02}:{:02}:{:02}".format(arrival_time + stoptimes.planned_arrival_time.hour, stoptimes.planned_arrival_time.minute, stoptimes.planned_arrival_time.second)
 
         departure_time = None
         if stoptimes.planned_departure_time:
             departure_time = (stoptimes.planned_departure_time.date() - stoptimes.journey.first_date().date()).days * 24
-            departure_time = "{:02}:{:02}:{:02}".format(departure_time, stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute)
+            departure_time = "{:02}:{:02}:{:02}".format(departure_time + stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute, stoptimes.planned_departure_time.second)
 
         writer.writerow({'trip_id': stoptimes.journey.journey_id, 'arrival_time': arrival_time, 'departure_time': departure_time,'stop_id': stoptimes.stop.id,'stop_sequence': i})
 
