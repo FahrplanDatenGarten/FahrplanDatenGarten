@@ -9,6 +9,7 @@
 - hosts: fdg
   roles:
     - fdg.redis
+    - fdg.rabbitmq
     - fdg.postgresql
     - fdg.app
     - fdg.celery
