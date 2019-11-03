@@ -20,14 +20,14 @@
 
 - name: Create rabbitmq vhost
   rabbitmq_vhost:
-    name: /jhulm19
+    name: jhulm19
     state: present
 
 - name: Create rabbitmq_user
   rabbitmq_user:
     user: fdg
     password: fdg
-    vhost: /jhulm19
+    vhost: jhulm19
     configure_priv: .*
     read_priv: .*
     write_priv: .*
