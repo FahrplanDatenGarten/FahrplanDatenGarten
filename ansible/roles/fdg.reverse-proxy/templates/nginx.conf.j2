@@ -24,12 +24,14 @@ http {
       listen [::]:443 ssl http2;
       server_name jhulm19.labcode.party;
 
-      root /var/www/labcode.de/cdn.labcode.de;
-      add_header X-XSS-Protection "1; mode=block";
+      root /var/www/html;
       access_log  off;
       error_log off;
 
       ssl_certificate /etc/letsencrypt/live/jhulm19.labcode.party/fullchain.pem;
       ssl_certificate_key /etc/letsencrypt/live/jhulm19.labcode.party/privkey.pem;
+      location / {
+          proxy_pass http://unix:/run/gunicorn/socket;
+      }
   }
 }

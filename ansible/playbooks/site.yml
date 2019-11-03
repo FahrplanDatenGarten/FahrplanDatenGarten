@@ -4,6 +4,7 @@
   roles:
     - general.packages
     - general.authentication
+    - general.ohmyzsh
 
 - hosts: fdg
   roles:

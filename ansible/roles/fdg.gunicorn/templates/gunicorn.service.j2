@@ -1,0 +1,19 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=www-data
+Group=www-data
+RuntimeDirectory=gunicorn
+WorkingDirectory=/fdg/FahrplanDatenGarten
+ExecStart=/fdg/.venv/bin/gunicorn --pid /run/gunicorn/pid   \
+          --bind unix:/run/gunicorn/socket FahrplanDatenGarten.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
