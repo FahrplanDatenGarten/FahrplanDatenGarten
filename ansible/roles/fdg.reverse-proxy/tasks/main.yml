@@ -1,0 +1,37 @@
+---
+- name: Install nginx
+  apt:
+    pkg: ['nginx']
+
+- name: Upload nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: reload nginx
+
+- name: Install certbot
+  apt:
+    pkg: ['certbot', 'python3-certbot-nginx']
+    update_cache: true
+    state: present
+
+- name: Change Let's Encrypt API to v2
+  lineinfile:
+    path: /etc/letsencrypt/cli.ini
+    line: 'server = https://acme-v02.api.letsencrypt.org/directory'
+
+- name: Generate Certificate for opendatamap.net
+  shell: certbot certonly -d jhulm19.labcode.party --agree-tos --email webmaster@labcode.de -n --nginx
+  notify: reload nginx
+
+- name: remove certbot standard cronjob
+  file:
+    path: /etc/cron.d/certbot
+    state: absent
+
+- name: Add Cronjob doe renewing certificates every month
+  cron:
+    name: renew letsencrypt certs
+    special_time: monthly
+    job: "/usr/bin/env certbot renew --post-hook 'systemctl restart nginx'"
+    user: root

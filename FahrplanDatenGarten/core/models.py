@@ -63,9 +63,9 @@ class StopLocation(models.Model):
         ordering = ["-priority"]
 
 class Journey(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True)
     stop = models.ManyToManyField(Stop, through='JourneyStop')
-    date = models.DateField()
+    date = models.DateField(null=True)
     journey_id = models.CharField(max_length=255)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE)

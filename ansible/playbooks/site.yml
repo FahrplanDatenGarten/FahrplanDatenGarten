@@ -1,0 +1,17 @@
+---
+# file: site.yml
+- hosts: all
+  roles:
+    - general.packages
+    - general.authentication
+    - general.ohmyzsh
+
+- hosts: fdg
+  roles:
+    - fdg.redis
+    - fdg.rabbitmq
+    - fdg.postgresql
+    - fdg.app
+    - fdg.celery
+    - fdg.gunicorn
+    - fdg.reverse-proxy

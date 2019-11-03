@@ -1,0 +1,5 @@
+[fdg]
+jhulm19.labcode.party
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

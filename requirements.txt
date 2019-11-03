@@ -1,3 +1,4 @@
+wheel==0.33.6
 django==2.2.6
 dj-database-url==0.5.0
 requests==2.22.0
@@ -10,4 +11,5 @@ django_compressor==2.3
 django-libsass==0.7
 pycryptodome==3.9.1
 celery==4.3.0
-redis
+redis==3.3.11
+pytz==2019.3

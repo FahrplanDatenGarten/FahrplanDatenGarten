@@ -1,0 +1,5 @@
+---
+# handlers file for lbcd.authentication
+
+- name: reload ssh
+  service: name=ssh state=reloaded
