@@ -3,7 +3,6 @@
     name: leo
     comment: Leo
     groups: sudo
-    shell: /bin/bash
 
 - name: Add leos ssh key (me@leomaroni.de)
   authorized_key:
@@ -20,7 +19,6 @@
     name: n0emis
     comment: Simeon
     groups: sudo
-    shell: /bin/bash
 
 - name: Add ssh key of n0emis
   authorized_key:
