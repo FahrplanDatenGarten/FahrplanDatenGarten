@@ -2,3 +2,22 @@
 - name: Install PostgreSQL
   apt:
     pkg: ['postgresql']
+
+- name: Install PostgreSQL pip helper
+  pip:
+    name: psycopg2-binary==2.8.4
+    state: present
+
+- name: Create PostgreSQL user
+  postgresql_user:
+    name: fdg
+    password: fdg
+  become: true
+  become_user: "postgres"
+
+- name: Create PostgreSQL db
+  postgresql_db:
+    name: fdg
+    owner: fdg
+  become: true
+  become_user: "postgres"
