@@ -15,7 +15,7 @@ def agencyexport():
     writer.writeheader()
 
     for agency in models.Agency.objects.all():
-        writer.writerow({'agency_id': agency.id, 'agency_name': agency.name, 'agency_url': 'localhost', 'agency_timezone': 'Europe/Berlin'})
+        writer.writerow({'agency_id': agency.id, 'agency_name': agency.name, 'agency_url': 'http://localhost', 'agency_timezone': 'Europe/Berlin'})
     return output.getvalue()
 
 def stopexport():
@@ -76,12 +76,12 @@ def stoptimesexport():
         arrival_time = None
         if stoptimes.planned_arrival_time:
             arrival_time = (stoptimes.planned_arrival_time.date() - stoptimes.journey.first_date().date()).days * 24
-            arrival_time = "{:02}:{:02}:{:02}".format(arrival_time + stoptimes.planned_arrival_time.hour, stoptimes.planned_arrival_time.minute, stoptimes.planned_arrival_time.second)
+            arrival_time = "{:02}:{:02}:{:02}".format(arrival_time, stoptimes.planned_arrival_time.hour, stoptimes.planned_arrival_time.minute)
 
         departure_time = None
         if stoptimes.planned_departure_time:
             departure_time = (stoptimes.planned_departure_time.date() - stoptimes.journey.first_date().date()).days * 24
-            departure_time = "{:02}:{:02}:{:02}".format(departure_time + stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute, stoptimes.planned_departure_time.second)
+            departure_time = "{:02}:{:02}:{:02}".format(departure_time, stoptimes.planned_departure_time.hour, stoptimes.planned_departure_time.minute)
 
         arrival_time = arrival_time or departure_time
         departure_time = departure_time or arrival_time
