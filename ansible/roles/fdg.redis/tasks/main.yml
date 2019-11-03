@@ -3,3 +3,9 @@
   apt:
     pkg: ['redis']
     state: present
+
+- name: Ensure redis service is enabled and started
+  service:
+    name: redis
+    enabled: yes
+    state: started
