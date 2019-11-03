@@ -3,3 +3,25 @@
   pip:
     name: gunicorn==19.9.0
     state: present
+    virtualenv: /fdg/.venv
+
+- name: Add Gunicorn service template
+  template:
+    src: gunicorn.service.j2
+    dest: /etc/systemd/system/gunicorn.service
+
+- name: Add Gunicorn socket template
+  template:
+    src: gunicorn.socket.j2
+    dest: /etc/systemd/system/gunicorn.socket
+
+- name: Add tmpfiles/gunicorn config template
+  template:
+    src: tmpfiles_gunicorn.conf.j2
+    dest: /etc/tmpfiles.d/gunicorn.conf
+
+- name: Ensure gunicorn socket service is enabled and started
+  systemd:
+    name: gunicorn.socket
+    enabled: yes
+    state: started

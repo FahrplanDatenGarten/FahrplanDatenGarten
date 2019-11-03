@@ -9,7 +9,15 @@
     pkg: ['python3-dev', 'python3-wheel']
     state: present
 
-- pip:
+- name: Install pip requirements
+  pip:
      requirements: /fdg/requirements.txt
      virtualenv: /fdg/.venv
      virtualenv_command: /usr/bin/python3 -m venv
+
+- name: Chown repo
+  file:
+    path: /fdg
+    owner: www-data
+    group: www-data
+    recurse: yes
