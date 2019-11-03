@@ -24,6 +24,8 @@ SECRET_KEY = ')k#a0%)w9)lc^i8k)(=m=_ondzl(+bjzdvnu)()_l1d-ajzp7^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if os.environ.get('DEBUG'):
+    CELERY_RESULT_BACKEND=os.environ['DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -85,6 +87,7 @@ DATABASES = {
 }
 if os.environ.get('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config(default=os.environ['DATABASE_URL'])
+print(DATABASES['default']['NAME'])
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

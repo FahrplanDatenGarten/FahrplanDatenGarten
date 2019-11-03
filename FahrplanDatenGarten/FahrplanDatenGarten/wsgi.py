@@ -9,6 +9,11 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 
 import os
 
+import dotenv
+
+
+dotenv.read_dotenv(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, '.env'), override=True)
+
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FahrplanDatenGarten.settings')

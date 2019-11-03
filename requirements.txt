@@ -13,3 +13,5 @@ pycryptodome==3.9.1
 celery==4.3.0
 redis==3.3.11
 pytz==2019.3
+django-dotenv==1.4.2
+pathlib
