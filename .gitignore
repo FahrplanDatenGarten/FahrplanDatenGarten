@@ -1,5 +1,6 @@
 .DS_Store
 DBApis/migrations/python3*/
+*.pid
 
 *.sqlite*
 
