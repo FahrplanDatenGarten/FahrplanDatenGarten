@@ -22,9 +22,9 @@ def import_timetable(stop_pk):
 @periodic_task(run_every=(crontab(minute='*/1')), name="import_all_journeys", ignore_result=True)
 def import_all_journeys():
     for journey in Journey.objects.filter(agency__name='db').all():
-        import_journeys.delay(journey.pk)
+        import_journey.delay(journey.pk)
 
-@task(name="import_journeys")
-def import_journeys(journey_pk):
+@task(name="import_journey")
+def import_journey(journey_pk):
     hafasimport = HafasImport()
-    hafasimport.import_journeys(Journey.objects.get(pk=journey_pk))
+    hafasimport.import_journey(Journey.objects.get(pk=journey_pk))

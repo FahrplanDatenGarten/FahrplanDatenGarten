@@ -11,6 +11,11 @@ class Command(BaseCommand):
         parser.add_argument('journeyid', nargs='?', type=str)
 
     def handle(self, *args, **options):
-        stop = Journey.objects.filter(journey_id=options['journeyid']).first()
         hafasimport = HafasImport()
-        hafasimport.import_journey(stop)
+
+        stop = Journey.objects.filter(journey_id=options['journeyid']).first()
+        if not stop is None:
+            hafasimport.import_journey(stop)
+        else:
+            for journey in Journey.objects.filter(agency__name='db').all():
+                hafasimport.import_journey(journey)

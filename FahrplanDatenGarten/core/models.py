@@ -2,11 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Stop(models.Model):
-    def __str__(self):
-        if not self.stopname_set.first() is None:
-            return self.stopname_set.first().name
-        else:
-            return "Stop{}".format(self.pk)
+    pass
 
 class StopIDKind(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -71,7 +67,9 @@ class Journey(models.Model):
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        if not self.name is None:
+            return self.name
+        return self.journey_id
 
     def first_date(self):
         return sorted(self.journeystop_set.all(), key=lambda x: x.earlier_time())[0].earlier_time()
