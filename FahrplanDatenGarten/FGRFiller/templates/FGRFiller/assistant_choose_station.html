@@ -10,7 +10,7 @@
             </div>
             <div class="card-content">
                 <form id="assistant-form2" class="border-box form-control center"
-                      action="{% url 'fgrfiller:assistant_2' %}" method="post">
+                      action="{% url 'fgrfiller:assistant_pdf' %}" method="post">
                     <p>
                         Gewählte Verbindung: {{ journey.name }} - {{ journey.date }}
                         <a href="{% url 'fgrfiller:index' %}">ändern</a>
@@ -39,7 +39,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="journey" id="journey" value="{{ journey.pk }}">
-                    <button class="button is-primary" type="submit">Weiter</button>
+                    <button class="button is-primary" type="submit">Formular generieren</button>
+                    <button class="button is-warning" type="button" onclick="document.querySelector('#assistant-form2').action='{% url 'fgrfiller:assistant_multihop' %}'; document.querySelector('#assistant-form2').submit()">Zug hinzufügen</button>
                 </form>
             </div>
         </div>

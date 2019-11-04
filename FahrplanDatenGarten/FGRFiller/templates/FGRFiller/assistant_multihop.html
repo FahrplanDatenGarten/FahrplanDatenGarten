@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="title is-1 has-text-centered">Fahrgastrechte</h1>
+    <br>
+    <div class="columns">
+        <div class="column card is-6 is-offset-3">
+            <div class="card-header">
+                <p class="card-header-title">Ausfüllassistent - Weiteren Zug auswählen</p>
+            </div>
+            <div class="card-content">
+                <h6 class="title is-6">Gewählte Züge</h6>
+                {% for journeyPart in journeys %}
+                    {% if not journeyPart.end is None %}
+                        <p>
+                            {{ journeyPart.journey.name }} von {{ journeyPart.start.stop.stopname_set.all.first.name }} nach {{ journeyPart.end.stop.stopname_set.all.first.name }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                <form id="assistant-form2" class="border-box form-control center" action="{% url 'fgrfiller:assistant_pdf' %}" method="post">
+                    {% if journeys|length > 1 %}
+                        <button class="button is-white" type="button" onclick="document.querySelector('#assistant-form2').action='{% url 'fgrfiller:assistant_multihop' %}?back'; document.querySelector('#assistant-form2').submit()">Zurück</button>
+                    {% endif %}
+                    <br>
+                    {% csrf_token %}
+                    <input type="hidden" id="journey_json" name="journey_json" value="{{ journey_json }}">
+                    {% if not select_station %}
+                        <div class="field">
+                            <label class="label">Neuer Zug:</label>
+                            <div class="select">
+                                <select name="newtrain" form="assistant-form2">
+                                    {% for train in availableTrains %}
+                                        <option value="{{ train.pk }}" {% if forloop.first %}selected{% endif %}>{{ train.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="field">
+                            <label class="label">Zielbahnhof:</label>
+                            <div class="select">
+                                <select name="endstation" form="assistant-form2">
+                                    {% for station in availableEndstations %}
+                                        <option value="{{ station.pk }}" {% if forloop.last %} selected{% endif %}>{{ station.stopname_set.all.first.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <button class="button is-primary" type="submit">Formular generieren</button>
+                    <button class="button is-warning" type="button" onclick="document.querySelector('#assistant-form2').action='{% url 'fgrfiller:assistant_multihop' %}'; document.querySelector('#assistant-form2').submit()">Zug hinzufügen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
