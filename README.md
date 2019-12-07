@@ -2,7 +2,7 @@
 
 and
 
-![](https://i.jhbadge.com/?evt=ulm&year=2019) [![](https://i.jhbadge.com/?type=view-presentation&evt=ulm&year=2019)](https://media.ccc.de/v/currently-not-published)
+![](http://jhbadge.marvnethosted.com/?evt=ulm&year=2019) [![](http://jhbadge.marvnethosted.com/?type=view-presentation&evt=ulm&year=2019)](https://media.ccc.de/v/currently-not-published)
 
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
