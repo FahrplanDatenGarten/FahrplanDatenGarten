@@ -1,8 +1,8 @@
-![](http://jhbadge.marvnethosted.com/?evt=ber&year=2019) [![](http://jhbadge.marvnethosted.com/?type=view-presentation&evt=ber&year=2018)](https://media.ccc.de/v/jh19-fahrplandatengarten)
+![](https://jhbadge.freetls.fastly.net/?evt=ber&year=2019) [![](https://jhbadge.freetls.fastly.net/?type=view-presentation&evt=ber&year=2018)](https://media.ccc.de/v/jh19-fahrplandatengarten)
 
 and
 
-![](http://jhbadge.marvnethosted.com/?evt=ulm&year=2019) [![](http://jhbadge.marvnethosted.com/?type=view-presentation&evt=ulm&year=2019)](https://media.ccc.de/v/currently-not-published)
+![](https://jhbadge.freetls.fastly.net/?evt=ulm&year=2019) [![](https://jhbadge.freetls.fastly.net/?type=view-presentation&evt=ulm&year=2019)](https://media.ccc.de/v/currently-not-published)
 
 # FahrplanDatenGarten
 We  ❤️  Deutsche Bahn
