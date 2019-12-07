@@ -1,4 +1,4 @@
-![](https://i.jhbadge.com/?evt=ber&year=2019) [![](https://i.jhbadge.com/?type=view-presentation&evt=ber&year=2018)](https://media.ccc.de/v/jh19-fahrplandatengarten)
+![](http://jhbadge.marvnethosted.com/?evt=ber&year=2019) [![](http://jhbadge.marvnethosted.com/?type=view-presentation&evt=ber&year=2018)](https://media.ccc.de/v/jh19-fahrplandatengarten)
 
 and
 
