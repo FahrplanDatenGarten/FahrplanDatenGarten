@@ -14,7 +14,7 @@ http {
     server {
       listen 80;
       listen [::]:80;
-      server_name {{inventory_hostname}};
+      server_name {{ ansible_fqdn }};
       root /var/www/html;
       return 301 https://$host$request_uri;
   }
@@ -22,7 +22,7 @@ http {
   server {
       listen 443 ssl http2;
       listen [::]:443 ssl http2;
-      server_name {{inventory_hostname}};
+      server_name {{ ansible_fqdn }};
 
       root /vfdg/FahrplanDatenGarten/;
       access_log  off;

@@ -22,7 +22,7 @@
     line: 'server = https://acme-v02.api.letsencrypt.org/directory'
 
 - name: Generate Certificate for opendatamap.net
-  shell: certbot certonly -d {{ ansible_fqdn }} --agree-tos --email webmaster@labcode.de -n --nginx
+  shell: certbot certonly -d {{ ansible_fqdn }} -d fahrplandatengarten.de -d www.fahrplandatengarten.de --agree-tos --email webmaster@labcode.de -n --nginx
   notify: reload nginx
 
 - name: remove certbot standard cronjob
