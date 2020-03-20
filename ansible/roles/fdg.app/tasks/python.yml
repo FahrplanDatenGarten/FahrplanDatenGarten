@@ -19,9 +19,14 @@
 - name: copy app configuration
   template:
     src: .env.j2
-    dest: /fdg/FahrplanDatenGarten/.env
+    dest: /fdg/.env
 
 - name: collect django statics
   command: ../.venv/bin/python manage.py collectstatic --noinput
+  args:
+    chdir: /fdg/FahrplanDatenGarten
+
+- name: migrate database
+  command: ../.venv/bin/python manage.py migrate
   args:
     chdir: /fdg/FahrplanDatenGarten

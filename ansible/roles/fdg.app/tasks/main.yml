@@ -7,6 +7,14 @@
     recurse: yes
     state: directory
 
+- name: create static files folder
+  file:
+    path: "{{ static_root }}"
+    owner: www-data
+    group: www-data
+    recurse: yes
+    state: directory
+
 - include: python.yml
   become: yes
   become_method: su
