@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'Imports the Stations from the Haltestellendaten-CSV'
 
     def add_arguments(self, parser):
-        parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2017_09.csv')
+        parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
 
     def handle(self, *args, **options):
         agency, _ = Agency.objects.get_or_create(name="db")
@@ -28,10 +28,10 @@ class Command(BaseCommand):
         csv_file.seek(0)
         reader = csv.DictReader(csv_file, delimiter=';')
         for row in reader:
-            if row['\ufeffEVA_NR'] == '':
+            if row['EVA_NR'] == '':
                 continue
             stop = Stop.objects.filter(
-                stopid__name=row['\ufeffEVA_NR'],
+                stopid__name=row['EVA_NR'],
                 stopid__kind__in=agency.used_id_kind.all()
             ).first()
             if stop is None:
@@ -40,7 +40,7 @@ class Command(BaseCommand):
             StopName.objects.get_or_create(name=row['NAME'], stop=stop, source=source)
             StopID.objects.get_or_create(
                 stop=stop,
-                name=row['\ufeffEVA_NR'],
+                name=row['EVA_NR'],
                 source=source,
                 kind=kind
             )
