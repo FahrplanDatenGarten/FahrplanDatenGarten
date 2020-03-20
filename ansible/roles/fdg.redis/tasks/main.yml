@@ -1,5 +1,0 @@
----
-- name: Remove redis
-  apt:
-    pkg: ['redis']
-    state: absent

@@ -1,0 +1,7 @@
+celeryd_log_file: /var/log/celery/%n%I.log
+celeryd_log_level: INFO
+celeryd_pid_file: /run/celeryd/%n.pid
+celery_bin: /fdg/.venv/bin/celery
+celeryd_nodes: 2
+celery_app: FahrplanDatenGarten
+celeryd_opts: --time-limit=300 --concurrency=8

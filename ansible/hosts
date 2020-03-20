@@ -1,5 +1,5 @@
 [fdg]
-jhulm19.labcode.party
+mars.srv.fahrplandatengarten.de
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
