@@ -1,0 +1,3 @@
+[submodule "FahrplanDatenGarten/netzkarte"]
+	path = FahrplanDatenGarten/netzkarte
+	url = https://github.com/Jugendhackt/deutschlandkarte-a-la-bahn
