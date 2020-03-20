@@ -4,8 +4,15 @@
     url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
     state: present
 
+- name: add erlang apt repository
+  apt_repository:
+    repo: 'deb https://dl.bintray.com/rabbitmq-erlang/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} erlang'
+    state: present
+
 - name: add rabbitmq official apt repository
-  apt_repository: repo='deb https://dl.bintray.com/rabbitmq/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main' state=present
+  apt_repository:
+    repo: 'deb https://dl.bintray.com/rabbitmq/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main'
+    state: present
 
 - name: install package
   apt:

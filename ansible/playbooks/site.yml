@@ -8,9 +8,9 @@
 
 - hosts: fdg
   roles:
-#    - fdg.rabbitmq
+    - fdg.rabbitmq
     - fdg.postgresql
     - fdg.app
-#    - fdg.celery
+    - fdg.celery
     - fdg.gunicorn
     - fdg.reverse-proxy
