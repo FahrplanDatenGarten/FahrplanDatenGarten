@@ -3,7 +3,7 @@ import datetime
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from plotly.graph_objs import Figure, Pie, Scatter
+from plotly.graph_objs import Pie
 from plotly.offline import plot
 
 from core import models

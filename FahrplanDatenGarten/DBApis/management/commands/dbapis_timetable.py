@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand, CommandError
-from DBApis.hafasImport import HafasImport
+
 from core.models import Stop
+from DBApis.hafasImport import HafasImport
+
 
 class Command(BaseCommand):
     help = 'Imports the Timetable from DB API'

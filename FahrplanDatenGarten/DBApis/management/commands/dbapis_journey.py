@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand, CommandError
-from DBApis.hafasImport import HafasImport
+
 from core.models import Journey
+from DBApis.hafasImport import HafasImport
+
 
 class Command(BaseCommand):
     help = 'Imports the Timetable from DB API'
@@ -14,7 +16,7 @@ class Command(BaseCommand):
         hafasimport = HafasImport()
 
         stop = Journey.objects.filter(journey_id=options['journeyid']).first()
-        if not stop is None:
+        if stop is not None:
             hafasimport.import_journey(stop)
         else:
             for journey in Journey.objects.filter(agency__name='db').all():

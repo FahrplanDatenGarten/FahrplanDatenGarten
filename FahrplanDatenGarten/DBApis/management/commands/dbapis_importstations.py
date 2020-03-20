@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from django.core.management.base import BaseCommand, CommandError
-from core.models import Stop, StopID, StopIDKind, StopName, Source, Agency
 import csv
 import io
+
 import requests
+from django.core.management.base import BaseCommand, CommandError
+
+from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName
+
 
 class Command(BaseCommand):
     help = 'Imports the Stations from the Haltestellendaten-CSV'
 
     def add_arguments(self, parser):
-        parser.add_argument('csv-url', nargs='?', type=str, default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
+        parser.add_argument(
+            'csv-url',
+            nargs='?',
+            type=str,
+            default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
 
     def handle(self, *args, **options):
         agency, _ = Agency.objects.get_or_create(name="db")
@@ -37,7 +44,8 @@ class Command(BaseCommand):
             if stop is None:
                 stop = Stop()
                 stop.save()
-            StopName.objects.get_or_create(name=row['NAME'], stop=stop, source=source)
+            StopName.objects.get_or_create(
+                name=row['NAME'], stop=stop, source=source)
             StopID.objects.get_or_create(
                 stop=stop,
                 name=row['EVA_NR'],

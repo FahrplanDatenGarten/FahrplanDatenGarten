@@ -1,9 +1,13 @@
-from .hafasClient import HafasClient
-from core.models import StopID, Stop, StopIDKind, Journey, Agency, Source, JourneyStop, StopName
-from django.utils import timezone
-from .hafasClient import HafasClient
 import datetime
+
 import pytz
+from django.utils import timezone
+
+from core.models import (Agency, Journey, JourneyStop, Source, Stop, StopID,
+                         StopIDKind, StopName)
+
+from .hafasClient import HafasClient
+
 
 class HafasImport:
     def __init__(self):
@@ -13,12 +17,19 @@ class HafasImport:
         self.idkind, _ = StopIDKind.objects.get_or_create(name='eva')
         self.timezone = pytz.timezone("Europe/Berlin")
 
-    def import_timetable(self, station, start_time=datetime.datetime.now(), duration=90):
+    def import_timetable(
+            self,
+            station,
+            start_time=datetime.datetime.now(),
+            duration=90):
         try:
-            stopid, _ = StopID.objects.get_or_create(stop=station, kind=self.idkind)
+            stopid, _ = StopID.objects.get_or_create(
+                stop=station, kind=self.idkind)
         except StopID.MultipleObjectsReturned:
-            stopid = StopID.objects.filter(stop=station, kind=self.idkind).first()
-        res = self.hafasclient.stationBoard(station.stopname_set.first().name, duration=90)
+            stopid = StopID.objects.filter(
+                stop=station, kind=self.idkind).first()
+        res = self.hafasclient.stationBoard(
+            station.stopname_set.first().name, duration=90)
         if len(res['svcResL']) != 0:
             if 'jnyL' in res['svcResL'][0]['res']:
                 journeys = res['svcResL'][0]['res']['jnyL']
@@ -30,50 +41,66 @@ class HafasImport:
                     )
 
     def import_journey(self, journey):
-        journeyDetails = self.hafasclient.journeyDetails(journey.journey_id)['svcResL'][0]['res']
+        journeyDetails = self.hafasclient.journeyDetails(journey.journey_id)[
+            'svcResL'][0]['res']
         if not journeyDetails.get('journey') is None:
-            date = self.timezone.localize(datetime.datetime.strptime(journeyDetails['journey']['date'], "%Y%m%d"), is_dst=None)
-            journey.name=journeyDetails['common']['prodL'][0]['name']
-            journey.date=date
+            date = self.timezone.localize(
+                datetime.datetime.strptime(
+                    journeyDetails['journey']['date'],
+                    "%Y%m%d"),
+                is_dst=None)
+            journey.name = journeyDetails['common']['prodL'][0]['name']
+            journey.date = date
             journey.save()
             stops = journeyDetails['journey']['stopL']
             for stop in stops:
                 if stop.get("dTimeS") is not None:
-                    dTimeS = date + self.hafasclient.strpDelta(stop.get("dTimeS")[-6:])
+                    dTimeS = date + \
+                        self.hafasclient.strpDelta(stop.get("dTimeS")[-6:])
                 else:
                     dTimeS = None
                 if stop.get("aTimeS") is not None:
-                    aTimeS = date + self.hafasclient.strpDelta(stop.get("aTimeS")[-6:])
+                    aTimeS = date + \
+                        self.hafasclient.strpDelta(stop.get("aTimeS")[-6:])
                 else:
                     aTimeS = None
 
                 if stop.get("dTimeR") is not None:
-                    dTimeR = date + self.hafasclient.strpDelta(stop.get("dTimeR")[-6:])
+                    dTimeR = date + \
+                        self.hafasclient.strpDelta(stop.get("dTimeR")[-6:])
                 else:
                     dTimeR = None
                 if stop.get("aTimeR") is not None:
-                    aTimeR = date + self.hafasclient.strpDelta(stop.get("aTimeR")[-6:])
+                    aTimeR = date + \
+                        self.hafasclient.strpDelta(stop.get("aTimeR")[-6:])
                 else:
                     aTimeR = None
 
                 name = journeyDetails['common']['locL'][stop['locX']]['name']
-                eva_id = journeyDetails['common']['locL'][stop['locX']]['lid'][-8:-1]
+                eva_id = journeyDetails['common']['locL'][stop['locX']
+                                                          ]['lid'][-8:-1]
                 dbStopID = StopID.objects.filter(
                     name=eva_id,
                     source=self.dbapis
                 ).first()
                 if (dbStopID is None):
-                    print("The Stop {} with ID {} could not be found!".format(name, eva_id))
+                    print(
+                        "The Stop {} with ID {} could not be found!".format(
+                            name, eva_id))
                 else:
                     dbStop = dbStopID.stop
-                    if JourneyStop.objects.filter(stop=dbStop, journey=journey).count() == 0:
-                        JourneyStop.objects.create(stop=dbStop, journey=journey,
-                        planned_departure_time=dTimeS,
-                        actual_departure_time=dTimeR,
-                        planned_arrival_time=aTimeS,
-                        actual_arrival_time=aTimeR)
+                    if JourneyStop.objects.filter(
+                            stop=dbStop, journey=journey).count() == 0:
+                        JourneyStop.objects.create(
+                            stop=dbStop,
+                            journey=journey,
+                            planned_departure_time=dTimeS,
+                            actual_departure_time=dTimeR,
+                            planned_arrival_time=aTimeS,
+                            actual_arrival_time=aTimeR)
                     else:
-                        journeyStop = JourneyStop.objects.get(stop=dbStop, journey=journey)
+                        journeyStop = JourneyStop.objects.get(
+                            stop=dbStop, journey=journey)
                         if 'dTimeR' in stop:
                             journeyStop.actual_departure_time = dTimeR
                         if 'aTimeR' in stop:

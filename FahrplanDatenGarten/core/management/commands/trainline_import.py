@@ -6,7 +6,8 @@ import io
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName, StopLocation
+from core.models import (Agency, Source, Stop, StopID, StopIDKind,
+                         StopLocation, StopName)
 
 
 class Command(BaseCommand):
@@ -37,7 +38,11 @@ class Command(BaseCommand):
     }
 
     def add_arguments(self, parser):
-        parser.add_argument('csv-url', nargs='?', type=str, default='https://raw.githubusercontent.com/trainline-eu/stations/master/stations.csv')
+        parser.add_argument(
+            'csv-url',
+            nargs='?',
+            type=str,
+            default='https://raw.githubusercontent.com/trainline-eu/stations/master/stations.csv')
 
     def handle(self, *args, **options):
         trainline, _ = Source.objects.get_or_create(name="trainline")
@@ -62,7 +67,7 @@ class Command(BaseCommand):
                 angency_objs = []
                 agencies = []
                 for key in row.keys():
-                    if key[-3:] == '_id' and not key in ['parent_station_id']:
+                    if key[-3:] == '_id' and key not in ['parent_station_id']:
                         name = key[:-3]
                         agency = Agency.objects.filter(name=name).first()
 
@@ -75,7 +80,8 @@ class Command(BaseCommand):
                 primary_id_kinds = {}
                 for agency in agencies:
                     for idkind_name in self.operators[agency.name]:
-                        idkind = StopIDKind.objects.filter(name=idkind_name).first()
+                        idkind = StopIDKind.objects.filter(
+                            name=idkind_name).first()
                         if idkind is None:
                             idkind = StopIDKind(name=idkind_name)
                             idkind.save()
@@ -83,9 +89,8 @@ class Command(BaseCommand):
 
                         if idkind_name == self.operators[agency.name][0]:
                             primary_id_kinds[agency.name] = idkind
-                uic_kind , _ = StopIDKind.objects.get_or_create(name='uic')
+                uic_kind, _ = StopIDKind.objects.get_or_create(name='uic')
                 first_row = False
-
 
             # Now import all stops from the CSV
             ids = {}
@@ -104,7 +109,12 @@ class Command(BaseCommand):
                 stop.save()
 
             if not row.get('uic', '') == '':
-                stopid_objs.append(StopID(name=row.get('uic'), stop=stop, kind=uic_kind, source=trainline))
+                stopid_objs.append(
+                    StopID(
+                        name=row.get('uic'),
+                        stop=stop,
+                        kind=uic_kind,
+                        source=trainline))
 
             for id_name in ids.keys():
                 stopid_obj = StopID(
@@ -114,7 +124,12 @@ class Command(BaseCommand):
                     kind=primary_id_kinds[id_name]
                 )
                 stopid_objs.append(stopid_obj)
-            if not (row.get('latitude', '') == '' or row.get('longitude', '') == ''):
+            if not (
+                row.get(
+                    'latitude',
+                    '') == '' or row.get(
+                    'longitude',
+                    '') == ''):
                 stoplocation_objs.append(StopLocation(
                     latitude=row.get('latitude'),
                     longitude=row.get('longitude'),

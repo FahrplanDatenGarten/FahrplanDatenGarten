@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,8 +26,8 @@ SECRET_KEY = ')k#a0%)w9)lc^i8k)(=m=_ondzl(+bjzdvnu)()_l1d-ajzp7^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 if os.environ.get('DEBUG'):
-    DEBUG=os.environ.get('DEBUG')
-    CELERY_RESULT_BACKEND=os.environ['DEBUG']
+    DEBUG = os.environ.get('DEBUG')
+    CELERY_RESULT_BACKEND = os.environ['DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -39,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'core',
     'DBApis',
     'FGRFiller',
     'verspaeti',
     'gtfs',
-    'compressor',
     'netzkarte',
 ]
 
@@ -88,7 +89,8 @@ DATABASES = {
     }
 }
 if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(default=os.environ['DATABASE_URL'])
+    DATABASES['default'] = dj_database_url.config(
+        default=os.environ['DATABASE_URL'])
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -140,6 +142,7 @@ if os.environ.get('STATIC_ROOT'):
 COMPRESS_PRECOMPILERS = [
     ('text/x-scss', 'django_libsass.SassCompiler'),
 ]
+LIBSASS_SOURCE_COMMENTS = False
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
 # Celery configuration
@@ -147,10 +150,10 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
 CELERY_RESULT_BACKEND = 'redis://localhost/0'
 if os.environ.get('CELERY_RESULT_BACKEND'):
-    CELERY_RESULT_BACKEND=os.environ['CELERY_RESULT_BACKEND']
+    CELERY_RESULT_BACKEND = os.environ['CELERY_RESULT_BACKEND']
 
 CELERY_BROKER_URL = 'redis://localhost/0'
 if os.environ.get('CELERY_BROKER_URL'):
-    CELERY_BROKER_URL=os.environ['CELERY_BROKER_URL']
+    CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
 
 CELERY_TASK_SERIALIZER = 'json'
