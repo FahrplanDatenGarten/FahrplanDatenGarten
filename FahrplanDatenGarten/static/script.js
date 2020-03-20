@@ -50,6 +50,7 @@ function standartdaten() {
             var currentaverageseconds = currentaverage - currentaverageminutes * 60;
             var averagejourneys = data.journeys_delayed / data.current_journeys;
             averagejourneys = averagejourneys * 100;
+            console.log([(data.current_journeys - data.journeys_delayed).toFixed(3), data.journeys_delayed.toFixed(3)])
             new Chart($('#train-percentage-chart')[0].getContext("2d"), {
                 type: 'pie',
                 data: {

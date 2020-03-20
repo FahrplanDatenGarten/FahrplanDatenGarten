@@ -16,3 +16,4 @@ pytz==2019.3
 django-dotenv==1.4.2
 pathlib
 psycopg2-binary==2.8.4
+matplotlib

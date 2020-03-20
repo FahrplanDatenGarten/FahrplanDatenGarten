@@ -25,6 +25,7 @@ SECRET_KEY = ')k#a0%)w9)lc^i8k)(=m=_ondzl(+bjzdvnu)()_l1d-ajzp7^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 if os.environ.get('DEBUG'):
+    DEBUG=os.environ.get('DEBUG')
     CELERY_RESULT_BACKEND=os.environ['DEBUG']
 
 ALLOWED_HOSTS = []
