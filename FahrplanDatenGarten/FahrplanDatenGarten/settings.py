@@ -132,6 +132,8 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder'
 ]
+if os.environ.get('STATIC_ROOT'):
+    STATIC_ROOT = os.environ['STATIC_ROOT']
 
 # Added SCSS to Compress
 COMPRESS_PRECOMPILERS = [

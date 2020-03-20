@@ -20,6 +20,11 @@
     name: "build-essential"
     state: present
 
+- name: Install ACL
+  apt:
+    name: "acl"
+    state: present
+
 - name: Install unattended-upgrades
   include_tasks: unattended-upgrades.yml
 
