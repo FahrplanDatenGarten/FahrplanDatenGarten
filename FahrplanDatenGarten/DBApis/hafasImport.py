@@ -57,13 +57,13 @@ class HafasImport:
                     aTimeR = None
 
                 name = journeyDetails['common']['locL'][stop['locX']]['name']
-                eva_nr = journeyDetails['common']['locL'][stop['locX']]['lid'][-8:-1]
+                eva_id = journeyDetails['common']['locL'][stop['locX']]['lid'][-8:-1]
                 dbStopID = StopID.objects.filter(
-                    name=eva_nr,
+                    name=eva_id,
                     source=self.dbapis
                 ).first()
                 if (dbStopID is None):
-                    print("The Stop {} could not be found!".format(name))
+                    print("The Stop {} with ID {} could not be found!".format(name, eva_id))
                 else:
                     dbStop = dbStopID.stop
                     if JourneyStop.objects.filter(stop=dbStop, journey=journey).count() == 0:
