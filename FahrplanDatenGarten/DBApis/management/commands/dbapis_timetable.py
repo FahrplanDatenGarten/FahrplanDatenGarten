@@ -11,6 +11,6 @@ class Command(BaseCommand):
         parser.add_argument('stopname', nargs='?', type=str)
 
     def handle(self, *args, **options):
-        stop = Stop.objects.filter(stopname__name=options['stopname']).first()
+        stop = Stop.objects.get(stopname__name=options['stopname'])
         hafasimport = HafasImport()
         hafasimport.import_timetable(stop)

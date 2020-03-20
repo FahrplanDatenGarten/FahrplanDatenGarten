@@ -15,6 +15,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         agency, _ = Agency.objects.get_or_create(name="db")
         source, _ = Source.objects.get_or_create(name="dbapis")
+        kind, _ = StopIDKind.objects.get_or_create(name='eva')
+
+        agency.used_id_kind.add(kind)
+        agency.save()
 
         r = requests.get(options.get('csv-url'))
         r.encoding = 'utf-8'
@@ -24,7 +28,7 @@ class Command(BaseCommand):
         csv_file.seek(0)
         reader = csv.DictReader(csv_file, delimiter=';')
         for row in reader:
-            if row['\ufeffEVA_NR'] is '':
+            if row['\ufeffEVA_NR'] == '':
                 continue
             stop = Stop.objects.filter(
                 stopid__name=row['\ufeffEVA_NR'],
@@ -38,7 +42,5 @@ class Command(BaseCommand):
                 stop=stop,
                 name=row['\ufeffEVA_NR'],
                 source=source,
-                kind=StopIDKind.objects.filter(
-                    name='eva'
-                ).first()
+                kind=kind
             )
