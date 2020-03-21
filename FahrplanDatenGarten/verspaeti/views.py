@@ -82,7 +82,7 @@ class IndexView(TemplateView):
         ), key=lambda d: d['delay'], reverse=True) if x['delay'] >= 5)
         num_delayed_stops = len({d['name'] for d in delayed_stops})
 
-        colors = ['red', 'limegreen']
+        colors = ['limegreen', 'red']
         labels = ['Pünktlich', 'Zu spät']
         values = [
             current_journeys.count() -
