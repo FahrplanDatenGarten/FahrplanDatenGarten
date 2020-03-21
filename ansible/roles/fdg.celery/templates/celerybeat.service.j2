@@ -1,9 +1,9 @@
 [Unit]
-Description=Celery Service
+Description=Celery Beat Service
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 User=celery
 Group=celery
 WorkingDirectory=/fdg/FahrplanDatenGarten
