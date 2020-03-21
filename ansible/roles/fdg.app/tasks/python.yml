@@ -4,6 +4,7 @@
     repo: https://github.com/Jugendhackt/FahrplanDatenGarten.git
     dest: /fdg
     force: yes
+    recursive: yes
 
 - name: Install pip requirements
   pip:

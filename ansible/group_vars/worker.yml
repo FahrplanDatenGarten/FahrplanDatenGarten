@@ -1,5 +1,3 @@
-firewall_services:
-firewall_ports:
 postgresql_host: mars.srv.fahrplandatengarten.de
 postgresql_user: fdg
 postgresql_password: !vault |

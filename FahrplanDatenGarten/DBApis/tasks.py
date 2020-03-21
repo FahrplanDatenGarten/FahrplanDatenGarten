@@ -11,7 +11,7 @@ logger = get_task_logger(__name__)
 @periodic_task(
     run_every=(
         crontab(
-            hour='*/1')),
+            hour='*/1', minute=0)),
     name="import_all_timetables",
     ignore_result=True)
 def import_all_timetables():
@@ -29,7 +29,7 @@ def import_timetable(stop_pk):
 @periodic_task(
     run_every=(
         crontab(
-            minute='*/1')),
+            minute='*/1', minute=0)),
     name="import_all_journeys",
     ignore_result=True)
 def import_all_journeys():

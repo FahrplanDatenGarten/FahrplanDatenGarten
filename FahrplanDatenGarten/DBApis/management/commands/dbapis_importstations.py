@@ -11,6 +11,7 @@ from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName, Stop
 from pyhafas import HafasClient
 from pyhafas.profile import DBProfile
 
+
 class Command(BaseCommand):
     help = 'Imports the Stations from the Haltestellendaten-CSV'
 
@@ -65,4 +66,3 @@ class Command(BaseCommand):
                 )
             except IndexError:
                 pass
-
