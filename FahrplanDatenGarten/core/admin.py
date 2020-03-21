@@ -24,10 +24,12 @@ class StopAdmin(admin.ModelAdmin):
         'primary_stop_location')
     inlines = (StopnameAdminInline, StopIDAdminInline, StoplocationAdminInline)
 
-    def primary_stop_name(self, obj):
+    @staticmethod
+    def primary_stop_name(obj):
         return obj.stopname_set.first().name
 
-    def primary_stop_id(self, obj):
+    @staticmethod
+    def primary_stop_id(obj):
         return obj.stopid_set.first().name
 
     def primary_stop_location(self, obj):
