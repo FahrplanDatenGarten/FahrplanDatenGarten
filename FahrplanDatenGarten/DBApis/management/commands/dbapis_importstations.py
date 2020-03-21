@@ -6,8 +6,10 @@ import io
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName
+from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName, StopLocation
 
+from pyhafas import HafasClient
+from pyhafas.profile import DBProfile
 
 class Command(BaseCommand):
     help = 'Imports the Stations from the Haltestellendaten-CSV'
@@ -20,6 +22,7 @@ class Command(BaseCommand):
             default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
 
     def handle(self, *args, **options):
+        hafasClient = HafasClient(DBProfile())
         agency, _ = Agency.objects.get_or_create(name="db")
         source, _ = Source.objects.get_or_create(name="dbapis")
         kind, _ = StopIDKind.objects.get_or_create(name='eva')
@@ -52,3 +55,11 @@ class Command(BaseCommand):
                 source=source,
                 kind=kind
             )
+            hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
+            StopLocation.objects.get_or_create(
+                stop=stop,
+                latitude=hafasLocation.latitude,
+                longitude=hafasLocation.longitude,
+                source=source
+            )
+
