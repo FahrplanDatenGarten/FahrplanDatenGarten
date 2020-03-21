@@ -55,11 +55,14 @@ class Command(BaseCommand):
                 source=source,
                 kind=kind
             )
-            hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
-            StopLocation.objects.get_or_create(
-                stop=stop,
-                latitude=hafasLocation.latitude,
-                longitude=hafasLocation.longitude,
-                source=source
-            )
+            try:
+                hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
+                StopLocation.objects.get_or_create(
+                    stop=stop,
+                    latitude=hafasLocation.latitude,
+                    longitude=hafasLocation.longitude,
+                    source=source
+                )
+            except IndexError:
+                pass
 
