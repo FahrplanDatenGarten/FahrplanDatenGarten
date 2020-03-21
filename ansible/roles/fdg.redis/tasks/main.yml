@@ -22,6 +22,12 @@
     regexp: "^# requirepass foobared"
     line: "requirepass {{ redis_password }}"
 
+- name: Disable redis protected mode
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "^protected-mode yes"
+    line: "protected-mode no"
+
 - name: Ensure redis service is enabled and started
   service:
     name: redis-server
