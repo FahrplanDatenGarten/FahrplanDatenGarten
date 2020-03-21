@@ -95,7 +95,8 @@ class IndexView(TemplateView):
         context['delayed_stops'] = delayed_stops
         context['current_journeys'] = current_journeys.count()
         context['journeys_delayed'] = len({d['name'] for d in delayed_stops}),
-        context['biggest_delay'] = delayed_stops[0]
+        context['biggest_delay'] = delayed_stops[0] if len(
+            delayed_stops) else 0
         context['average_delay'] = round(
             (sum([d['delay'] for d in delayed_stops]) / len(delayed_stops))) if delayed_stops else None
         return context
