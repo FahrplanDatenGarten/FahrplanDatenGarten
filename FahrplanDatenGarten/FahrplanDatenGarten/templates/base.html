@@ -42,6 +42,9 @@
             <a class="navbar-item{% if request.resolver_match.namespace == "fgrfiller" %} is-active{% endif %}" href="{% url "fgrfiller:index" %}">
                 Fahrgastrechte
             </a>
+            <a class="navbar-item{% if request.resolver_match.namespace == "netzkarte" %} is-active{% endif %}" href="{% url "netzkarte:index" %}">
+                Netzkarte
+            </a>
         </div>
     </div>
 </nav>
