@@ -4,21 +4,23 @@
     name: firewalld
     state: present
 
-- firewalld:
+- name: expose ssh service
+  firewalld:
     service: ssh
     permanent: yes
     state: enabled
     immediate: yes
-#this is seperate so you don't accidentally remove it
 
-- firewalld:
+- name: expose custom services
+  firewalld:
     service: "{{ item }}"
     permanent: yes
     state: enabled
     immediate: yes
   with_items: "{{ firewall_services }}"
 
-- firewalld:
+- name: expose custom ports
+  firewalld:
     port: "{{ item }}"
     permanent: yes
     state: enabled
