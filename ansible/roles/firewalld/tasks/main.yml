@@ -1,0 +1,32 @@
+---
+- name: install firewalld
+  package:
+    name: firewalld
+    state: present
+
+- firewalld:
+    service: ssh
+    permanent: yes
+    state: enabled
+    immediate: yes
+#this is seperate so you don't accidentally remove it
+
+- firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items: "{{ firewall_services }}"
+
+- firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items: "{{ firewall_ports }}"
+
+- name: Enable firewalld on system reboot
+  service:
+    name: firewalld
+    enabled: yes
+    state: started

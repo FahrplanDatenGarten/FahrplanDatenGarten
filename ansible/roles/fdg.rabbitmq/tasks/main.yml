@@ -33,7 +33,7 @@
 - name: Create rabbitmq_user
   rabbitmq_user:
     user: fdg
-    password: fdg
+    password: "{{ rabbitmq_password }}"
     vhost: fdg
     configure_priv: .*
     read_priv: .*

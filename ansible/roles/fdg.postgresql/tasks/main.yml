@@ -10,8 +10,8 @@
 
 - name: Create PostgreSQL user
   postgresql_user:
-    name: fdg
-    password: fdg
+    name: "{{ postgresql_user }}"
+    password: "{{ postgresql_password }}"
   become: true
   become_user: "postgres"
 

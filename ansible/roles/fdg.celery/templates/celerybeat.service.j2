@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=forking
 User=celery
-Group=www-data
+Group=celery
 WorkingDirectory=/fdg/FahrplanDatenGarten
 ExecStart=/bin/sh -c '{{ celery_bin }} beat \
   -A {{ celery_app }} --pidfile={{ celerybeat_pid_file }} \

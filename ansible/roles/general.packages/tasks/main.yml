@@ -27,6 +27,3 @@
 
 - name: Install unattended-upgrades
   include_tasks: unattended-upgrades.yml
-
-- name: Install mosh
-  include_tasks: mosh.yml

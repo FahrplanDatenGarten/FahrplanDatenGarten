@@ -5,6 +5,7 @@
     - general.packages
     - general.authentication
     - general.ohmyzsh
+    - firewalld
 
 - hosts: fdg
   roles:
