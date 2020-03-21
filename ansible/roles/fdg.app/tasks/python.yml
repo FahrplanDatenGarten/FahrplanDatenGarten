@@ -10,6 +10,7 @@
     requirements: /fdg/requirements.txt
     virtualenv: /fdg/.venv
     virtualenv_command: /usr/bin/python3 -m venv
+    extra_args: --upgrade
 
 - name: copy app configuration
   template:
