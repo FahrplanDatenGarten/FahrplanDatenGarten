@@ -8,10 +8,17 @@
     - firewalld
 
 - hosts: fdg
+  tags: fdg
   roles:
-    - fdg.rabbitmq
+    - fdg.redis
     - fdg.postgresql
     - fdg.app
-    - fdg.celery
+    - fdg.celerybeat
     - fdg.gunicorn
     - fdg.reverse-proxy
+
+- hosts: worker
+  tags: worker
+  roles:
+    - fdg.app
+    - worker.celery

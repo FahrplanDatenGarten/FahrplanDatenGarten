@@ -1,5 +1,8 @@
 [fdg]
 mars.srv.fahrplandatengarten.de
 
+[worker]
+10.151.19.72 # leo-worker01
+
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

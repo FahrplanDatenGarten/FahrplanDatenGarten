@@ -1,0 +1,22 @@
+---
+- name: Create celery user
+  user:
+    name: celery
+    comment: celery
+
+- name: Add tmpfiles/celeryd config template
+  template:
+    src: tmpfiles_celeryd.conf.j2
+    dest: /etc/tmpfiles.d/celeryd.conf
+
+- name: Add celerybeat service template
+  template:
+    src: celerybeat.service.j2
+    dest: /etc/systemd/system/celerybeat.service
+
+- name: Ensure celerybeat service is enabled and started
+  systemd:
+    daemon_reload: yes
+    name: celerybeat
+    enabled: yes
+    state: started

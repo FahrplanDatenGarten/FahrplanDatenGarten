@@ -1,11 +1,6 @@
 firewall_services:
-  - http
-  - https
 firewall_ports:
-  - 5432/tcp
-  - 5672/tcp
-
-postgresql_host: localhost
+postgresql_host: mars.srv.fahrplandatengarten.de
 postgresql_user: fdg
 postgresql_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
@@ -20,8 +15,7 @@ postgresql_password: !vault |
   34653130353366396163343764613266666664386562366634623539643164386435343361643463
   39656166346534343964623334326436313737656333636138336135303839343531373066633363
   326364326661346664306338386339653965
-
-redis_host: localhost
+redis_host: mars.srv.fahrplandatengarten.de
 redis_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   32646532646536316433313132313630373239383461386334383539313065323933646339623430

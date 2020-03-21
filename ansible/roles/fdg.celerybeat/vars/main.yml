@@ -1,12 +1,6 @@
 celery_bin: /fdg/.venv/bin/celery
 celery_app: FahrplanDatenGarten
 
-celeryd_nodes: 1
-celeryd_opts: --time-limit=300 --concurrency=8
-celeryd_log_file: "/var/log/celery/%%n%%I.log"
-celeryd_log_level: INFO
-celeryd_pid_file: "/run/celery/%%n.pid"
-
 celerybeat_log_file: /var/log/celery/beat.log
 celerybeat_log_level: INFO
 celerybeat_pid_file: /run/celery/beat.pid

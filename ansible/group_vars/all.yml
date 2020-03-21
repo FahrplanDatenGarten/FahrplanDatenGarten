@@ -1,6 +1,2 @@
 ---
 static_root: /var/www/static/
-firewall_services:
-  - http
-  - https
-firewall_ports:

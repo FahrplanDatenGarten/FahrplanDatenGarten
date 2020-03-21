@@ -1,0 +1,29 @@
+---
+- name: install package
+  apt:
+    name: redis-server
+    state: present
+
+- name: Change redis network binding
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "^bind 127.0.0.1 ::1"
+    line: "#bind 127.0.0.1 ::1"
+
+- name: Change supervision system in redis config to systemd
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "^supervised no"
+    line: "supervised systemd"
+
+- name: Change redis password
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "^# requirepass foobared"
+    line: "requirepass {{ redis_password }}"
+
+- name: Ensure redis service is enabled and started
+  service:
+    name: redis-server
+    enabled: yes
+    state: started
