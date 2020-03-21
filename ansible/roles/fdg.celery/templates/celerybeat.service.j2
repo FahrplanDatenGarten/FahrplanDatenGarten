@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=forking
+User=celery
+Group=www-data
+WorkingDirectory=/fdg/FahrplanDatenGarten
+ExecStart=/bin/sh -c '{{ celery_bin }} beat \
+  -A {{ celery_app }} --pidfile={{ celerybeat_pid_file }} \
+  --logfile={{ celerybeat_log_file }} --loglevel={{ celerybeat_log_level }} {{ celerybeat_opts }}'
+
+[Install]
+WantedBy=multi-user.target
