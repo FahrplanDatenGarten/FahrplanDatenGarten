@@ -8,6 +8,12 @@
     name: psycopg2-binary==2.8.4
     state: present
 
+- name: Ensure postgresql service is enabled and started
+  systemd:
+    name: postgresql
+    enabled: yes
+    state: started
+
 - name: Create PostgreSQL user
   postgresql_user:
     name: "{{ postgresql_user }}"
