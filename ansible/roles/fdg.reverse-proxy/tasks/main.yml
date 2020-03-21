@@ -21,7 +21,7 @@
     path: /etc/letsencrypt/cli.ini
     line: 'server = https://acme-v02.api.letsencrypt.org/directory'
 
-- name: Generate Certificate for opendatamap.net
+- name: Generate Certificates
   shell: certbot certonly -d {{ ansible_fqdn }} -d fahrplandatengarten.de -d www.fahrplandatengarten.de --agree-tos --email webmaster@labcode.de -n --nginx
   notify: reload nginx
 
