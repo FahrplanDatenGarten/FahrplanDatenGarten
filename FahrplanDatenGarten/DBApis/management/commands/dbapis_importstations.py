@@ -72,4 +72,4 @@ class Command(BaseCommand):
                         source=source
                     )
                 except IndexError:
-                    pass
+                    continue
