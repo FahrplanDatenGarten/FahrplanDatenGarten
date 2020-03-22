@@ -137,6 +137,15 @@ COMPRESS_PRECOMPILERS = [
 LIBSASS_SOURCE_COMMENTS = False
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
+
+CACHES = {
+    'default': {
+        'BACKEND': config.get("caching", "backend", fallback='django.core.cache.backends.dummy.DummyCache'),
+        'LOCATION': config.get("caching", "location", fallback=""),
+    }
+}
+
+
 # Celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html
 
