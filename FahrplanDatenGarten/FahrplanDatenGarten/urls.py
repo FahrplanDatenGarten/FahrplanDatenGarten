@@ -26,4 +26,4 @@ urlpatterns = [
     path('fgr/', include('FGRFiller.urls', namespace='fgrfiller')),
     path('gtfs/', include('gtfs.urls', namespace='gtfs')),
     path('netzkarte/', include('netzkarte.urls', namespace='netzkarte')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
