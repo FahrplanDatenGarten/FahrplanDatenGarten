@@ -9,7 +9,6 @@
 
     <link type="text/css" href="{% static 'bulma/css/bulma.min.css' %}" rel="stylesheet" media="screen">
     <script src="{% static "jquery.js" %}"></script>
-    <script src="{% static "script.js" %}"></script>
     <link href="{% static "roboto/roboto.css" %}" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico" %}">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
@@ -48,5 +47,6 @@
 <main class="container">
     {% block content %}{% endblock %}
 </main>
+<script src="{% static "script.js" %}"></script>
 </body>
 </html>
