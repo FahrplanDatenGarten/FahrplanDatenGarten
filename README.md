@@ -9,9 +9,15 @@ We  ❤️  Deutsche Bahn
 
 # Setup
 
+## Init and Update git-submodules
+```
+git submodule init
+git submodule update
+```
+
 ## Install Debian Requirements *(only on debian systems)*
 ```bash
-sudo apt install python3-dev python3-wheel
+sudo apt install python3-dev python3-wheel python3-venv
 ```
 ## Set up the VEnv *(optional, but recommended)*
 Using an VEnv will help you to avoid dependency-(version)-conflicts.

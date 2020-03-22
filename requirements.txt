@@ -7,8 +7,6 @@ npyscreen==4.10.5
 beautifulsoup4==4.8.1
 flake8==3.7.9
 isort==4.3.21
-django_compressor==2.4
-django-libsass==0.8
 pycryptodome==3.9.1
 celery==4.3.0
 redis==3.3.11

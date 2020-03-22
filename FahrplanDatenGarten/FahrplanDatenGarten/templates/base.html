@@ -2,16 +2,12 @@
 <html lang="de">
 <head>
     {% load static %}
-    {% load compress %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FahrplanDatenGarten</title>
 
-    {% compress css %}
-        <link type="text/x-scss" href="{% static 'bulma-0.8.0/bulma.scss' %}" rel="stylesheet" media="screen">
-        <link type="text/x-scss" href="{% static 'style.scss' %}" rel="stylesheet" media="screen">
-    {% endcompress %}
+    <link type="text/css" href="{% static 'bulma/css/bulma.min.css' %}" rel="stylesheet" media="screen">
     <script src="{% static "jquery.js" %}"></script>
     <script src="{% static "script.js" %}"></script>
     <link href="{% static "roboto/roboto.css" %}" rel="stylesheet">
@@ -36,7 +32,7 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item {% if request.resolver_match.namespace == "verspaeti" %}is-active{% endif %}" href="{% url "verspaeti:index" %}">
+            <a class="navbar-item{% if request.resolver_match.namespace == "verspaeti" %} is-active{% endif %}" href="{% url "verspaeti:index" %}">
                 Home
             </a>
 

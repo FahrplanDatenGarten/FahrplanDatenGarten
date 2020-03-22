@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'compressor',
     'core',
     'DBApis',
     'FGRFiller',
@@ -133,7 +132,6 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder'
 ]
 if os.environ.get('STATIC_ROOT'):
     STATIC_ROOT = os.environ['STATIC_ROOT']
