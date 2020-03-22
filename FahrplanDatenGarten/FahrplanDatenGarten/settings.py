@@ -30,7 +30,7 @@ SECRET_KEY = config.get("general", "secret_key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.getboolean('general', 'debug', fallback=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config.get("general", 'allowed_hosts', fallback=[])
 
 # Application definition
 
