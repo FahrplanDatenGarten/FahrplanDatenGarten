@@ -1,4 +1,5 @@
 import datetime
+
 from django.views.generic import TemplateView
 from plotly.graph_objs import Pie
 from plotly.offline import plot

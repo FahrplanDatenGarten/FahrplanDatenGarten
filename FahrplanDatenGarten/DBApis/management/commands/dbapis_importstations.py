@@ -6,11 +6,11 @@ import io
 import requests
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand, CommandError
-
-from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName, StopLocation
-
 from pyhafas import HafasClient
 from pyhafas.profile import DBProfile
+
+from core.models import (Agency, Source, Stop, StopID, StopIDKind,
+                         StopLocation, StopName)
 
 
 class Command(BaseCommand):
