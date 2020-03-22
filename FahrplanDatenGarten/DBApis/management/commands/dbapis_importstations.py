@@ -4,6 +4,7 @@ import csv
 import io
 
 import requests
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand, CommandError
 
 from core.models import Agency, Source, Stop, StopID, StopIDKind, StopName, StopLocation
@@ -57,12 +58,18 @@ class Command(BaseCommand):
                 kind=kind
             )
             try:
-                hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
-                StopLocation.objects.get_or_create(
+                StopLocation.objects.get(
                     stop=stop,
-                    latitude=hafasLocation.latitude,
-                    longitude=hafasLocation.longitude,
                     source=source
                 )
-            except IndexError:
-                pass
+            except ObjectDoesNotExist:
+                try:
+                    hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
+                    StopLocation.objects.create(
+                        stop=stop,
+                        latitude=hafasLocation.latitude,
+                        longitude=hafasLocation.longitude,
+                        source=source
+                    )
+                except IndexError:
+                    pass
