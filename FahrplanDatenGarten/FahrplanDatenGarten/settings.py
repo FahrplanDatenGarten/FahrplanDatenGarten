@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import configparser
 import os
 
 import dj_database_url
+
+config = configparser.RawConfigParser()
+config.read_file(open('env.cfg', encoding='utf-8'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,13 +25,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')k#a0%)w9)lc^i8k)(=m=_ondzl(+bjzdvnu)()_l1d-ajzp7^'
+SECRET_KEY = config.get("general", "secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-if os.environ.get('DEBUG'):
-    DEBUG = os.environ.get('DEBUG')
-    CELERY_RESULT_BACKEND = os.environ['DEBUG']
+DEBUG = config.getboolean('general', 'debug', fallback=True)
 
 ALLOWED_HOSTS = []
 
@@ -82,14 +83,8 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../', 'db.sqlite3'),
-    }
+    'default': dj_database_url.parse(config.get('general', 'database_url', fallback="sqlite:///../db.sqlite3"))
 }
-if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ['DATABASE_URL'])
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -114,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = config.get("general", "time_zone", fallback='Europe/Berlin')
 
 USE_I18N = True
 
@@ -133,8 +128,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-if os.environ.get('STATIC_ROOT'):
-    STATIC_ROOT = os.environ['STATIC_ROOT']
+STATIC_ROOT = config.get("general", "static_root", fallback=None)
 
 # Added SCSS to Compress
 COMPRESS_PRECOMPILERS = [
@@ -146,12 +140,8 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 # Celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html
 
-CELERY_RESULT_BACKEND = 'redis://localhost/0'
-if os.environ.get('CELERY_RESULT_BACKEND'):
-    CELERY_RESULT_BACKEND = os.environ['CELERY_RESULT_BACKEND']
+CELERY_RESULT_BACKEND = config.get('celery', 'result_backend', fallback='redis://localhost/0')
 
-CELERY_BROKER_URL = 'redis://localhost/0'
-if os.environ.get('CELERY_BROKER_URL'):
-    CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
+CELERY_BROKER_URL = config.get('celery', 'broker_url', fallback='redis://localhost/0')
 
 CELERY_TASK_SERIALIZER = 'json'

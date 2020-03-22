@@ -4,16 +4,8 @@ import os
 import sys
 from pathlib import Path
 
-import dotenv
-
 
 def main():
-    dotenv.read_dotenv(
-        os.path.join(
-            os.path.dirname(__file__),
-            os.pardir,
-            '.env'),
-        override=True)
 
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',

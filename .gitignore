@@ -87,7 +87,7 @@ target/
 
 # pyenv
 .python-version
-.env
+FahrplanDatenGarten/env.cfg
 .venv
 
 # pipenv
