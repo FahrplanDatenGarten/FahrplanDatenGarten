@@ -20,3 +20,9 @@
     name: celeryd
     enabled: yes
     state: started
+
+- name: reload celeryd service when fdg-app has changed
+  systemd:
+    name: celeryd
+    state: restarted
+  when: "fdg_app_updated.changed"

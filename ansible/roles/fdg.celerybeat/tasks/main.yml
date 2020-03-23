@@ -20,3 +20,9 @@
     name: celerybeat
     enabled: yes
     state: started
+
+- name: reload celerybeat service when fdg-app has changed
+  systemd:
+    name: celerybeat
+    state: restarted
+  when: "fdg_app_updated.changed"

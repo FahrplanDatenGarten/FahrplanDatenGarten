@@ -5,6 +5,7 @@
     dest: /fdg
     force: yes
     recursive: yes
+  register: fdg_app_updated
 
 - name: Install pip requirements
   pip:
