@@ -1,2 +1,3 @@
 ---
 static_root: /var/www/static/
+cache_root: /var/cache/fdg/
