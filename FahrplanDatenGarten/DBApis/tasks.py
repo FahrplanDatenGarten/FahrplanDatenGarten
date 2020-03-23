@@ -1,6 +1,7 @@
 from celery.decorators import periodic_task, task
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
+from django.conf import settings
 
 from core.models import Journey, Stop
 from DBApis.hafasImport import HafasImport
@@ -11,7 +12,8 @@ logger = get_task_logger(__name__)
 @periodic_task(
     run_every=(
         crontab(
-            hour='*/1', minute=0)),
+            hour=settings.PERIODIC_IMPORT_TIMETABLES[0],
+            minute=settings.PERIODIC_IMPORT_JOURNEYS[1])),
     name="import_all_timetables",
     ignore_result=True)
 def import_all_timetables():
@@ -29,7 +31,8 @@ def import_timetable(stop_pk):
 @periodic_task(
     run_every=(
         crontab(
-            hour='*/1', minute=0)),
+            hour=settings.PERIODIC_IMPORT_JOURNEYS[0],
+            minute=settings.PERIODIC_IMPORT_JOURNEYS[1])),
     name="import_all_journeys",
     ignore_result=True)
 def import_all_journeys():

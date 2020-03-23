@@ -30,7 +30,7 @@ SECRET_KEY = config.get("general", "secret_key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.getboolean('general', 'debug', fallback=True)
 
-ALLOWED_HOSTS = config.get("general", 'allowed_hosts', fallback="").split(',')
+ALLOWED_HOSTS = config.get("general", 'allowed_hosts', fallback="*").split(',')
 
 # Application definition
 
@@ -83,8 +83,11 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(config.get('general', 'database_url', fallback="sqlite:///../db.sqlite3"))
-}
+    'default': dj_database_url.parse(
+        config.get(
+            'general',
+            'database_url',
+            fallback="sqlite:///../db.sqlite3"))}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -140,17 +143,35 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
 CACHES = {
     'default': {
-        'BACKEND': config.get("caching", "backend", fallback='django.core.cache.backends.dummy.DummyCache'),
-        'LOCATION': config.get("caching", "location", fallback=""),
-    }
-}
+        'BACKEND': config.get(
+            "caching",
+            "backend",
+            fallback='django.core.cache.backends.dummy.DummyCache'),
+        'LOCATION': config.get(
+            "caching",
+            "location",
+            fallback=""),
+    }}
 
 
 # Celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html
 
-CELERY_RESULT_BACKEND = config.get('celery', 'result_backend', fallback='redis://localhost/0')
+CELERY_RESULT_BACKEND = config.get(
+    'celery',
+    'result_backend',
+    fallback='redis://localhost/0')
 
-CELERY_BROKER_URL = config.get('celery', 'broker_url', fallback='redis://localhost/0')
+CELERY_BROKER_URL = config.get(
+    'celery',
+    'broker_url',
+    fallback='redis://localhost/0')
 
 CELERY_TASK_SERIALIZER = 'json'
+
+# FahrplanDatenGarten's custom configuration
+PERIODIC_IMPORT_TIMETABLES = config.get(
+    "periodic", 'timetables', fallback="*,15").split(',')
+
+PERIODIC_IMPORT_JOURNEYS = config.get(
+    "periodic", 'timetables', fallback="*,5").split(',')
