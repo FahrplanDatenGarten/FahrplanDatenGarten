@@ -169,6 +169,12 @@ CELERY_BROKER_URL = config.get(
 
 CELERY_TASK_SERIALIZER = 'json'
 
+CELERY_TASK_IGNORE_RESULT = config.getboolean(
+    'celery', 'task_ignore_result', fallback=False)
+
+CELERY_TASK_STORE_ERRORS_EVEN_IF_IGNORED = config.getboolean(
+    'celery', 'task_store_errors_even_if_ignored', fallback=True)
+
 # FahrplanDatenGarten's custom configuration
 PERIODIC_IMPORT_TIMETABLES = config.get(
     "periodic", 'timetables', fallback="*,15").split(',')
