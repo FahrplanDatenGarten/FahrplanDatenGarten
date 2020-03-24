@@ -1,12 +1,14 @@
-- name: Install dnsmasq
+- name: Install dnsmasq and resolvconf
   apt:
-    name: dnsmasq
+    name:
+      - dnsmasq
+      - resolvconf
     state: present
 
-- name: Install resolvconf
-  apt:
-    name: resolvconf
-    state: present
+- name: Copy dnsmasq.conf
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
 
 - name: Enable and start resolvconf service
   systemd:
