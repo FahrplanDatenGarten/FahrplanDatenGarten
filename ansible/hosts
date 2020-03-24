@@ -2,8 +2,10 @@
 mars.srv.fahrplandatengarten.de
 
 [worker]
-merkur.home.labcode.de
 mars.srv.fahrplandatengarten.de
+merkur.home.labcode.de
+venus.int.goe.de.n0emis.eu
+neptun.home.e1mo.de
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

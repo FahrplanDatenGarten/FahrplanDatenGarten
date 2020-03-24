@@ -1,0 +1,3 @@
+---
+celeryd_nodes: 1
+autossh_remote_port: 2203

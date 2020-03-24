@@ -13,6 +13,11 @@
   template:
     src: tmpfiles_celeryd.conf.j2
     dest: /etc/tmpfiles.d/celeryd.conf
+  register: add_tmpfile
+
+- name: Create tmpdirs
+  command: systemd-tmpfiles --remove --create
+  when: add_tmpfile.changed
 
 - name: Ensure celeryd service is enabled and started
   systemd:
