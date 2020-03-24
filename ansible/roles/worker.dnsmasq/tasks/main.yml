@@ -1,0 +1,17 @@
+- name: Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: present
+
+- name: Remove resolvconf
+  apt:
+    name: resolvconf
+    state: absent
+
+- name: Add new nameserver to resolv.conf
+  blockinfile:
+    path: /etc/resolv.conf
+    insertbefore: BOF
+    block: |
+      nameserver ::1
+      nameserver 127.0.0.1

@@ -17,6 +17,7 @@
   tags: worker
   roles:
     - fdg.app
+    - worker.dnsmasq
     - worker.celery
 
 - hosts: worker
