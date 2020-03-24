@@ -5,6 +5,7 @@ After=network.target
 [Service]
 User=autossh
 Group=autossh
+Restart=always
 Environment="AUTOSSH_GATETIME=0"
 ExecStart=/usr/bin/autossh -M 0 -N -i ~/.ssh/autossh_key -R {{ autossh_remote_port }}:localhost:22 autossh@mars.srv.fahrplandatengarten.de
 

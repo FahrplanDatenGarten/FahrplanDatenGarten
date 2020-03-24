@@ -6,6 +6,7 @@ After=network.target
 Type=forking
 User=celery
 Group=celery
+Restart=always
 WorkingDirectory=/fdg/FahrplanDatenGarten
 ExecStart=/bin/sh -c '{{ celery_bin }} multi start {{ celeryd_nodes }} \
   -A {{ celery_app }} --pidfile={{ celeryd_pid_file }} \
