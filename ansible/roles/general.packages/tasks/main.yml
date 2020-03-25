@@ -2,25 +2,9 @@
 - name: Install required packages
   apt:
     name:
-      - git
       - policykit-1
-      - python3-pip
-      - python3-setuptools
       - python3-venv
       - acl
-      - sudo
-      - curl
       - build-essential
     update_cache: true
     state: present
-
-- name: Install unattended-upgrades
-  include_tasks: unattended-upgrades.yml
-
-- name: Ensure the locale exists
-  locale_gen:
-    name: en_US.UTF-8
-    state: present
-
-- name: set as default locale
-  command: localectl set-locale LANG=en_US.UTF-8

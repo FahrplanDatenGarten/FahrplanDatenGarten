@@ -1,21 +1,2 @@
 # Default theme
 oh_my_zsh_theme: agnoster
-
-# User configuration
-# Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
-users:
-  - username: root
-    oh_my_zsh:
-      theme: agnoster
-      plugins:
-        - git
-  - username: leo
-    oh_my_zsh:
-      theme: agnoster
-      plugins:
-        - git
-  - username: n0emis
-    oh_my_zsh:
-      theme: agnoster
-      plugins:
-        - git

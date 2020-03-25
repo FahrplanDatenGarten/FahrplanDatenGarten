@@ -1,9 +1,0 @@
----
-- name: Add users
-  include_tasks: users.yml
-
-- name: Change sudo configuration
-  include_tasks: sudo.yml
-
-- name: Change SSH configuration
-  include_tasks: ssh.yml

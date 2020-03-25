@@ -7,3 +7,9 @@
 [submodule "FahrplanDatenGarten/static/bulma"]
 	path = FahrplanDatenGarten/static/bulma
 	url = https://git.labcode.dev/static_libs/bulma.git
+[submodule "ansible/roles/n0emis.base"]
+	path = ansible/roles/n0emis.base
+	url = https://github.com/n0emis/ansible-role-base
+[submodule "ansible/roles/jnv.unattended-upgrades"]
+	path = ansible/roles/jnv.unattended-upgrades
+	url = https://github.com/jnv/ansible-role-unattended-upgrades
