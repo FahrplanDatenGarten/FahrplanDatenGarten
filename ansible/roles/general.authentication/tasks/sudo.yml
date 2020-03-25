@@ -1,6 +1,0 @@
-- name: Disable password based sudo for users in group sudo and enable password less sudo
-  lineinfile:
-    dest: "/etc/sudoers"
-    regexp: '^%sudo'
-    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
-    validate: 'visudo -cf %s'

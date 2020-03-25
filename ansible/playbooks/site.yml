@@ -1,9 +1,10 @@
 ---
 - hosts: all
   roles:
+    - n0emis.base
     - general.packages
-    - general.authentication
-    - general.ohmyzsh
+    - gantsign.oh-my-zsh
+    - jnv.unattended-upgrades
 #    - firewalld
 
 - hosts: fdg
