@@ -1,6 +1,7 @@
 ---
 - hosts: all
   roles:
+    - n0emis.base
     - general.packages
     - gantsign.oh-my-zsh
     - jnv.unattended-upgrades
