@@ -4,6 +4,7 @@
     - general.packages
     - general.authentication
     - general.ohmyzsh
+    - jnv.unattended-upgrades
 #    - firewalld
 
 - hosts: fdg
