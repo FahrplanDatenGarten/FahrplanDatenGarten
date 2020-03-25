@@ -28,8 +28,8 @@ http {
       access_log  off;
       error_log off;
 
-      ssl_certificate /etc/letsencrypt/live/{{inventory_hostname}}/fullchain.pem;
-      ssl_certificate_key /etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem;
+      ssl_certificate /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem;
 
       location /static/ {
           alias {{ static_root }};

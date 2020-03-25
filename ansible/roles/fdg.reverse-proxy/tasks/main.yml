@@ -21,9 +21,17 @@
     path: /etc/letsencrypt/cli.ini
     line: 'server = https://acme-v02.api.letsencrypt.org/directory'
 
+- name: Register certbot certificate file
+  stat:
+    path: "/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem"
+  register: certbot_certificate_file_path
+
 - name: Generate Certificates
-  shell: certbot certonly -d {{ ansible_fqdn }} -d fahrplandatengarten.de -d www.fahrplandatengarten.de --agree-tos --email webmaster@labcode.de -n --nginx
+  command:
+    cmd: certbot certonly -d {{ ansible_fqdn }} -d fahrplandatengarten.de -d www.fahrplandatengarten.de --agree-tos --email webmaster@labcode.de -n --nginx
   notify: reload nginx
+  when: not certbot_certificate_file_path.stat.exists
+
 
 - name: remove certbot standard cronjob
   file:

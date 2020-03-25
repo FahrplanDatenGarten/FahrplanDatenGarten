@@ -6,6 +6,9 @@
     force: yes
     recursive: yes
   register: fdg_app_updated
+  notify:
+    - collect django statics
+    - migrate database
 
 - name: Install pip requirements
   pip:
@@ -18,13 +21,3 @@
   template:
     src: env.cfg.j2
     dest: /fdg/FahrplanDatenGarten/env.cfg
-
-- name: collect django statics
-  command: ../.venv/bin/python manage.py collectstatic --noinput
-  args:
-    chdir: /fdg/FahrplanDatenGarten
-
-- name: migrate database
-  command: ../.venv/bin/python manage.py migrate
-  args:
-    chdir: /fdg/FahrplanDatenGarten
