@@ -31,16 +31,3 @@
     cmd: certbot certonly -d {{ ansible_fqdn }} -d fahrplandatengarten.de -d www.fahrplandatengarten.de --agree-tos --email webmaster@labcode.de -n --nginx
   notify: reload nginx
   when: not certbot_certificate_file_path.stat.exists
-
-
-- name: remove certbot standard cronjob
-  file:
-    path: /etc/cron.d/certbot
-    state: absent
-
-- name: Add Cronjob doe renewing certificates every month
-  cron:
-    name: renew letsencrypt certs
-    special_time: monthly
-    job: "/usr/bin/env certbot renew --post-hook 'systemctl restart nginx'"
-    user: root
