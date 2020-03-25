@@ -2,8 +2,7 @@
 - hosts: all
   roles:
     - general.packages
-    - general.authentication
-    - general.ohmyzsh
+    - gantsign.oh-my-zsh
     - jnv.unattended-upgrades
 #    - firewalld
 

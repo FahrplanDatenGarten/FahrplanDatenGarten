@@ -13,3 +13,6 @@
 [submodule "ansible/roles/jnv.unattended-upgrades"]
 	path = ansible/roles/jnv.unattended-upgrades
 	url = https://github.com/jnv/ansible-role-unattended-upgrades
+[submodule "ansible/roles/gantsign.oh-my-zsh"]
+	path = ansible/roles/gantsign.oh-my-zsh
+	url = https://github.com/gantsign/ansible-role-oh-my-zsh/
