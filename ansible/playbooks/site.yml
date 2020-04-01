@@ -3,7 +3,7 @@
   roles:
     - n0emis.base
     - general.packages
-    - gantsign.oh-my-zsh
+    - labcode.oh-my-zsh
     - jnv.unattended-upgrades
 #    - firewalld
 

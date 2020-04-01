@@ -16,3 +16,6 @@
 [submodule "ansible/roles/gantsign.oh-my-zsh"]
 	path = ansible/roles/gantsign.oh-my-zsh
 	url = https://github.com/gantsign/ansible-role-oh-my-zsh/
+[submodule "ansible/roles/labcode.oh-my-zsh"]
+	path = ansible/roles/labcode.oh-my-zsh
+	url = https://git.labcode.dev/ansible_roles/oh-my-zsh.git
