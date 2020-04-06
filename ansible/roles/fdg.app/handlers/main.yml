@@ -2,9 +2,9 @@
 - name: collect django statics
   command: ../.venv/bin/python manage.py collectstatic --noinput
   args:
-    chdir: /fdg/FahrplanDatenGarten
+    chdir: /opt/fdg/FahrplanDatenGarten
 
 - name: migrate database
   command: ../.venv/bin/python manage.py migrate
   args:
-    chdir: /fdg/FahrplanDatenGarten
+    chdir: /opt/fdg/FahrplanDatenGarten

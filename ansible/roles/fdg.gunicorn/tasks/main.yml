@@ -3,7 +3,7 @@
   pip:
     name: gunicorn==20.0.4
     state: present
-    virtualenv: /fdg/.venv
+    virtualenv: /opt/fdg/.venv
 
 - name: Add Gunicorn service template
   template:

@@ -7,7 +7,7 @@ Type=forking
 User=celery
 Group=celery
 Restart=always
-WorkingDirectory=/fdg/FahrplanDatenGarten
+WorkingDirectory=/opt/fdg/FahrplanDatenGarten
 ExecStart=/bin/sh -c '{{ celery_bin }} multi start {{ celeryd_nodes }} \
   -A {{ celery_app }} --pidfile={{ celeryd_pid_file }} \
   --logfile={{ celeryd_log_file }} --loglevel={{ celeryd_log_level }} {{ celeryd_opts }}'

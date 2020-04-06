@@ -1,7 +1,7 @@
 ---
 - name: create fgr folder
   file:
-    path: /fdg
+    path: /opt/fdg
     owner: www-data
     group: www-data
     recurse: yes
