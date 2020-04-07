@@ -7,8 +7,8 @@ PIDFile=/run/gunicorn/pid
 User=www-data
 Group=www-data
 RuntimeDirectory=gunicorn
-WorkingDirectory=/fdg/FahrplanDatenGarten
-ExecStart=/fdg/.venv/bin/gunicorn --pid /run/gunicorn/pid   \
+WorkingDirectory=/opt/fdg/FahrplanDatenGarten
+ExecStart=/opt/fdg/.venv/bin/gunicorn --pid /run/gunicorn/pid   \
           FahrplanDatenGarten.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID

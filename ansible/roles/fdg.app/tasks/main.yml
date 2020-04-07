@@ -1,7 +1,10 @@
 ---
+- name: move old fdg folder to new path
+  command: mv /fdg /opt/
+
 - name: create fgr folder
   file:
-    path: /fdg
+    path: /opt/fdg
     owner: www-data
     group: www-data
     recurse: yes
@@ -22,7 +25,6 @@
     group: www-data
     recurse: yes
     state: directory
-
 
 - name: Install requirements for project
   apt:

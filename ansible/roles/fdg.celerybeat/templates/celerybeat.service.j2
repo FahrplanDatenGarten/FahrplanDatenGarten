@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=celery
 Group=celery
-WorkingDirectory=/fdg/FahrplanDatenGarten
+WorkingDirectory=/opt/fdg/FahrplanDatenGarten
 ExecStart=/bin/sh -c '{{ celery_bin }} beat \
   -A {{ celery_app }} --pidfile={{ celerybeat_pid_file }} \
   --logfile={{ celerybeat_log_file }} --loglevel={{ celerybeat_log_level }} {{ celerybeat_opts }}'

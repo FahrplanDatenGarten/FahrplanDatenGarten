@@ -2,7 +2,7 @@
 - name: Clone repository from GitHub
   git:
     repo: https://github.com/Jugendhackt/FahrplanDatenGarten.git
-    dest: /fdg
+    dest: /opt/fdg
     force: yes
     recursive: yes
   register: fdg_app_updated
@@ -12,12 +12,12 @@
 
 - name: Install pip requirements
   pip:
-    requirements: /fdg/requirements.txt
-    virtualenv: /fdg/.venv
+    requirements: /opt/fdg/requirements.txt
+    virtualenv: /opt/fdg/.venv
     virtualenv_command: /usr/bin/python3 -m venv
     extra_args: --upgrade
 
 - name: copy app configuration
   template:
     src: env.cfg.j2
-    dest: /fdg/FahrplanDatenGarten/env.cfg
+    dest: /opt/fdg/FahrplanDatenGarten/env.cfg

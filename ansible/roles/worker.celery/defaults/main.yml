@@ -1,4 +1,4 @@
-celery_bin: /fdg/.venv/bin/celery
+celery_bin: /opt/fdg/.venv/bin/celery
 celery_app: FahrplanDatenGarten
 
 celeryd_nodes: 1
