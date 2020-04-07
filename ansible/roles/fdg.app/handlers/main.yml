@@ -8,3 +8,8 @@
   command: ../.venv/bin/python manage.py migrate
   args:
     chdir: /opt/fdg/FahrplanDatenGarten
+
+- name: delete virtualenv
+  file:
+    path: /opt/fdg/.venv
+    state: absent

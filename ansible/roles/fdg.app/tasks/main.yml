@@ -1,6 +1,10 @@
 ---
 - name: move old fdg folder to new path
   command: mv /fdg /opt/
+  ignore_errors: yes
+  notify: delete virtualenv
+
+- meta: flush_handlers
 
 - name: create fgr folder
   file:
