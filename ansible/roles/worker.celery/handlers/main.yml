@@ -2,4 +2,3 @@
 - name: create tmpdirs
   command:
     cmd: systemd-tmpfiles --remove --create
-  when: add_tmpfile.changed
