@@ -22,6 +22,15 @@ users:
   oh_my_zsh:
     theme: agnoster
 
+- username: e1mo
+  state: present
+  shell: /bin/zsh
+  sudo: yes
+  public_key: |
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfbb4m4o89EumFjE8ichX03CC/mWry0JYaz91HKVJPb e1mo
+  oh_my_zsh:
+    theme: agnoster
+
 - username: autossh
   state: present
   public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICwpPJuYR3Glr5VBqjfOXcbsNNB9Lp2CjBBm6UhWSxUG fdg-autossh
