@@ -3,7 +3,7 @@ static_root: /var/www/static/
 cache_root: /var/cache/fdg/
 
 users:
-- username: leo
+- username: em0lar
   state: present
   shell: /bin/zsh
   sudo: yes
