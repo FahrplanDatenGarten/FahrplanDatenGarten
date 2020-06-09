@@ -4,13 +4,11 @@ import csv
 import io
 
 import requests
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.management.base import BaseCommand, CommandError
-from pyhafas import HafasClient
-from pyhafas.profile import DBProfile
+from django.core.management.base import BaseCommand
 
-from core.models import (Agency, Source, Stop, StopID, StopIDKind,
-                         StopLocation, StopName)
+
+from DBApis.tasks import dbapis_importstations_parse_station_row
+from core.models import Agency, Source, StopIDKind
 
 
 class Command(BaseCommand):
@@ -24,7 +22,6 @@ class Command(BaseCommand):
             default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
 
     def handle(self, *args, **options):
-        hafasClient = HafasClient(DBProfile())
         agency, _ = Agency.objects.get_or_create(name="db")
         source, _ = Source.objects.get_or_create(name="dbapis")
         kind, _ = StopIDKind.objects.get_or_create(name='eva')
@@ -40,36 +37,4 @@ class Command(BaseCommand):
         csv_file.seek(0)
         reader = csv.DictReader(csv_file, delimiter=';')
         for row in reader:
-            if row['EVA_NR'] == '':
-                continue
-            stop = Stop.objects.filter(
-                stopid__name=row['EVA_NR'],
-                stopid__kind__in=agency.used_id_kind.all()
-            ).first()
-            if stop is None:
-                stop = Stop()
-                stop.save()
-            StopName.objects.get_or_create(
-                name=row['NAME'], stop=stop, source=source)
-            StopID.objects.get_or_create(
-                stop=stop,
-                name=row['EVA_NR'],
-                source=source,
-                kind=kind
-            )
-            try:
-                StopLocation.objects.get(
-                    stop=stop,
-                    source=source
-                )
-            except ObjectDoesNotExist:
-                try:
-                    hafasLocation = hafasClient.locations(row['EVA_NR'])[0]
-                    StopLocation.objects.create(
-                        stop=stop,
-                        latitude=hafasLocation.latitude,
-                        longitude=hafasLocation.longitude,
-                        source=source
-                    )
-                except IndexError:
-                    continue
+            dbapis_importstations_parse_station_row.delay(row, agency.pk, source.pk, kind.pk)
