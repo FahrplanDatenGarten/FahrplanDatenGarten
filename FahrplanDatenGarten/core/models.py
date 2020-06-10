@@ -113,8 +113,8 @@ class JourneyStop(models.Model):
         if self.planned_departure_time:
             return self.planned_departure_time
 
-    def get_actual_arrival_delay(self) -> datetime.datetime:
+    def get_actual_arrival_time(self) -> datetime.datetime:
         return self.planned_arrival_time + self.actual_arrival_delay
 
-    def get_actual_departure_delay(self) -> datetime.datetime:
+    def get_actual_departure_time(self) -> datetime.datetime:
         return self.planned_departure_time + self.actual_departure_delay
