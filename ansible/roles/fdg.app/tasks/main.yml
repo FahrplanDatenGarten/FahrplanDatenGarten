@@ -32,7 +32,10 @@
 
 - name: Install requirements for project
   apt:
-    pkg: ['python3-dev', 'python3-wheel']
+    name:
+      - python3-dev
+      - python3-wheel
+      - pdftk
     state: present
 
 - include: python.yml
