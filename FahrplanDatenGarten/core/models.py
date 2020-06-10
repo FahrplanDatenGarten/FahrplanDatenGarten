@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -79,7 +81,7 @@ class Journey(models.Model):
     name = models.CharField(max_length=255, null=True)
     stop = models.ManyToManyField(Stop, through='JourneyStop')
     date = models.DateField(null=True)
-    journey_id = models.CharField(max_length=255)
+    journey_id = models.CharField(max_length=255, unique=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
 
@@ -98,8 +100,8 @@ class JourneyStop(models.Model):
     journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
     planned_arrival_time = models.DateTimeField(null=True)
     planned_departure_time = models.DateTimeField(null=True)
-    actual_arrival_time = models.DateTimeField(null=True)
-    actual_departure_time = models.DateTimeField(null=True)
+    actual_arrival_delay = models.DurationField(null=True)
+    actual_departure_delay = models.DurationField(null=True)
 
     class Meta:
         ordering = ["planned_arrival_time"]
@@ -110,3 +112,9 @@ class JourneyStop(models.Model):
 
         if self.planned_departure_time:
             return self.planned_departure_time
+
+    def get_actual_arrival_delay(self) -> datetime.datetime:
+        return self.planned_arrival_time + self.actual_arrival_delay
+
+    def get_actual_departure_delay(self) -> datetime.datetime:
+        return self.planned_departure_time + self.actual_departure_delay

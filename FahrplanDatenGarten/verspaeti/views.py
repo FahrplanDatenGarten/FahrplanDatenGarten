@@ -12,48 +12,29 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         current_journeys = models.Journey.objects.filter(
-            stop__journeystop__actual_departure_time__lte=datetime.datetime.now()).filter(
-            stop__journeystop__actual_arrival_time__gte=datetime.datetime.now()).distinct()
-        current_stops = models.JourneyStop.objects.filter(
+            journeystop__planned_arrival_time__gte=datetime.datetime.now() - datetime.timedelta(days=1)
+        ).distinct().all()
+
+        delayed_stops = models.JourneyStop.objects.filter(
             journey__in=current_journeys,
-            actual_departure_time__lte=datetime.datetime.now()).order_by('actual_departure_time')
-
-        delayed_stops = {}
-        for stop in current_stops:
-            if not stop.planned_departure_time or not stop.actual_departure_time:
-                break
-            delayed_stops[stop.journey] = {
-                "name": stop.journey.name,
-                "plannedDepature": stop.planned_departure_time,
-                "actualDepature": stop.actual_departure_time,
-                "delay": int((stop.actual_departure_time - stop.planned_departure_time).total_seconds() / 60),
-                "date": stop.journey.date,
-                "id": stop.journey.journey_id,
-                "source": stop.journey.source.name,
-                "agency": stop.journey.agency.name
-            }
-
-        delayed_stops = list(x for x in sorted(delayed_stops.values(
-        ), key=lambda d: d['delay'], reverse=True) if x['delay'] >= 5)
-        num_delayed_stops = len({d['name'] for d in delayed_stops})
+            actual_departure_delay__gte=datetime.timedelta(minutes=5)).order_by('-actual_departure_delay')
+        num_delayed_journeys = len({d.journey.name for d in delayed_stops})
 
         colors = ['#63a615', '#ec0016']
         labels = ['Pünktlich', 'Zu spät']
         values = [
             current_journeys.count() -
-            num_delayed_stops,
-            num_delayed_stops]
+            num_delayed_journeys,
+            num_delayed_journeys]
         plot_div = plot([Pie(labels=labels, values=values,
                              marker=dict(colors=colors))], output_type='div')
 
         context['plot_div'] = plot_div
-        context['delayed_stops'] = delayed_stops
         context['current_journeys'] = current_journeys.count()
-        context['journeys_delayed'] = len({d['name'] for d in delayed_stops}),
-        context['biggest_delay'] = delayed_stops[0] if len(
-            delayed_stops) else 0
+        context['journeys_delayed'] = num_delayed_journeys,
+        context['biggest_delay'] = delayed_stops[0] if len(delayed_stops) else 0
+        context['biggest_delay_time'] = int(delayed_stops[0].actual_departure_delay.seconds / 60) if len(delayed_stops) else 0
         context['average_delay'] = round(
-            (sum([d['delay'] for d in delayed_stops]) / len(delayed_stops))) if delayed_stops else None
+            (sum([d.actual_departure_delay.seconds / 60 for d in delayed_stops]) / len(delayed_stops))) if delayed_stops else None
         return context

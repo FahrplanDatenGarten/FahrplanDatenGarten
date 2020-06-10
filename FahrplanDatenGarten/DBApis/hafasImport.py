@@ -74,14 +74,14 @@ class HafasImport:
                     stop=dbStop,
                     journey=journey,
                     planned_departure_time=stopover.departure,
-                    actual_departure_time=stopover.departure + stopover.departureDelay if stopover.departureDelay is not None else None,
+                    actual_departure_delay=stopover.departureDelay,
                     planned_arrival_time=stopover.arrival,
-                    actual_arrival_time=stopover.arrival + stopover.arrivalDelay if stopover.arrivalDelay is not None else None)
+                    actual_arrival_delay=stopover.arrivalDelay)
             else:
                 journeyStop = JourneyStop.objects.get(
                     stop=dbStop, journey=journey)
                 if stopover.departureDelay is not None:
-                    journeyStop.actual_departure_time = stopover.departure + stopover.departureDelay
+                    journeyStop.actual_departure_delay = stopover.departureDelay
                 if stopover.arrivalDelay is not None:
-                    journeyStop.actual_arrival_time = stopover.arrival + stopover.arrivalDelay
+                    journeyStop.actual_arrival_delay = stopover.arrivalDelay
                 journeyStop.save()

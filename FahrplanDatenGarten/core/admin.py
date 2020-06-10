@@ -43,8 +43,8 @@ class JourneystopAdminInline(admin.TabularInline):
         'stop',
         'planned_arrival_time',
         'planned_departure_time',
-        'actual_arrival_time',
-        'actual_departure_time')
+        'actual_arrival_delay',
+        'actual_departure_delay')
     #readonly_fields = ('primary_stop_name', )
 
     def primary_stop_name(self, obj):
