@@ -13,3 +13,5 @@ psycopg2-binary==2.8.5
 plotly==4.5.4
 -r FahrplanDatenGarten/netzkarte/requirements.txt
 git+https://github.com/n0emis/pyhafas.git
+
+lxml~=4.5.1

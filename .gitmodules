@@ -16,3 +16,6 @@
 [submodule "ansible/roles/em0lar.oh-my-zsh"]
 	path = ansible/roles/em0lar.oh-my-zsh
 	url = https://git.labcode.dev/ansible_roles/oh-my-zsh.git
+[submodule "FahrplanDatenGarten/static/bulma-calender"]
+	path = FahrplanDatenGarten/static/bulma-calender
+	url = https://git.labcode.dev/static_libs/bulma-calender

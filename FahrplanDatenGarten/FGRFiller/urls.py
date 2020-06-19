@@ -11,15 +11,11 @@ urlpatterns = [
             template_name="FGRFiller/form.html"),
         name='index'),
     path(
-        'assistant',
-        views.Assistant1View.as_view(),
-        name='assistant_1'),
-    path(
-        'assistant_2',
-        views.Assistant2View.as_view(),
-        name='assistant_2'),
+        'assistant/bookingnr/1',
+        views.BookingNrAssistant1View.as_view(),
+        name='bookingnr_assistant_1'),
     path(
         'pdf',
-        views.create_pdf,
+        views.GeneratePDFView.as_view(),
         name='pdf'),
 ]

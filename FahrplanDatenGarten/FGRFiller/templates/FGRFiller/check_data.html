@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link type="text/css" href="{% static 'bulma-calender/css/bulma-calendar.min.css' %}" rel="stylesheet">
+    <script src="{% static 'bulma-calender/js/bulma-calendar.min.js' %}"></script>
+    <link type="text/css" href="{% static 'fgrfiller.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h1 class="title is-1 has-text-centered">Fahrgastrechte</h1>
+    <br>
+    <div class="columns">
+        <div class="column card is-8 is-offset-2">
+            <div class="card-header">
+                <p class="card-header-title">Ausfüllassistent - Daten überprüfen</p>
+            </div>
+            <div class="card-content">
+                <form id="assistant-form2" class="border-box form-control center"
+                      action="{% url 'fgrfiller:pdf' %}" method="post">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label"
+                               for="{{ form.travel_date.id_for_label }}">{{ form.travel_date.label }}</label>
+                        <div class="control">
+                            <input id="{{ form.travel_date.auto_id }}"
+                                   type="date"
+                                   name="{{ form.travel_date.name }}"
+                                   class="input calendar-date-prefill"
+                                   data-value="{{ form.travel_date.value }}">
+                        </div>
+                        <p class="help is-danger">{{ form.errors.travel_date.as_text }}</p>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.departure_stop_name.id_for_label }}">{{ form.departure_stop_name.label }}</label>
+                            <div class="control">
+                                {{ form.departure_stop_name }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.departure_stop_name.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.departure_planned_time.id_for_label }}">{{ form.departure_planned_time.label }}</label>
+                            <div class="control">
+                                <input id="{{ form.departure_planned_time.auto_id }}"
+                                       type="time"
+                                       class="input calendar-time-prefill"
+                                       name="{{ form.departure_planned_time.name }}"
+                                       data-value="2020-01-01T{{ form.departure_planned_time.value }}">
+                            </div>
+                            <p class="help is-danger">{{ form.errors.departure_planned_time.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_stop_name.id_for_label }}">{{ form.arrival_stop_name.label }}</label>
+                            <div class="control">
+                                {{ form.arrival_stop_name }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_stop_name.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_planned_time.id_for_label }}">{{ form.arrival_planned_time.label }}</label>
+                            <div class="control">
+                                <input id="{{ form.arrival_planned_time.auto_id }}"
+                                       type="time"
+                                       class="input calendar-time-prefill"
+                                       name="{{ form.arrival_planned_time.name }}"
+                                       data-value="2020-01-01T{{ form.arrival_planned_time.value }}">
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_planned_time.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_actual_date.id_for_label }}">{{ form.arrival_actual_date.label }}</label>
+                            <div class="control">
+                                <input id="{{ form.arrival_actual_date.auto_id }}"
+                                       type="date"
+                                       name="{{ form.arrival_actual_date.name }}"
+                                       class="input calendar-date-prefill"
+                                       data-value="{{ form.arrival_actual_date.value }}">
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_actual_date.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_actual_time.id_for_label }}">{{ form.arrival_actual_time.label }}</label>
+                            <div class="control">
+                                <input id="{{ form.arrival_actual_time.auto_id }}"
+                                       type="time"
+                                       name="{{ form.arrival_actual_time.name }}"
+                                       class="input calendar-time-prefill"
+                                       data-value="2020-01-01T{{ form.arrival_actual_time.value }}">
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_actual_time.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_actual_product_type.id_for_label }}">{{ form.arrival_actual_product_type.label }}</label>
+                            <div class="control">
+                                {{ form.arrival_actual_product_type }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_actual_product_type.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.arrival_actual_product_number.id_for_label }}">{{ form.arrival_actual_product_number.label }}</label>
+                            <div class="control">
+                                {{ form.arrival_actual_product_number }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.arrival_actual_product_number.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.first_delayed_train_product_type.id_for_label }}">{{ form.first_delayed_train_product_type.label }}</label>
+                            <div class="control">
+                                {{ form.first_delayed_train_product_type }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.first_delayed_train_product_type.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label">Erster versp&auml;teter Zug - Nummer:</label>
+                            <div class="control">
+                                {{ form.first_delayed_train_product_number }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.first_delayed_train_product_number.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"
+                               for="{{ form.first_delayed_train_departure_planned.id_for_label }}">{{ form.first_delayed_train_departure_planned.label }}</label>
+                        <div class="control">
+                            <input id="{{ form.first_delayed_train_departure_planned.auto_id }}"
+                                   type="time"
+                                   name="{{ form.first_delayed_train_departure_planned.name }}"
+                                   class="input calendar-time-prefill"
+                                   data-value="2020-01-01T{{ form.first_delayed_train_departure_planned.value }}">
+                        </div>
+                        <p class="help is-danger">{{ form.errors.first_delayed_train_departure_planned.as_text }}</p>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control control-checkbox">
+                            <label class="checkbox">
+                                {{ form.changed_train }}
+                                {{ form.changed_train.label }}
+                            </label>
+                        </div>
+                        <div class="control is-expanded">
+                            {{ form.changed_train_last_station }}
+                            <p class="help is-danger">{{ form.errors.changed_train_last_station.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control control-checkbox">
+                            <label class="checkbox">
+                                {{ form.connecting_train_missed }}
+                                {{ form.connecting_train_missed.label }}
+                            </label>
+                        </div>
+                        <div class="control is-expanded">
+                            {{ form.connecting_train_missed_station }}
+                            <p class="help is-danger">{{ form.errors.connecting_train_missed_station.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control control-checkbox">
+                            <label class="checkbox">
+                                {{ form.journey_not_start_or_cut_short }}
+                                {{ form.journey_not_start_or_cut_short.label }}
+                            </label>
+                        </div>
+                        <div class="control is-expanded">
+                            {{ form.journey_not_start_or_cut_short_station }}
+                            <p class="help is-danger">{{ form.errors.journey_not_start_or_cut_short_station.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control control-checkbox">
+                            <label class="checkbox">
+                                {{ form.journey_cut_short_additional_costs }}
+                                {{ form.journey_cut_short_additional_costs.label }}
+                            </label>
+                        </div>
+                        <div class="control is-expanded">
+                            {{ form.journey_cut_short_additional_costs_station }}
+                            <p class="help is-danger">{{ form.errors.journey_cut_short_additional_costs_station.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">{{ form.compensation.label }}</label>
+                        <div class="control">
+                            {% for choice in form.compensation.field.widget.choices %}
+                                <label class="radio">
+                                    <input required
+                                           type="radio"
+                                           name="{{ form.compensation.name }}"
+                                           value="{{ choice.0 }}">
+                                    {{ choice.1 }}
+                                </label>
+                            {% endfor %}
+                            <p class="help is-danger">{{ form.errors.compensation.as_text }}</p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <b class="is-size-5">Optional:</b><br/><br/>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                            <div class="control">
+                                {{ form.first_name }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.first_name.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                            <div class="control">
+                                {{ form.last_name }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.last_name.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.academic_title.id_for_label }}">{{ form.academic_title.label }}</label>
+                            <div class="control">
+                                {{ form.academic_title }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.academic_title.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.company.id_for_label }}">{{ form.company.label }}</label>
+                            <div class="control">
+                                {{ form.company }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.company.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label"
+                               for="{{ form.telephone_number.id_for_label }}">{{ form.telephone_number.label }}</label>
+                        <div class="control">
+                            {{ form.telephone_number }}
+                        </div>
+                        <p class="help is-danger">{{ form.errors.telephone_number.as_text }}</p>
+                    </div>
+                    <div class="field">
+                        <label class="label"
+                               for="{{ form.address_c_o_extra_details.id_for_label }}">{{ form.address_c_o_extra_details.label }}</label>
+                        <div class="control">
+                            {{ form.address_c_o_extra_details }}
+                        </div>
+                        <p class="help is-danger">{{ form.errors.address_c_o_extra_details.as_text }}</p>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-5-desktop">
+                            <label class="label"
+                                   for="{{ form.address_street.id_for_label }}">{{ form.address_street.label }}</label>
+                            <div class="control">
+                                {{ form.address_street }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.address_street.as_text }}</p>
+                        </div>
+                        <div class="field column is-4-desktop">
+                            <label class="label"
+                                   for="{{ form.address_house_nr.id_for_label }}">{{ form.address_house_nr.label }}</label>
+                            <div class="control">
+                                {{ form.address_house_nr }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.address_house_nr.as_text }}</p>
+                        </div>
+                        <div class="field column is-3-desktop">
+                            <label class="label"
+                                   for="{{ form.address_country.id_for_label }}">{{ form.address_country.label }}</label>
+                            <div class="control">
+                                {{ form.address_country }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.address_country.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.address_postal_code.id_for_label }}">{{ form.address_postal_code.label }}</label>
+                            <div class="control">
+                                {{ form.address_postal_code }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.address_postal_code.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.address_city.id_for_label }}">{{ form.address_city.label }}</label>
+                            <div class="control">
+                                {{ form.address_city }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.address_city.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">{{ form.bahncard_100_season_ticket.label }}</label>
+                        <div class="control">
+                            {% for choice in form.bahncard_100_season_ticket.field.widget.choices %}
+                                <label class="radio">
+                                    <input type="radio"
+                                           name="{{ form.bahncard_100_season_ticket.name }}"
+                                           value="{{ choice.0 }}">
+                                    {{ choice.1 }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <p class="help is-danger">{{ form.errors.bahncard_100_season_ticket.as_text }}</p>
+                    </div>
+                    <div class="columns">
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.bahncard_100_season_ticket_number.id_for_label }}">{{ form.bahncard_100_season_ticket_number.label }}</label>
+                            <div class="control">
+                                {{ form.bahncard_100_season_ticket_number }}
+                            </div>
+                            <p class="help is-danger">{{ form.errors.bahncard_100_season_ticket_number.as_text }}</p>
+                        </div>
+                        <div class="field column is-6-desktop">
+                            <label class="label"
+                                   for="{{ form.date_of_birth.id_for_label }}">{{ form.date_of_birth.label }}</label>
+                            <div class="control">
+                                <input id="{{ form.date_of_birth.auto_id }}"
+                                       type="date"
+                                       name="{{ form.date_of_birth.name }}"
+                                       class="input calendar-date-prefill"
+                                       data-value="{{ form.date_of_birth.value }}">
+                            </div>
+                            <p class="help is-danger">{{ form.errors.date_of_birth.as_text }}</p>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Abschicken</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'fgrfiller.js' %}"></script>
+{% endblock %}

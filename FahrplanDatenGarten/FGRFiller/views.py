@@ -1,146 +1,146 @@
 import datetime
-import re
+import random
 
-from django.http import FileResponse, HttpResponse
-from django.shortcuts import get_object_or_404, render
+import requests
+from django.http import FileResponse
+from django.shortcuts import render
 from django.views.generic import View
+from lxml import etree
 
 import FGRFiller.utils
-from core.models import Journey, JourneyStop
+from FGRFiller.forms.data import FGRFillerDataForm
+from FGRFiller.utils import FillFormFieldsBahnCard100SeasonTicket, FillFormFieldsCompensation
+from core.models import JourneyStop
 
 
-def create_pdf(request):
-    now = datetime.datetime.now()
-    trip_date = datetime.datetime.strptime(
-        request.POST.get(
-            'date',
-            now.strftime('%Y-%m-%d')),
-        '%Y-%m-%d')
-    starttime = datetime.datetime.strptime(
-        request.POST.get(
-            'starttime',
-            now.strftime('%H:%M')),
-        '%H:%M')
-    endtime = datetime.datetime.strptime(
-        request.POST.get(
-            'endtime',
-            now.strftime('%H:%M')),
-        '%H:%M')
-    arrivaldate = datetime.datetime.strptime(request.POST.get(
-        'arrivaldate', now.strftime('%Y-%m-%d')), '%Y-%m-%d')
-    arrivaltime = datetime.datetime.strptime(
-        request.POST.get(
-            'arrivaltime',
-            now.strftime('%H:%M')),
-        '%H:%M')
-    firsttraintime = datetime.datetime.strptime(
-        request.POST.get(
-            'firsttraintime',
-            now.strftime('%H:%M')),
-        '%H:%M')
-    arrivaltraintype = re.search(
-        '([A-Z])+',
-        request.POST.get(
-            'arrivaltrain',
-            ''))
-    arrivaltrainnum = re.search(
-        '([0-9])+',
-        request.POST.get(
-            'arrivaltrain',
-            ''))
-    firsttraintype = re.search(
-        '([A-Z])+',
-        request.POST.get(
-            'firsttrainid',
-            ''))
-    firsttrainnum = re.search('([0-9])+', request.POST.get('firsttrainid', ''))
-
-    form_data = {
-        'S1F1': "{:02}".format(trip_date.day),
-        'S1F2': "{:02}".format(trip_date.month),
-        'S1F3': str(trip_date.year)[-2:],
-        'S1F4': request.POST.get('startstation', ''),
-        'S1F5': "{:02}".format(starttime.hour),
-        'S1F6': "{:02}".format(starttime.minute),
-        'S1F7': request.POST.get('endstation', ''),
-        'S1F8': "{:02}".format(endtime.hour),
-        'S1F9': "{:02}".format(endtime.minute),
-        'S1F10': "{:02}".format(arrivaldate.day),
-        'S1F11': "{:02}".format(arrivaldate.month),
-        'S1F12': str(arrivaldate.year)[-2:],
-        'S1F13': arrivaltraintype,
-        'S1F14': arrivaltrainnum,
-        'S1F15': "{:02}".format(arrivaltime.hour),
-        'S1F16': "{:02}".format(arrivaltime.minute),
-        'S1F17': firsttraintype,
-        'S1F18': firsttrainnum,
-        'S1F19': "{:02}".format(firsttraintime.hour),
-        'S1F20': "{:02}".format(firsttraintime.minute),
-    }
-    return FileResponse(
-        FGRFiller.utils.generate_form(form_data),
-        filename='fahrgastrechte.pdf')
-
-
-class Assistant1View(View):
-    template_name = 'FGRFiller/assistant1.html'
+class BookingNrAssistant1View(View):
+    template_name = 'FGRFiller/check_data.html'
 
     def post(self, request, *args, **kwargs):
-        try:
-            trip_date = datetime.datetime.strptime(
-                request.POST.get(
-                    'date',
-                    datetime.date.today().strftime('%Y-%m-%d')),
-                '%Y-%m-%d').date()
-        except ValueError:
-            trip_date = datetime.date.today()
-        journey = get_object_or_404(
-            Journey,
-            name="{} {}".format(
-                self.request.POST['traintype'],
-                self.request.POST['trainnum']),
-            date=trip_date)
-        return render(request, self.template_name, {'journey': journey})
+        xml = '<rqorder on="{}"/><authname tln="{}"/>'.format(
+            request.POST['buchungsnummer'], request.POST['nachname'])
+        url = 'https://fahrkarten.bahn.de/mobile/dbc/xs.go'
+        tnr = random.getrandbits(64)
+        ts = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+        request_body = '<rqorderdetails version="2.0"><rqheader tnr="{0}" ts="{1}" v="19100000" d="iPhone10,4" os="iOS_13.1.3" app="NAVIGATOR"/>{2}</rqorderdetails>'.format(
+            tnr,
+            ts,
+            xml)
+        parsed_response = etree.fromstring(requests.post(url, data=request_body).content)
+        trainlist = parsed_response.find('order').find(
+            'schedulelist').find('out').find('trainlist')
+
+        arrival_planned_time = datetime.time.fromisoformat(
+            trainlist[-1].find('arr').attrib['t'])
+
+        first_delayed_train = None
+
+        for train in trainlist:
+            train_arrival_planned_time = datetime.time.fromisoformat(
+                train.find('arr').attrib['t'])
+            if JourneyStop.objects.filter(
+                    journey__name=train.find('gat').text + " " + train.find('zugnr').text,
+                    stop__stopid__name=train.find('arr').find('nr').text,
+                    stop__stopid__kind__name="eva",
+                    planned_arrival_time=datetime.datetime.fromisoformat(
+                        train.find('arr').attrib['dt']).replace(
+                        hour=train_arrival_planned_time.hour,
+                        minute=train_arrival_planned_time.minute),
+            ).first().actual_arrival_delay >= datetime.timedelta(
+                minutes=5):
+                first_delayed_train = train
+                break
+
+        arrival_actual_datetime = JourneyStop.objects.filter(
+            journey__name=trainlist[-1].attrib['tn'],
+            stop__stopid__name=trainlist[-1].find('arr').find('nr').text,
+            stop__stopid__kind__name="eva",
+            planned_arrival_time=datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
+                hour=arrival_planned_time.hour,
+                minute=arrival_planned_time.minute),
+        ).first().get_actual_arrival_time()
+
+        form = FGRFillerDataForm({
+            "travel_date": datetime.datetime.fromisoformat(parsed_response.find('order').attrib['sdt']).date().strftime(
+                '%Y-%m-%d'),
+            "departure_stop_name": trainlist[0].find('dep').find('n').text,
+            "departure_planned_time": datetime.time.fromisoformat(trainlist[0].find('dep').attrib['t']).strftime(
+                "%H:%M"),
+            "arrival_stop_name": trainlist[-1].find('arr').find('n').text,
+            "arrival_planned_time": arrival_planned_time.strftime("%H:%M"),
+            "arrival_actual_date": arrival_actual_datetime.strftime('%Y-%m-%d'),
+            "arrival_actual_time": arrival_actual_datetime.strftime('%H:%M'),
+            "arrival_actual_product_type": trainlist[-1].find('gat').text,
+            "arrival_actual_product_number": trainlist[-1].find('zugnr').text,
+            "first_name": parsed_response.find('order').find('tcklist')[0].find('mtk').find('reisender_vorname').text,
+            "last_name": parsed_response.find('order').find('tcklist')[0].find('mtk').find('reisender_nachname').text,
+            "first_delayed_train_product_type": first_delayed_train.find('gat').text,
+            "first_delayed_train_product_number": first_delayed_train.find('zugnr').text,
+            "first_delayed_train_departure_planned": datetime.time.fromisoformat(
+                first_delayed_train.find('dep').attrib['t']).strftime("%H:%M"),
+            "changed_train": len(trainlist) > 1,
+            "changed_train_last_station": trainlist[-1].find('dep').find('n').text,
+        })
+
+        return render(request, self.template_name, {
+            "form": form
+        })
 
 
-class Assistant2View(View):
-    template_name = 'FGRFiller/assistant2.html'
-
+class GeneratePDFView(View):
     def post(self, request, *args, **kwargs):
-        journey = get_object_or_404(Journey, pk=request.POST.get('journey'))
-        startstation = get_object_or_404(
-            JourneyStop,
-            journey=journey,
-            stop__pk=request.POST.get('startstation'))
-        endstation = get_object_or_404(
-            JourneyStop,
-            journey=journey,
-            stop__pk=request.POST.get('endstation'))
-        print(startstation.stop.stopname_set.first())
-
-        form_data = {
-            'S1F1': "{:02}".format(journey.date.day),
-            'S1F2': "{:02}".format(journey.date.month),
-            'S1F3': str(journey.date.year)[-2:],
-            'S1F4': startstation.stop.stopname_set.first(),
-            'S1F5': "{:02}".format(startstation.planned_departure_time.hour),
-            'S1F6': "{:02}".format(startstation.planned_departure_time.minute),
-            'S1F7': endstation.stop.stopname_set.first(),
-            'S1F8': "{:02}".format(endstation.planned_arrival_time.hour),
-            'S1F9': "{:02}".format(endstation.planned_arrival_time.minute),
-            'S1F10': "{:02}".format(endstation.get_actual_arrival_time().day),
-            'S1F11': "{:02}".format(endstation.get_actual_arrival_time().month),
-            'S1F12': str(endstation.get_actual_arrival_time().year)[-2:],
-            'S1F13': re.search('([A-Z])+', journey.name).group(0),
-            'S1F14': re.search('([0-9])+', journey.name).group(0),
-            'S1F15': "{:02}".format(endstation.get_actual_arrival_time().hour),
-            'S1F16': "{:02}".format(endstation.get_actual_arrival_time().minute),
-            'S1F17': re.search('([A-Z])+', journey.name).group(0),
-            'S1F18': re.search('([0-9])+', journey.name).group(0),
-            'S1F19': "{:02}".format(startstation.planned_departure_time.hour),
-            'S1F20': "{:02}".format(startstation.planned_departure_time.minute),
-        }
-        print(re.search('([A-Z])+', journey.name).group(0))
-        return FileResponse(
-            FGRFiller.utils.generate_form(form_data),
-            filename='fahrgastrechte.pdf')
+        form = FGRFillerDataForm(request.POST)
+        if form.is_valid():
+            form_fields = FGRFiller.utils.fill_form_fields(
+                travel_date=form.cleaned_data['travel_date'],
+                departure_stop_name=form.cleaned_data['departure_stop_name'],
+                departure_planned_time=form.cleaned_data['departure_planned_time'],
+                arrival_stop_name=form.cleaned_data['arrival_stop_name'],
+                arrival_planned_time=form.cleaned_data['arrival_planned_time'],
+                arrival_actual_datetime=datetime.datetime.combine(
+                    form.cleaned_data['arrival_actual_date'],
+                    form.cleaned_data['arrival_actual_time']),
+                arrival_actual_product_type=form.cleaned_data['arrival_actual_product_type'],
+                arrival_actual_product_number=form.cleaned_data['arrival_actual_product_number'],
+                first_delayed_train_product_type=form.cleaned_data['first_delayed_train_product_type'],
+                first_delayed_train_product_number=form.cleaned_data['first_delayed_train_product_number'],
+                first_delayed_train_departure_planned=form.cleaned_data['first_delayed_train_departure_planned'],
+                connecting_train_missed=form.cleaned_data['connecting_train_missed'],
+                connecting_train_missed_station=form.cleaned_data['connecting_train_missed_station'],
+                changed_train=form.cleaned_data['changed_train'],
+                changed_train_last_station=form.cleaned_data['changed_train_last_station'],
+                journey_not_start_or_cut_short=form.cleaned_data['journey_not_start_or_cut_short'],
+                journey_not_start_or_cut_short_station=form.cleaned_data['journey_not_start_or_cut_short_station'],
+                journey_cut_short_additional_costs=form.cleaned_data['journey_cut_short_additional_costs'],
+                journey_cut_short_additional_costs_station=form.cleaned_data[
+                    'journey_cut_short_additional_costs_station'],
+                compensation=form.cleaned_data['compensation'] if isinstance(
+                    form.cleaned_data['compensation'],
+                    FillFormFieldsCompensation) else FillFormFieldsCompensation[
+                    form.cleaned_data['compensation'].split('.')[1]] if form.cleaned_data[
+                                                                            'compensation'] != '' else None,
+                academic_title=form.cleaned_data['academic_title'],
+                company=form.cleaned_data['company'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                address_c_o_extra_details=form.cleaned_data['address_c_o_extra_details'],
+                telephone_number=form.cleaned_data['telephone_number'],
+                address_street=form.cleaned_data['address_street'],
+                address_house_nr=form.cleaned_data['address_house_nr'],
+                address_postal_code=form.cleaned_data['address_postal_code'],
+                address_city=form.cleaned_data['address_city'],
+                address_country=form.cleaned_data['address_country'],
+                bahncard_100_season_ticket=form.cleaned_data['bahncard_100_season_ticket'] if isinstance(
+                    form.cleaned_data['bahncard_100_season_ticket'],
+                    FillFormFieldsBahnCard100SeasonTicket) else FillFormFieldsBahnCard100SeasonTicket[
+                    form.cleaned_data['bahncard_100_season_ticket'].split('.')[1]] if form.cleaned_data[
+                                                                                          'bahncard_100_season_ticket'] != '' else None,
+                bahncard_100_season_ticket_number=form.cleaned_data['bahncard_100_season_ticket_number'],
+                date_of_birth=form.cleaned_data['date_of_birth'])
+            return FileResponse(
+                FGRFiller.utils.generate_form(form_fields),
+                filename='fahrgastrechte.pdf')
+        else:
+            return render(request, "FGRFiller/check_data.html", {
+                "form": form
+            })
