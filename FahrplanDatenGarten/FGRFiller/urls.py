@@ -15,6 +15,10 @@ urlpatterns = [
         views.BookingNrAssistant1View.as_view(),
         name='bookingnr_assistant_1'),
     path(
+        'manual',
+        views.ManualFormView.as_view(),
+        name='manual'),
+    path(
         'pdf',
         views.GeneratePDFView.as_view(),
         name='pdf'),

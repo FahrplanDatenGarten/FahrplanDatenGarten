@@ -93,6 +93,14 @@ class BookingNrAssistant1View(View):
         })
 
 
+class ManualFormView(View):
+    def get(self, request):
+        form = FGRFillerDataForm()
+        return render(request, "FGRFiller/check_data.html", {
+            "form": form
+        })
+
+
 class GeneratePDFView(View):
     def post(self, request, *args, **kwargs):
         form = FGRFillerDataForm(request.POST)
