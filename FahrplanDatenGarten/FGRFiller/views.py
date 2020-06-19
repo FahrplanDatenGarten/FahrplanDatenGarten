@@ -38,27 +38,33 @@ class BookingNrAssistant1View(View):
         for train in trainlist:
             train_arrival_planned_time = datetime.time.fromisoformat(
                 train.find('arr').attrib['t'])
-            if JourneyStop.objects.filter(
-                    journey__name=train.find('gat').text + " " + train.find('zugnr').text,
-                    stop__stopid__name=train.find('arr').find('nr').text,
-                    stop__stopid__kind__name="eva",
-                    planned_arrival_time=datetime.datetime.fromisoformat(
-                        train.find('arr').attrib['dt']).replace(
-                        hour=train_arrival_planned_time.hour,
-                        minute=train_arrival_planned_time.minute),
-            ).first().actual_arrival_delay >= datetime.timedelta(
-                minutes=5):
-                first_delayed_train = train
-                break
+            try:
+                if JourneyStop.objects.filter(
+                        journey__name=train.find('gat').text + " " + train.find('zugnr').text,
+                        stop__stopid__name=train.find('arr').find('nr').text,
+                        stop__stopid__kind__name="eva",
+                        planned_arrival_time=datetime.datetime.fromisoformat(
+                            train.find('arr').attrib['dt']).replace(
+                            hour=train_arrival_planned_time.hour,
+                            minute=train_arrival_planned_time.minute),
+                ).first().actual_arrival_delay >= datetime.timedelta(minutes=5):
+                    first_delayed_train = train
+                    break
+            except AttributeError:
+                continue
 
-        arrival_actual_datetime = JourneyStop.objects.filter(
-            journey__name=trainlist[-1].attrib['tn'],
-            stop__stopid__name=trainlist[-1].find('arr').find('nr').text,
-            stop__stopid__kind__name="eva",
-            planned_arrival_time=datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
-                hour=arrival_planned_time.hour,
-                minute=arrival_planned_time.minute),
-        ).first().get_actual_arrival_time()
+        try:
+            arrival_actual_datetime = JourneyStop.objects.filter(
+                journey__name=trainlist[-1].attrib['tn'],
+                stop__stopid__name=trainlist[-1].find('arr').find('nr').text,
+                stop__stopid__kind__name="eva",
+                planned_arrival_time=datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
+                    hour=arrival_planned_time.hour,
+                    minute=arrival_planned_time.minute),
+            ).first().get_actual_arrival_time()
+        except AttributeError:
+            arrival_actual_datetime = None
+            pass
 
         form = FGRFillerDataForm({
             "travel_date": datetime.datetime.fromisoformat(parsed_response.find('order').attrib['sdt']).date().strftime(
@@ -68,16 +74,16 @@ class BookingNrAssistant1View(View):
                 "%H:%M"),
             "arrival_stop_name": trainlist[-1].find('arr').find('n').text,
             "arrival_planned_time": arrival_planned_time.strftime("%H:%M"),
-            "arrival_actual_date": arrival_actual_datetime.strftime('%Y-%m-%d'),
-            "arrival_actual_time": arrival_actual_datetime.strftime('%H:%M'),
+            "arrival_actual_date": arrival_actual_datetime.strftime('%Y-%m-%d') if arrival_actual_datetime is not None else "",
+            "arrival_actual_time": arrival_actual_datetime.strftime('%H:%M') if arrival_actual_datetime is not None else "",
             "arrival_actual_product_type": trainlist[-1].find('gat').text,
             "arrival_actual_product_number": trainlist[-1].find('zugnr').text,
             "first_name": parsed_response.find('order').find('tcklist')[0].find('mtk').find('reisender_vorname').text,
             "last_name": parsed_response.find('order').find('tcklist')[0].find('mtk').find('reisender_nachname').text,
-            "first_delayed_train_product_type": first_delayed_train.find('gat').text,
-            "first_delayed_train_product_number": first_delayed_train.find('zugnr').text,
+            "first_delayed_train_product_type": first_delayed_train.find('gat').text if first_delayed_train is not None else "",
+            "first_delayed_train_product_number": first_delayed_train.find('zugnr').text if first_delayed_train is not None else "",
             "first_delayed_train_departure_planned": datetime.time.fromisoformat(
-                first_delayed_train.find('dep').attrib['t']).strftime("%H:%M"),
+                first_delayed_train.find('dep').attrib['t']).strftime("%H:%M") if first_delayed_train is not None else "",
             "changed_train": len(trainlist) > 1,
             "changed_train_last_station": trainlist[-1].find('dep').find('n').text,
         })
