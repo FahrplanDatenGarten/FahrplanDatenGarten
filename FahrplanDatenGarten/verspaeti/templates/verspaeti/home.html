@@ -20,7 +20,7 @@
         </div>
         <div class="column card is-3 is-offset-1">
             <div class="card-header">
-                <div class="card-header-title">H&ouml;chste Versp&auml;tung heute</div>
+                <div class="card-header-title">H&ouml;chste Versp&auml;tung</div>
             </div>
             <div class="card-content">
                 <p><b>{{ biggest_delay.journey.name }}</b> ist <b>{{ biggest_delay_time  }}</b> Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
@@ -28,10 +28,10 @@
         </div>
         <div class="column card is-3 is-offset-1">
             <div class="card-header">
-                <div class="card-header-title">H&ouml;chste Versp&auml;tung heute</div>
+                <div class="card-header-title">Durchschnittsversp&auml;tung</div>
             </div>
             <div class="card-content">
-                <p>Alle Z&uuml;ge sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!</p>
+                <p>Alle Z&uuml;ge der letzten 24h sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!</p>
             </div>
         </div>
     </div>
