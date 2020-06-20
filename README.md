@@ -2,6 +2,8 @@
 ![](https://jhbadge.freetls.fastly.net/?evt=ber&year=2019) [![](https://jhbadge.freetls.fastly.net/?type=view-presentation&evt=ber&year=2018)](https://media.ccc.de/v/jh19-fahrplandatengarten)
 ![](https://jhbadge.freetls.fastly.net/?evt=ulm&year=2019) [![](https://jhbadge.freetls.fastly.net/?type=view-presentation&evt=ulm&year=2019)](https://media.ccc.de/v/currently-not-published)
 
+[![#FahrplanDatenGarten on noemis.me](https://img.shields.io/matrix/fahrplandatengarten:noemis.me?logo=matrix&server_fqdn=matrix.noemis.me)](https://noemis.me/riot/#/room/#fahrplandatengarten:noemis.me)
+
 We  ❤️  Deutsche Bahn
 
 ## Used API's
