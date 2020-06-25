@@ -5,7 +5,7 @@ After=network.target
 [Service]
 PIDFile=/run/gunicorn/pid
 User=fdg
-Group=fdgw
+Group=fdg
 RuntimeDirectory=gunicorn
 WorkingDirectory={{ fdg_base_path }}/FahrplanDatenGarten
 ExecStart={{ fdg_base_path }}/.venv/bin/gunicorn --pid /run/gunicorn/pid   \
