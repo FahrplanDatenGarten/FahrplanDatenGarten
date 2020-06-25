@@ -31,3 +31,6 @@
 [submodule "ansible/roles/geerlingguy.nginx"]
 	path = ansible/roles/geerlingguy.nginx
 	url = https://github.com/geerlingguy/ansible-role-nginx.git
+[submodule "ansible/roles/n0emis.wireguard"]
+	path = ansible/roles/n0emis.wireguard
+	url = https://github.com/n0emis/ansible-wireguard.git

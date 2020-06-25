@@ -1,0 +1,7 @@
+---
+celeryd_nodes: 1
+autossh_remote_port: 2201
+celeryd_concurrency: 6
+wireguard_address: "fd59:974e:6ee8::1/128"
+wireguard_private_key: "{{ lookup('passwordstore', 'infra/wireguard') }}"
+wireguard_public_key: "{{ lookup('passwordstore', 'infra/wireguard subkey=public') }}"

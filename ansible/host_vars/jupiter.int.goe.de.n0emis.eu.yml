@@ -1,6 +1,6 @@
 ---
-celeryd_nodes: 3
-autossh_remote_port: 2201
+celeryd_nodes: 1
+autossh_remote_port: 2202
 wireguard_address: "fd59:974e:6ee8:10::1:1"
 wireguard_private_key: "{{ lookup('passwordstore', 'infra/host/' + ansible_fqdn + '/wireguard') }}"
 wireguard_public_key: "{{ lookup('passwordstore', 'infra/host/' + ansible_fqdn + '/wireguard subkey=public') }}"

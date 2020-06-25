@@ -24,9 +24,9 @@ users:
     sudo: yes
     state: present
 
-  - username: autossh
+  - name: autossh
     public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICwpPJuYR3Glr5VBqjfOXcbsNNB9Lp2CjBBm6UhWSxUG fdg-autossh
-    state: present
+    state: absent
 
   - username: "root"
     shell: "/bin/zsh"

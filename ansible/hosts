@@ -1,17 +1,20 @@
 [redis]
-mars.srv.fahrplandatengarten.de
+mars.het.nue.de.fahrplandatengarten.de
 
 [postgresql]
-mars.srv.fahrplandatengarten.de
+mars.het.nue.de.fahrplandatengarten.de
 
 [celerybeat]
-mars.srv.fahrplandatengarten.de
+mars.het.nue.de.fahrplandatengarten.de
 
 [web]
-mars.srv.fahrplandatengarten.de
+mars.het.nue.de.fahrplandatengarten.de
+
+[wireguard]
+mars.het.nue.de.fahrplandatengarten.de
 
 [worker]
-mars.srv.fahrplandatengarten.de
+mars.het.nue.de.fahrplandatengarten.de
 saturn.int.sig.de.labcode.de
-venus.int.goe.de.n0emis.eu
-neptun.local.e1mo.de
+jupiter.int.goe.de.n0emis.eu
+#neptun.local.e1mo.de

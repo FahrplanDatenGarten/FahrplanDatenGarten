@@ -2,14 +2,32 @@
 - hosts: all
   tags: base
   roles:
+    - worker_autossh
     - n0emis.base
     - em0lar.oh-my-zsh
     - jnv.unattended-upgrades
 
-- hosts: worker
-  tags: base
+- hosts: all,!wireguard
+  tags: wireguard
   roles:
-    - worker_autossh
+    - n0emis.wireguard
+  tasks:
+    - name: Create wireguard_peer config for main wireguard server
+      set_fact:
+        wireguard_peer:
+          public_key: "{{ wireguard_public_key }}"
+          allowed_ips: "{{ wireguard_address }}/128"
+
+- hosts: wireguard
+  tags: wireguard
+  pre_tasks:
+    - name: Create wireguard peers config
+      set_fact:
+        wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ hostvars[item].ansible_fqdn: hostvars[item].wireguard_peer }) }}"
+      when: "hostvars[item].ansible_fqdn is defined and hostvars[item].ansible_fqdn != ansible_fqdn"
+      with_items: "{{ groups['all'] }}"
+  roles:
+    - n0emis.wireguard
 
 - hosts: redis
   tags: redis

@@ -1,33 +1,17 @@
 ---
-- name: Install autossh
+- name: Remove autossh
   apt:
     name: "autossh"
-    state: present
-
-- name: Create .ssh directory
-  file:
-    path: "/home/autossh/.ssh"
-    mode: u=rwx,g=-,o=-
-    owner: "autossh"
-    group: "autossh"
-    state: directory
-
-- name: Upload ssh key
-  copy:
-    src: "ssh_key"
-    dest: "/home/autossh/.ssh/autossh_key"
-    mode: u=rw,g=-,o=-
-    owner: autossh
-    group: autossh
+    state: absent
 
 - name: Upload autossh service file
-  template:
-    src: "autossh.service.j2"
-    dest: "/etc/systemd/system/autossh.service"
+  file:
+    path: "/etc/systemd/system/autossh.service"
+    state: absent
 
 - name: Ensure autossh service is started
   systemd:
     name: "autossh.service"
-    daemon_reload: yes
-    state: started
-    enabled: yes
+    state: stopped
+    enabled: no
+  ignore_errors: yes
