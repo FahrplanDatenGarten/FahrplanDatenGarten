@@ -1,3 +1,0 @@
----
-- include_tasks: firewalld.yml
-  when: ansible_virtualization_type  != 'lxc'

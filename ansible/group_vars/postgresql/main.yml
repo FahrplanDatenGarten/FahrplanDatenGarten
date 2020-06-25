@@ -1,0 +1,14 @@
+---
+postgresql_python_library: python3-psycopg2
+
+postgresql_users:
+  - name: "{{ lookup('passwordstore', 'infra/postgresql subkey=user') }}"
+    password: "{{ lookup('passwordstore', 'infra/postgresql') }}"
+postgresql_databases:
+  - name: "fdg"
+    owner: "{{ lookup('passwordstore', 'infra/postgresql subkey=user') }}"
+
+postgresql_hba_entries:
+  - { type: local, database: all, user: postgres, auth_method: peer }
+  - { type: host, database: all, user: all, address: '0.0.0.0/0', auth_method: md5 }
+  - { type: host, database: all, user: all, address: '::0/0', auth_method: md5 }

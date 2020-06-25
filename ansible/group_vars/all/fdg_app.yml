@@ -1,0 +1,11 @@
+---
+fdg_app_secret: "{{ lookup('passwordstore', 'infra/fdg/secret') }}"
+fdg_base_path: "/opt/fdg"
+fdg_static_root_path: "/var/www/static"
+fdg_cache_root_path: "/var/cache/fdg/"
+fdg_postgresql_host: "mars.srv.fahrplandatengarten.de"
+fdg_postgresql_user: "{{ lookup('passwordstore', 'infra/postgresql subkey=user') }}"
+fdg_postgresql_password: "{{ lookup('passwordstore', 'infra/postgresql') }}"
+fdg_postgresql_database: "fdg"
+fdg_redis_host: "mars.srv.fahrplandatengarten.de"
+fdg_redis_password: "{{ lookup('passwordstore', 'infra/redis') }}"

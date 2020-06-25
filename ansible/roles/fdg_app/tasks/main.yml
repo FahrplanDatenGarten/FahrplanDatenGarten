@@ -1,0 +1,60 @@
+---
+- name: create fdg user
+  group:
+    name: "fdg"
+    system: yes
+
+- name: create fdg user
+  user:
+    name: "fdg"
+    group: "fdg"
+    system: yes
+
+- name: create required folders
+  file:
+    path: "{{ item }}"
+    owner: "fdg"
+    group: "fdg"
+    recurse: yes
+    state: directory
+  with_items:
+    - "{{ fdg_base_path }}"
+    - "{{ fdg_cache_root_path }}"
+    - "{{ fdg_static_root_path }}"
+
+- name: Install requirements for project
+  apt:
+    name:
+      - "python3-dev"
+      - "python3-wheel"
+      - "pdftk"
+    state: present
+
+- name: Clone repository from GitHub
+  git:
+    repo: "https://github.com/Jugendhackt/FahrplanDatenGarten.git"
+    dest: "{{ fdg_base_path }}"
+    force: yes
+    recursive: yes
+  notify:
+    - collect django statics
+    - migrate database
+    - restart celeryd service
+    - restart gunicorn service
+    - restart celerybeat service
+  become_user: "fdg"
+
+- name: Install pip requirements
+  pip:
+    requirements: "{{ fdg_base_path }}/requirements.txt"
+    virtualenv: "{{ fdg_base_path }}/.venv"
+    virtualenv_command: "python3 -m venv"
+    extra_args: "--upgrade"
+  become_user: "fdg"
+
+- name: copy app configuration
+  template:
+    src: "env.cfg.j2"
+    dest: "{{ fdg_base_path }}/FahrplanDatenGarten/env.cfg"
+    owner: "fdg"
+    group: "fdg"

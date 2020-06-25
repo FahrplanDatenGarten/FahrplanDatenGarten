@@ -1,5 +1,0 @@
----
-- name: reload celerybeat service
-  systemd:
-    name: celerybeat
-    state: restarted

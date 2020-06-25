@@ -1,0 +1,4 @@
+---
+- name: Install autossh and create service
+  import_tasks: "service.yml"
+  when: "'fdg' not in group_names"

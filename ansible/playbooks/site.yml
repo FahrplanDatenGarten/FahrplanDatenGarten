@@ -1,33 +1,57 @@
 ---
 - hosts: all
+  tags: base
   roles:
     - n0emis.base
-    - general.packages
     - em0lar.oh-my-zsh
     - jnv.unattended-upgrades
-#    - firewalld
-
-- hosts: fdg
-  tags: fdg
-  roles:
-    - fdg.redis
-    - fdg.postgresql
 
 - hosts: worker
-  tags: worker
+  tags: base
   roles:
-    - fdg.app
-    - worker.dnsmasq
-    - worker.celery
+    - worker_autossh
+
+- hosts: redis
+  tags: redis
+  roles:
+    - geerlingguy.redis
+
+- hosts: postgresql
+  tags: postgresql
+  roles:
+    - geerlingguy.postgresql
+
+- hosts: web,worker
+  tags: web,worker,app
+  roles:
+    - fdg_app
+
+- hosts: web
+  tags: web
+  roles:
+    - fdg_app_gunicorn
+    - geerlingguy.nginx
+    - em0lar.traefik
+  tasks:
+    - name: Add dynamic traefik configs to server
+      template:
+        dest: "{{ traefik_dynamic_config_directory }}"
+        src: "{{ item }}"
+        owner: "{{ traefik_user }}"
+        group: "{{ traefik_group }}"
+      with_fileglob: '../files/web/traefik/*'
 
 - hosts: worker
-  tags: worker
+  tags: worker,dnsmasq
   roles:
-    - worker.autossh
+    - worker_dnsmasq
 
-- hosts: fdg
-  tags: fdg
+- hosts: worker
+  tags: worker,celery
   roles:
-    - fdg.celerybeat
-    - fdg.gunicorn
-    - fdg.reverse-proxy
+    - worker_celery
+
+- hosts: celerybeat
+  tags: celerybeat
+  roles:
+    - celerybeat

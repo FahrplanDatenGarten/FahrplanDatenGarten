@@ -19,3 +19,15 @@
 [submodule "FahrplanDatenGarten/static/bulma-calender"]
 	path = FahrplanDatenGarten/static/bulma-calender
 	url = https://git.labcode.dev/static_libs/bulma-calender
+[submodule "ansible/roles/geerlingguy.redis"]
+	path = ansible/roles/geerlingguy.redis
+	url = https://github.com/geerlingguy/ansible-role-redis.git
+[submodule "ansible/roles/geerlingguy.postgresql"]
+	path = ansible/roles/geerlingguy.postgresql
+	url = https://github.com/geerlingguy/ansible-role-postgresql.git
+[submodule "ansible/roles/em0lar.traefik"]
+	path = ansible/roles/em0lar.traefik
+	url = https://github.com/em0lar/ansible-role-traefik.git
+[submodule "ansible/roles/geerlingguy.nginx"]
+	path = ansible/roles/geerlingguy.nginx
+	url = https://github.com/geerlingguy/ansible-role-nginx.git

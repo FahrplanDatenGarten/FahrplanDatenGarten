@@ -1,0 +1,28 @@
+---
+- name: collect django statics
+  command: "{{ fdg_base_path }}/.venv/bin/python manage.py collectstatic --noinput"
+  args:
+    chdir: "{{ fdg_base_path }}/FahrplanDatenGarten"
+
+- name: migrate database
+  command: "{{ fdg_base_path }}/.venv/bin/python manage.py migrate"
+  args:
+    chdir: "{{ fdg_base_path }}/FahrplanDatenGarten"
+
+- name: restart celeryd service
+  systemd:
+    name: "celeryd.service"
+    state: restarted
+  ignore_errors: yes
+
+- name: restart gunicorn service
+  systemd:
+    name: "gunicorn.service"
+    state: restarted
+  ignore_errors: yes
+
+- name: restart celerybeat service
+  systemd:
+    name: "celerybeat"
+    state: restarted
+  ignore_errors: yes

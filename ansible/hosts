@@ -1,4 +1,13 @@
-[fdg]
+[redis]
+mars.srv.fahrplandatengarten.de
+
+[postgresql]
+mars.srv.fahrplandatengarten.de
+
+[celerybeat]
+mars.srv.fahrplandatengarten.de
+
+[web]
 mars.srv.fahrplandatengarten.de
 
 [worker]
@@ -6,6 +15,3 @@ mars.srv.fahrplandatengarten.de
 saturn.int.sig.de.labcode.de
 venus.int.goe.de.n0emis.eu
 neptun.local.e1mo.de
-
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3

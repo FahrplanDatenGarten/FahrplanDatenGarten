@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=fdg
+Group=fdgw
+RuntimeDirectory=gunicorn
+WorkingDirectory={{ fdg_base_path }}/FahrplanDatenGarten
+ExecStart={{ fdg_base_path }}/.venv/bin/gunicorn --pid /run/gunicorn/pid   \
+          FahrplanDatenGarten.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

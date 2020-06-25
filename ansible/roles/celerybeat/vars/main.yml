@@ -1,0 +1,7 @@
+celery_bin: "{{ fdg_base_path }}/.venv/bin/celery"
+celery_app: FahrplanDatenGarten
+
+celerybeat_log_file: /var/log/celery/beat.log
+celerybeat_log_level: INFO
+celerybeat_pid_file: /run/celery/beat.pid
+celerybeat_opts: --schedule=/var/run/celery/beat-schedule
