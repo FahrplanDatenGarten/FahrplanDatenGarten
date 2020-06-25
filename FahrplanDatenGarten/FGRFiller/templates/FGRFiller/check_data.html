@@ -48,7 +48,7 @@
                                        type="time"
                                        class="input calendar-time-prefill"
                                        name="{{ form.departure_planned_time.name }}"
-                                       data-value="2020-01-01T{{ form.departure_planned_time.value }}">
+                                       {% if form.departure_planned_time.value is not None %}data-value="2020-01-01T{{ form.departure_planned_time.value }}"{% endif %}>
                             </div>
                             <p class="help is-danger">{{ form.errors.departure_planned_time.as_text }}</p>
                         </div>
@@ -70,7 +70,7 @@
                                        type="time"
                                        class="input calendar-time-prefill"
                                        name="{{ form.arrival_planned_time.name }}"
-                                       data-value="2020-01-01T{{ form.arrival_planned_time.value }}">
+                                       {% if form.departure_planned_time.value is not None %}data-value="2020-01-01T{{ form.arrival_planned_time.value }}"{% endif %}>
                             </div>
                             <p class="help is-danger">{{ form.errors.arrival_planned_time.as_text }}</p>
                         </div>
@@ -96,7 +96,7 @@
                                        type="time"
                                        name="{{ form.arrival_actual_time.name }}"
                                        class="input calendar-time-prefill"
-                                       data-value="2020-01-01T{{ form.arrival_actual_time.value }}">
+                                       {% if form.departure_planned_time.value is not None %}data-value="2020-01-01T{{ form.arrival_actual_time.value }}"{% endif %}>
                             </div>
                             <p class="help is-danger">{{ form.errors.arrival_actual_time.as_text }}</p>
                         </div>
@@ -144,7 +144,7 @@
                                    type="time"
                                    name="{{ form.first_delayed_train_departure_planned.name }}"
                                    class="input calendar-time-prefill"
-                                   data-value="2020-01-01T{{ form.first_delayed_train_departure_planned.value }}">
+                                   {% if form.departure_planned_time.value is not None %}data-value="2020-01-01T{{ form.first_delayed_train_departure_planned.value }}"{% endif %}>
                         </div>
                         <p class="help is-danger">{{ form.errors.first_delayed_train_departure_planned.as_text }}</p>
                     </div>
