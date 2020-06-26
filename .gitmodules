@@ -34,3 +34,6 @@
 [submodule "ansible/roles/n0emis.wireguard"]
 	path = ansible/roles/n0emis.wireguard
 	url = https://github.com/n0emis/ansible-wireguard.git
+[submodule "ansible/roles/cloudalchemy.coredns"]
+	path = ansible/roles/cloudalchemy.coredns
+	url = https://github.com/em0lar/ansible-coredns.git

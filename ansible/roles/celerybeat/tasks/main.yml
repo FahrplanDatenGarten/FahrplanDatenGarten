@@ -8,6 +8,7 @@
   template:
     src: "tmpfiles_celeryd.conf.j2"
     dest: "/etc/tmpfiles.d/celeryd.conf"
+  notify: create tmpdirs
 
 - name: Add celerybeat service template
   template:

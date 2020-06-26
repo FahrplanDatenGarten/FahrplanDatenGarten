@@ -7,6 +7,38 @@
     - em0lar.oh-my-zsh
     - jnv.unattended-upgrades
 
+- hosts: all
+  tags: coredns
+  roles:
+    - worker_dnsmasq
+    - cloudalchemy.coredns
+  handlers:
+    - name: Restart resolvconf service
+      systemd:
+        name: resolvconf
+        state: restarted
+  tasks:
+    - name: Install resolvconf apt package
+      apt:
+        name:
+          - resolvconf
+        state: present
+
+    - name: Enable and start resolvconf service
+      systemd:
+        name: resolvconf
+        enabled: yes
+        state: started
+
+    - name: Add new nameserver to resolvconf
+      blockinfile:
+        path: /etc/resolvconf/resolv.conf.d/head
+        insertbefore: BOF
+        block: |
+          nameserver ::1
+          nameserver 127.0.0.1
+      notify: Restart resolvconf service
+
 - hosts: all,!wireguard
   tags: wireguard
   roles:
@@ -23,8 +55,8 @@
   pre_tasks:
     - name: Create wireguard peers config with host items
       set_fact:
-        wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ 'server_' + hostvars[item].ansible_fqdn: hostvars[item].wireguard_peer }) }}"
-      when: "hostvars[item].ansible_fqdn is defined and hostvars[item].ansible_fqdn != ansible_fqdn"
+        wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ 'server_' + hostvars[item].ansible_facts.fqdn: hostvars[item].wireguard_peer }) }}"
+      when: "hostvars[item].ansible_facts.fqdn is defined and hostvars[item].ansible_facts.fqdn != ansible_fqdn"
       with_items: "{{ groups['all'] }}"
   roles:
     - n0emis.wireguard
@@ -52,8 +84,8 @@
   roles:
     - geerlingguy.postgresql
 
-- hosts: web,worker
-  tags: web,worker,app
+- hosts: web,all
+  tags: web,all,app
   roles:
     - fdg_app
 
@@ -72,13 +104,8 @@
         group: "{{ traefik_group }}"
       with_fileglob: '../files/web/traefik/*'
 
-- hosts: worker
-  tags: worker,dnsmasq
-  roles:
-    - worker_dnsmasq
-
-- hosts: worker
-  tags: worker,celery
+- hosts: all
+  tags: all,celery
   roles:
     - worker_celery
 

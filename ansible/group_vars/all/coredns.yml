@@ -1,0 +1,4 @@
+---
+coredns_config_file: "../files/all/coredns/Corefile.j2"
+coredns_default_forward_server: "2606:4700:4700::1001 1.0.0.1 2001:4860:4860::8448 8.4.4.8"
+coredns_vpn_fdg_forward_server: "fd59:974e:6ee8::1"

@@ -1,26 +1,5 @@
-- name: Install dnsmasq and resolvconf
+- name: Uninstall dnsmasq
   apt:
     name:
       - dnsmasq
-      - resolvconf
-    state: present
-
-- name: Copy dnsmasq.conf
-  template:
-    src: dnsmasq.conf.j2
-    dest: /etc/dnsmasq.conf
-
-- name: Enable and start resolvconf service
-  systemd:
-    name: resolvconf
-    enabled: yes
-    state: started
-
-- name: Add new nameserver to resolvconf
-  blockinfile:
-    path: /etc/resolvconf/resolv.conf.d/head
-    insertbefore: BOF
-    block: |
-      nameserver ::1
-      nameserver 127.0.0.1
-  notify: Restart resolvconf service
+    state: absent

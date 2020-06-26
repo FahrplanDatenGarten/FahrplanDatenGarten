@@ -1,0 +1,5 @@
+---
+coredns_config_file: "../files/wireguard/coredns/Corefile.j2"
+coredns_zone_files_paths:
+  - "../files/wireguard/coredns/zones/*"
+coredns_default_forward_server: "2606:4700:4700::1001 1.0.0.1 2001:4860:4860::8448 8.4.4.8"

@@ -1,0 +1,15 @@
+$ORIGIN vpn.fahrplandatengarten.de.
+@ 3600 IN SOA ns.fahrplandatengarten.de. noc.fahrplandatengarten.de. (
+    {{ '%Y%m%d%H' | strftime }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
+    1800       ; refresh (30 min)
+    1800       ; retry (30 min)
+    86400      ; expire (1 day)
+    300       ; minimum (5min)
+    )
+
+;; Server
+{% for host in groups['all'] %}
+{% if hostvars[host].ansible_facts.fqdn is defined %}
+{{ hostvars[host].ansible_facts.fqdn.split('.')[:-2] | join('.')  }} 300 IN AAAA {{ hostvars[host].wireguard_address }}
+{% endif %}
+{% endfor %}

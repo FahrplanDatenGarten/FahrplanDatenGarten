@@ -3,3 +3,7 @@
   systemd:
     name: "celerybeat"
     state: restarted
+
+- name: create tmpdirs
+  command:
+    cmd: systemd-tmpfiles --remove --create

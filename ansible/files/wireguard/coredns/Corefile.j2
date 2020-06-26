@@ -1,0 +1,13 @@
+vpn.fahrplandatengarten.de {
+    root /etc/coredns/zones
+    file db.fdg_internal
+}
+
+.:53 {
+    forward . {{ coredns_default_forward_server }} {
+        except vpn.fahrplandatengarten.de
+    }
+    cache {
+        success 5120 3600 300
+    }
+}
