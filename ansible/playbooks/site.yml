@@ -84,8 +84,8 @@
   roles:
     - geerlingguy.postgresql
 
-- hosts: web,all
-  tags: web,all,app
+- hosts: web,worker
+  tags: web,worker,app
   roles:
     - fdg_app
 
@@ -104,8 +104,8 @@
         group: "{{ traefik_group }}"
       with_fileglob: '../files/web/traefik/*'
 
-- hosts: all
-  tags: all,celery
+- hosts: worker
+  tags: worker,celery
   roles:
     - worker_celery
 
