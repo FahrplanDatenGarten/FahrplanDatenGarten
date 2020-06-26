@@ -3,12 +3,14 @@ wireguard_networks:
 
 wireguard_wg_fdg_interface:
   listen_port: 40000
-  address: "{{ wireguard_address }}"
+  address: "{{ wireguard_address }}/128"
   private_key: "{{ wireguard_private_key }}"
 
 wireguard_wg_fdg_peers:
   main:
     public_key: "{{ lookup('passwordstore', 'infra/wireguard subkey=public') }}"
-    allowed_ips: "fd59:974e:6ee8::1/128"
+    allowed_ips: "{{ wireguard_fdg_net }}"
     endpoint: "mars.het.nue.de.fahrplandatengarten.de:40000"
     persistent_keepalive: 25
+
+wireguard_fdg_net: "fd59:974e:6ee8::/48"

@@ -21,13 +21,26 @@
 - hosts: wireguard
   tags: wireguard
   pre_tasks:
-    - name: Create wireguard peers config
+    - name: Create wireguard peers config with host items
       set_fact:
-        wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ hostvars[item].ansible_fqdn: hostvars[item].wireguard_peer }) }}"
+        wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ 'server_' + hostvars[item].ansible_fqdn: hostvars[item].wireguard_peer }) }}"
       when: "hostvars[item].ansible_fqdn is defined and hostvars[item].ansible_fqdn != ansible_fqdn"
       with_items: "{{ groups['all'] }}"
   roles:
     - n0emis.wireguard
+  tasks:
+    - name: Ensure forwarding of ipv4-packets is allowed
+      sysctl:
+          name: net.ipv4.ip_forward
+          value: '1'
+          state: present
+
+    - name: Ensure forwarding of ipv6-packets is allowed
+      sysctl:
+          name: net.ipv6.conf.all.forwarding
+          value: '1'
+          state: present
+
 
 - hosts: redis
   tags: redis

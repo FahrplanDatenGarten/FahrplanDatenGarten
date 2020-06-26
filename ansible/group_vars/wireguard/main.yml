@@ -1,2 +1,8 @@
 ---
-wireguard_wg_fdg_peers: {}
+wireguard_wg_fdg_peers:
+  private_em0lar_mimas:
+    public_key: "R5/E4qTiDfuM2u0XsdkYgZsjMJF3+E27IF3Ebcc7FjQ="
+    allowed_ips: "fd59:974e:6ee8:100::1/128"
+  private_n0emis_adrastea:
+    public_key: "jX09UX1l0nmc86krm3s5Ag/ytjcMKoG215aN+a6lF2Y="
+    allowed_ips: "fd59:974e:6ee8:100::1:1/128"
