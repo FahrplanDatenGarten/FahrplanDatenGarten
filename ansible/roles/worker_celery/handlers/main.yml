@@ -2,3 +2,8 @@
 - name: create tmpdirs
   command:
     cmd: systemd-tmpfiles --remove --create
+
+- name: reload celeryd service
+  systemd:
+    name: "celeryd"
+    state: reloaded

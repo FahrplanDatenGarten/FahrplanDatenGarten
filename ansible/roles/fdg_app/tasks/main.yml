@@ -39,8 +39,8 @@
   notify:
     - collect django statics
     - migrate database
-    - restart celeryd service
-    - restart gunicorn service
+    - reload celeryd service
+    - reload gunicorn service
     - restart celerybeat service
   become_user: "fdg"
 

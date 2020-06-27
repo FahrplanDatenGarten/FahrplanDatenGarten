@@ -9,16 +9,16 @@
   args:
     chdir: "{{ fdg_base_path }}/FahrplanDatenGarten"
 
-- name: restart celeryd service
+- name: reload celeryd service
   systemd:
-    name: "celeryd.service"
-    state: restarted
+    name: "celeryd"
+    state: reloaded
   ignore_errors: yes
 
-- name: restart gunicorn service
+- name: reload gunicorn service
   systemd:
     name: "gunicorn.service"
-    state: restarted
+    state: reloaded
   ignore_errors: yes
 
 - name: restart celerybeat service
