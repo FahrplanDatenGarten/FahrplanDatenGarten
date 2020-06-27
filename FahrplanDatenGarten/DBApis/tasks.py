@@ -1,3 +1,5 @@
+import datetime
+
 from celery.schedules import crontab
 from celery.task import periodic_task, task
 from celery.utils.log import get_task_logger
@@ -39,7 +41,10 @@ def import_timetable(stop_pk):
     name="import_all_journeys",
     ignore_result=True)
 def import_all_journeys():
-    for journey in Journey.objects.filter(agency__name='db').all():
+    for journey in Journey.objects.filter(
+            agency__name='db',
+            journeystop__planned_arrival_time__gte=datetime.datetime.now() - datetime.timedelta(days=1)
+    ).all():
         import_journey.delay(journey.pk)
 
 
