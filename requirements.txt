@@ -15,3 +15,4 @@ plotly==4.5.4
 git+https://github.com/n0emis/pyhafas.git
 
 lxml~=4.5.1
+django-redis~=4.12.1

@@ -143,16 +143,19 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
 
 CACHES = {
     'default': {
-        'BACKEND': config.get(
-            "caching",
-            "backend",
-            fallback='django.core.cache.backends.dummy.DummyCache'),
-        'LOCATION': config.get(
-            "caching",
-            "location",
-            fallback=""),
-    }}
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
 
+if config.has_option('caching', 'redis_location'):
+    CACHES['redis'] = {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config.get('caching', 'redis_location'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+    CACHES['default'] = CACHES['redis']
 
 # Celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html

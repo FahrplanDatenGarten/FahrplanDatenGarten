@@ -6,5 +6,5 @@ from . import views
 
 app_name = 'verspaeti'
 urlpatterns = [
-    path('', cache_page(60 * 30)(views.IndexView.as_view()), name='index'),
+    path('', views.IndexView.as_view(), name='index'),
 ]

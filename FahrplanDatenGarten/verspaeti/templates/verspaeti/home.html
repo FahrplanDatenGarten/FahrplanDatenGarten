@@ -3,36 +3,42 @@
 {% block content %}
     <h1 class="title is-1 has-text-centered">Statistik</h1>
     <br>
-    <div class="columns">
-        <div class="column card is-3 is-offset-1">
-            <div class="card-header">
-                <p class="card-header-title">Versp&auml;tung heute</p>
-            </div>
-            <div class="card-content">
-                <ul class="flex-list top-vertical content-center center">
-                    <li class="border-box">
-                        {% autoescape off %}
-                            {{ plot_div }}
-                        {% endautoescape %}
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="column card is-3 is-offset-1">
-            <div class="card-header">
-                <div class="card-header-title">H&ouml;chste Versp&auml;tung</div>
-            </div>
-            <div class="card-content">
-                <p><b>{{ biggest_delay.journey.name }}</b> ist <b>{{ biggest_delay_time  }}</b> Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
-            </div>
-        </div>
-        <div class="column card is-3 is-offset-1">
-            <div class="card-header">
-                <div class="card-header-title">Durchschnittsversp&auml;tung</div>
-            </div>
-            <div class="card-content">
-                <p>Alle Z&uuml;ge der letzten 24h sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!</p>
-            </div>
-        </div>
+    {% if error_message %}
+    <div class="notification is-warning">
+      {{ error_message }}
     </div>
+    {% else %}
+        <div class="columns">
+            <div class="column card is-3 is-offset-1">
+                <div class="card-header">
+                    <p class="card-header-title">Versp&auml;tung heute</p>
+                </div>
+                <div class="card-content">
+                    <ul class="flex-list top-vertical content-center center">
+                        <li class="border-box">
+                            {% autoescape off %}
+                                {{ plot_div }}
+                            {% endautoescape %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column card is-3 is-offset-1">
+                <div class="card-header">
+                    <div class="card-header-title">H&ouml;chste Versp&auml;tung</div>
+                </div>
+                <div class="card-content">
+                    <p><b>{{ biggest_delay.journey.name }}</b> ist <b>{{ biggest_delay_time }}</b> Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
+                </div>
+            </div>
+            <div class="column card is-3 is-offset-1">
+                <div class="card-header">
+                    <div class="card-header-title">Durchschnittsversp&auml;tung</div>
+                </div>
+                <div class="card-content">
+                    <p>Alle Z&uuml;ge der letzten 24h sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
