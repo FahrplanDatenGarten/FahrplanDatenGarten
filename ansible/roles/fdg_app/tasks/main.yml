@@ -58,3 +58,7 @@
     dest: "{{ fdg_base_path }}/FahrplanDatenGarten/env.cfg"
     owner: "fdg"
     group: "fdg"
+  notify:
+    - reload celeryd service
+    - reload gunicorn service
+    - restart celerybeat service

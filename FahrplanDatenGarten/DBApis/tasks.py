@@ -16,7 +16,7 @@ logger = get_task_logger(__name__)
     run_every=(
         crontab(
             hour=settings.PERIODIC_IMPORT_TIMETABLES[0],
-            minute=settings.PERIODIC_IMPORT_JOURNEYS[1])),
+            minute=settings.PERIODIC_IMPORT_TIMETABLES[1])),
     name="import_all_timetables",
     ignore_result=True)
 def import_all_timetables():

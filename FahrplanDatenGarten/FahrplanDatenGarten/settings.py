@@ -180,4 +180,4 @@ PERIODIC_IMPORT_TIMETABLES = config.get(
     "periodic", 'timetables', fallback="*,15").split(',')
 
 PERIODIC_IMPORT_JOURNEYS = config.get(
-    "periodic", 'timetables', fallback="*,5").split(',')
+    "periodic", 'journeys', fallback="*,5").split(',')
