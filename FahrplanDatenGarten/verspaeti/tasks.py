@@ -10,7 +10,7 @@ from core.models import Journey, JourneyStop
 @periodic_task(
     run_every=crontab(
         hour="*",
-        minute="*/15"),
+        minute="*/30"),
     name="verspaeti_statistics",
     ignore_result=True)
 def verspaeti_statistics():

@@ -19,7 +19,6 @@
     state: directory
   with_items:
     - "{{ fdg_base_path }}"
-    - "{{ fdg_cache_root_path }}"
     - "{{ fdg_static_root_path }}"
 
 - name: Install requirements for project
