@@ -1,19 +1,19 @@
 [redis]
-mars.het.nue.de.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [postgresql]
-mars.het.nue.de.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [celerybeat]
-mars.het.nue.de.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [web]
-mars.het.nue.de.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [wireguard]
-mars.het.nue.de.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [worker]
-saturn.int.sig.de.labcode.de
-jupiter.int.goe.de.n0emis.eu
-#neptun.local.e1mo.de
+saturn.int.sig.de.vpn.fahrplandatengarten.de #em0lar
+jupiter.int.goe.de.vpn.fahrplandatengarten.de #n0emis
+#neptun.local.vpn.fahrplandatengarten.de #e1mo
