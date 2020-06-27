@@ -43,7 +43,7 @@ def import_timetable(stop_pk):
 def import_all_journeys():
     for journey in Journey.objects.filter(
             agency__name='db',
-            journeystop__planned_arrival_time__gte=datetime.datetime.now() - datetime.timedelta(days=1)
+            date__gte=datetime.date.today() - datetime.timedelta(days=1)
     ).all():
         import_journey.delay(journey.pk)
 

@@ -26,7 +26,7 @@ class HafasImport:
         except StopID.MultipleObjectsReturned:
             stopid = StopID.objects.filter(
                 stop=station, kind=self.idkind).first()
-        departure_journeys = self.hafasclient.departures(
+        departure_legs = self.hafasclient.departures(
             station=stopid.name,
             date=datetime.datetime.now(),
             duration=duration,
@@ -43,11 +43,13 @@ class HafasImport:
                 'taxi': False
             }
         )
-        for journey in departure_journeys:
+        for leg in departure_legs:
             dbJourney, _ = Journey.objects.update_or_create(
-                journey_id=journey.id,
+                journey_id=leg.id,
                 source=self.dbapis,
-                agency=self.db
+                agency=self.db,
+                date=leg.departure.date(),
+                name=leg.name
             )
 
     def import_journey(self, journey):
@@ -55,9 +57,6 @@ class HafasImport:
             trip = self.hafasclient.trip(journey.journey_id)
         except:  # TODO: Implement correct Exception when pyhafas has them
             return
-        journey.name = trip.name
-        journey.date = trip.departure.date()
-        journey.save()
         for stopover in trip.stopovers:
             eva_id = stopover.stop.id[-8:]
             dbStopID = StopID.objects.filter(
