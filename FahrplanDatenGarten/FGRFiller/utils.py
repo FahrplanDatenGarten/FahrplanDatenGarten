@@ -19,6 +19,7 @@ class FillFormFieldsCompensation(Enum):
 class FillFormFieldsBahnCard100SeasonTicket(Enum):
     BAHNCARD_100 = "BahnCard 100-Nr."
     SEASON_TICKET = "Zeitkarten-Nr."
+    OFF = "Nicht vorhanden"
 
     def __repr__(self):
         return '<%s.%s>' % (self.__class__.__name__, self.name)
