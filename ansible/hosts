@@ -13,6 +13,9 @@ mars.het.nue.de.vpn.fahrplandatengarten.de
 [wireguard]
 mars.het.nue.de.vpn.fahrplandatengarten.de
 
+[coredns]
+mars.het.nue.de.vpn.fahrplandatengarten.de
+
 [worker]
 saturn.int.sig.de.vpn.fahrplandatengarten.de #em0lar
 jupiter.int.goe.de.vpn.fahrplandatengarten.de #n0emis

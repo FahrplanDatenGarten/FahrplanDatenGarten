@@ -1,0 +1,26 @@
+# hetzner secondary ns
+(hetzner) {
+    ## robotns2.second-ns.de
+    transfer to 2a01:4f8:d0a:2004::2
+    transfer to 213.133.105.6
+
+    # robotns3.second-ns.com
+    transfer to 2001:67c:192c::add:a3
+    transfer to 193.47.99.3
+}
+
+fahrplandatengarten.de {
+    root /etc/coredns/zones
+    file db.fahrplandatengarten.de {
+        import hetzner
+    }
+}
+
+.:53 {
+    forward . {{ coredns_default_forward_server }} {
+        except fahrplandatengarten.de
+    }
+    cache {
+        success 5120 3600 300
+    }
+}

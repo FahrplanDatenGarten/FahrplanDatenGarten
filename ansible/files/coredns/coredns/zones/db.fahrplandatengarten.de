@@ -1,0 +1,54 @@
+$ORIGIN fahrplandatengarten.de.
+@ 3600 IN SOA ns.fahrplandatengarten.de. noc.fahrplandatengarten.de. (
+    {{ '%Y%m%d%H' | strftime }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
+    1800       ; refresh (30 min)
+    1800       ; retry (30 min)
+    86400      ; expire (1 day)
+    300       ; minimum (5min)
+    )
+
+@ 3600 IN NS hydrogen.ns.hetzner.com.
+@ 3600 IN NS oxygen.ns.hetzner.com.
+@ 3600 IN NS helium.ns.hetzner.de.
+
+;; Server
+;;;; Cloud
+mars.het.nue.de 3600 IN A 116.203.77.208
+mars.het.nue.de 3600 IN AAAA 2a01:4f8:c0c:c683::1
+traefik.mars.het.nue.de 3600 IN CNAME mars.het.nue.de
+
+mars.srv 3600 CNAME mars.het.nue.de ; compatibility reasons
+
+;; MAIL
+;;;; MX
+@ 3600 IN MX 1 cetus.het.hel.fi.labcode.de.
+
+;;;; SRV
+_autodiscover._tcp 3600 IN SRV 1 10 443 cetus.het.hel.fi.labcode.de.
+
+;;;; SPF
+@ 3600 IN TXT "v=spf1 a mx ~all"
+
+;;;; DKIM
+dkim._domainkey 3600 IN TXT "v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0Tu/ehbAolLL/LgZe0pa52hze0i1SdCVtPVC9A6xTrmCOus1CAXmr0dOj3ydzSG7jRHHEXdYcfWEcGHzYfFRI1zAk2kPsskAnbSAqDtNpM3dYt8yQ0cU5cVXF8OjHJhPKDSdZJ8aY3BFJ5vuRuTHir0EuTWrPfDFPoiTTEcNeRkvziL9b/I0UAtYs80ul4YgIZPAIbE23AIkt9LR6JFx0cBqbWzUb/PCVO8Nr0N1MNIytV5enixXJyYB0jU+la/lV6g4FjBHS5/Rzc9ApxR6uLZz128/J0b78xL4+8PD4qzX2PCwGf5F1bhIxMlr4q0Pwstg6xpRJik/ujRlWQdGKQIDAQAB"
+
+;;;; CNAME
+autoconfig 3600 IN CNAME cetus.het.hel.fi.labcode.de.
+autodiscover 3600 IN CNAME cetus.het.hel.fi.labcode.de.
+mail 3600 IN CNAME cetus.het.hel.fi.labcode.de.
+
+;; CAA
+*	3600	IN	CAA	0 issue "letsencrypt.org"
+@	3600	IN	CAA	0 issue "letsencrypt.org"
+
+;; Pages
+@ 3600 IN CNAME mars.het.nue.de
+www 3600 IN CNAME mars.het.nue.de
+
+;; VPN
+;;; Server
+{% for host in groups['all'] %}
+{% if hostvars[host].wireguard_address is defined %}
+{{ hostvars[host].inventory_hostname }}. 300 IN AAAA {{ hostvars[host].wireguard_address }}
+{% endif %}
+{% endfor %}

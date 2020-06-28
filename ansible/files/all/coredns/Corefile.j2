@@ -1,14 +1,5 @@
-vpn.fahrplandatengarten.de {
-    forward . {{ coredns_vpn_fdg_forward_server }}
-    cache {
-        success 512 3600 300
-    }
-}
-
 .:53 {
-    forward . {{ coredns_default_forward_server }} {
-        except vpn.fahrplandatengarten.de
-    }
+    forward . {{ coredns_default_forward_server }}
     cache {
         success 5120 3600 300
     }
