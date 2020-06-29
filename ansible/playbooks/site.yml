@@ -18,6 +18,12 @@
         name: resolvconf
         state: restarted
   tasks:
+    - name: Disable proxmox changing resolv.conf
+      file:
+        path: "/etc/.pve-ignore.resolv.conf"
+        state: touch
+      when: ansible_virtualization_type == "lxc"
+
     - name: Install resolvconf apt package
       apt:
         name:
