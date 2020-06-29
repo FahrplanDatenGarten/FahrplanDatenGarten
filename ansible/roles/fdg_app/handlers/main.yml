@@ -3,26 +3,28 @@
   command: "{{ fdg_base_path }}/.venv/bin/python manage.py collectstatic --noinput"
   args:
     chdir: "{{ fdg_base_path }}/FahrplanDatenGarten"
+  when: "'web' in group_names"
 
 - name: migrate database
   command: "{{ fdg_base_path }}/.venv/bin/python manage.py migrate"
   args:
     chdir: "{{ fdg_base_path }}/FahrplanDatenGarten"
+  when: "'web' in group_names"
 
 - name: reload celeryd service
   systemd:
     name: "celeryd"
     state: reloaded
-  ignore_errors: yes
+  when: "'worker' in group_names"
 
 - name: reload gunicorn service
   systemd:
     name: "gunicorn.service"
     state: reloaded
-  ignore_errors: yes
+  when: "'web' in group_names"
 
 - name: restart celerybeat service
   systemd:
     name: "celerybeat"
     state: restarted
-  ignore_errors: yes
+  when: "'celerybeat' in group_names"
