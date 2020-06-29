@@ -16,15 +16,18 @@
     name: "celeryd"
     state: reloaded
   when: "'worker' in group_names"
+  ignore_errors: yes
 
 - name: reload gunicorn service
   systemd:
     name: "gunicorn.service"
     state: reloaded
   when: "'web' in group_names"
+  ignore_errors: yes
 
 - name: restart celerybeat service
   systemd:
     name: "celerybeat"
     state: restarted
   when: "'celerybeat' in group_names"
+  ignore_errors: yes
