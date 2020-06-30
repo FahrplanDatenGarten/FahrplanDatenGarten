@@ -27,7 +27,8 @@ fahrplandatengarten.de {
     }
 }
 
-.:53 {
+. {
+    bind 127.0.0.1 ::1
     forward . {{ coredns_default_forward_server }} {
         except fahrplandatengarten.de
     }

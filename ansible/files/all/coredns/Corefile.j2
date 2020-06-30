@@ -1,4 +1,5 @@
-.:53 {
+. {
+    bind 127.0.0.1 ::1
     forward . {{ coredns_default_forward_server }}
     cache {
         success 5120 3600 300
