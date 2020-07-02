@@ -44,13 +44,14 @@ class HafasImport:
             }
         )
         for leg in departure_legs:
-            dbJourney, _ = Journey.objects.update_or_create(
-                journey_id=leg.id,
-                source=self.dbapis,
-                agency=self.db,
-                date=leg.departure.date(),
-                name=leg.name
-            )
+            if not Journey.objects.filter(journey_id=leg.id).exists():
+                Journey.objects.create(
+                    journey_id=leg.id,
+                    source=self.dbapis,
+                    agency=self.db,
+                    date=leg.departure.date(),
+                    name=leg.name
+                )
 
     def import_journey(self, journey):
         try:
