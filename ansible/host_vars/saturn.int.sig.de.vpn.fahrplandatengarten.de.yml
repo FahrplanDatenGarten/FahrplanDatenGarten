@@ -4,4 +4,4 @@ celeryd_concurrency: 8
 wireguard_address: "fd59:974e:6ee8:10::1"
 wireguard_private_key: "{{ lookup('passwordstore', 'infra/host/' + ansible_fqdn + '/wireguard') }}"
 wireguard_public_key: "{{ lookup('passwordstore', 'infra/host/' + ansible_fqdn + '/wireguard subkey=public') }}"
-coredns_default_forward_server: "fd00::c482:21ff:fe0d:b08d 10.151.0.3"
+coredns_default_forward_server: "2001:470:7285:10::1 10.151.4.254"
