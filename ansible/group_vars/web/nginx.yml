@@ -2,7 +2,7 @@
 nginx_vhosts:
   - listen: "8001"
     server_name: "{{ ansible_fqdn }}"
-    root: "{{ fdg_static_root_path | dirname }}"
+    root: "{{ fdg_static_root_path }}"
     index: "index.html"
     state: "present"
     filename: "fdg_static.conf"

@@ -7,6 +7,8 @@ http:
         - "https"
       tls:
         certResolver: "le_http"
+      middlewares:
+        - "fdg_app_static_prefixremove"
       priority: 2
     fdg_app-http:
       rule: "Host(`fahrplandatengarten.de`) || Host(`www.fahrplandatengarten.de`)"
@@ -32,4 +34,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://localhost:8001"
-
+  middlewares:
+    fdg_app_static_prefixremove:
+      stripPrefix:
+        prefixes:
+          - "/static"
