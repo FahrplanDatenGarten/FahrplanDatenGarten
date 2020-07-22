@@ -12,7 +12,7 @@ pytz==2020.1
 psycopg2-binary==2.8.5
 plotly==4.5.4
 -r FahrplanDatenGarten/netzkarte/requirements.txt
-git+https://github.com/n0emis/pyhafas.git
+pyhafas==0.1.0
 
 lxml~=4.5.1
 django-redis~=4.12.1
