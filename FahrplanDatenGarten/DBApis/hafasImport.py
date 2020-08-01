@@ -49,7 +49,7 @@ class HafasImport:
                     journey_id=leg.id,
                     source=self.dbapis,
                     agency=self.db,
-                    date=leg.departure.date(),
+                    date=leg.dateTime.date(),
                     name=leg.name
                 )
 
