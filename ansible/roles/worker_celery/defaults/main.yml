@@ -4,6 +4,7 @@ celery_app: FahrplanDatenGarten
 celeryd_nodes: 1
 celeryd_concurrency: 8
 celeryd_opts: "--time-limit=300 --concurrency={{ celeryd_concurrency }}"
-celeryd_log_file: "/var/log/celery/%%n%%I.log"
+celeryd_log_directory: "/var/log/celery"
+celeryd_log_file: "{{ celeryd_log_directory }}/%%n%%I.log"
 celeryd_log_level: WARNING
 celeryd_pid_file: "/run/celery/%%n.pid"

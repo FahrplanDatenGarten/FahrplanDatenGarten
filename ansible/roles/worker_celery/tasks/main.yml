@@ -16,6 +16,12 @@
     dest: "/etc/tmpfiles.d/celeryd.conf"
   notify: create tmpdirs
 
+- name: Add logrotate config
+  template:
+    src: "logrotate.j2"
+    dest: "/etc/logrotate.d/celeryd"
+    mode: 0644
+
 - name: Ensure celeryd service is enabled and started
   systemd:
     daemon_reload: yes
