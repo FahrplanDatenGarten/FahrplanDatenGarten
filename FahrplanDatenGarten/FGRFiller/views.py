@@ -4,6 +4,7 @@ import random
 import requests
 from django.http import FileResponse
 from django.shortcuts import render
+from django.utils import timezone
 from django.views.generic import View
 from lxml import etree
 
@@ -58,10 +59,10 @@ class BookingNrAssistant1View(View):
                                 journey__name=train.find('gat').text + " " + train.find('zugnr').text,
                                 stop__stopid__name=train.find('arr').find('nr').text,
                                 stop__stopid__kind__name="eva",
-                                planned_arrival_time=datetime.datetime.fromisoformat(
+                                planned_arrival_time=timezone.make_aware(datetime.datetime.fromisoformat(
                                     train.find('arr').attrib['dt']).replace(
                                     hour=train_arrival_planned_time.hour,
-                                    minute=train_arrival_planned_time.minute),
+                                    minute=train_arrival_planned_time.minute)),
                         ).first().actual_arrival_delay >= datetime.timedelta(minutes=5):
                             first_delayed_train = train
                             break
@@ -70,12 +71,12 @@ class BookingNrAssistant1View(View):
 
                 try:
                     arrival_actual_datetime = JourneyStop.objects.filter(
-                        journey__name=trainlist[-1].attrib['tn'],
+                        journey__name=trainlist[-1].find('gat').text + " " + trainlist[-1].find('zugnr').text,
                         stop__stopid__name=trainlist[-1].find('arr').find('nr').text,
                         stop__stopid__kind__name="eva",
-                        planned_arrival_time=datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
+                        planned_arrival_time=timezone.make_aware(datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
                             hour=arrival_planned_time.hour,
-                            minute=arrival_planned_time.minute),
+                            minute=arrival_planned_time.minute)),
                     ).first().get_actual_arrival_time()
                 except AttributeError:
                     arrival_actual_datetime = None
@@ -89,8 +90,8 @@ class BookingNrAssistant1View(View):
                         "%H:%M"),
                     "arrival_stop_name": trainlist[-1].find('arr').find('n').text,
                     "arrival_planned_time": arrival_planned_time.strftime("%H:%M"),
-                    "arrival_actual_date": arrival_actual_datetime.strftime('%Y-%m-%d') if arrival_actual_datetime is not None else "",
-                    "arrival_actual_time": arrival_actual_datetime.strftime('%H:%M') if arrival_actual_datetime is not None else "",
+                    "arrival_actual_date": timezone.localdate(arrival_actual_datetime).strftime('%Y-%m-%d') if arrival_actual_datetime is not None else "",
+                    "arrival_actual_time": timezone.localtime(arrival_actual_datetime).strftime('%H:%M') if arrival_actual_datetime is not None else "",
                     "arrival_actual_product_type": trainlist[-1].find('gat').text,
                     "arrival_actual_product_number": trainlist[-1].find('zugnr').text,
                     "first_name": parsed_response.find('order').find('tcklist')[0].find('mtk').find('reisender_vorname').text,
