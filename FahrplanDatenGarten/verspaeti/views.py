@@ -26,7 +26,7 @@ class IndexView(TemplateView):
 
             context['plot_div'] = plot_div
             context['journeys_delayed'] = verspaeti_data_cache['num_delayed_journeys'],
-            context['biggest_delay'] = verspaeti_data_cache['biggest_delay']
+            context['biggest_delay_name'] = verspaeti_data_cache['biggest_delay_name']
             context['biggest_delay_time'] = verspaeti_data_cache['biggest_delay_time']
             context['average_delay'] = verspaeti_data_cache['average_delay']
         else:

@@ -1,8 +1,10 @@
 import datetime
+from typing import List, Tuple
 
 from celery.schedules import crontab
 from celery.task import periodic_task
 from django.core.cache import cache
+from django.db.models import Avg
 
 from core.models import Journey, JourneyStop
 
@@ -18,15 +20,24 @@ def verspaeti_statistics():
         journeystop__planned_arrival_time__gte=datetime.datetime.now() - datetime.timedelta(days=1)
     ).distinct().all()
 
-    delayed_stops = JourneyStop.objects.filter(
-        journey__in=current_journeys,
-        actual_departure_delay__gte=datetime.timedelta(minutes=5)).order_by('-actual_departure_delay')
+    all_journey_delays: List[datetime.timedelta] = []
+    delayed_journey_delays: List[Tuple[int, datetime.timedelta]] = []
 
+    for journey in current_journeys:
+        aggregated_journey_stops = JourneyStop.objects.filter(
+            journey=journey
+        ).aggregate(Avg('actual_arrival_delay'))
+        if aggregated_journey_stops['actual_arrival_delay__avg'] is not None:
+            all_journey_delays.append(aggregated_journey_stops['actual_arrival_delay__avg'])
+            if aggregated_journey_stops['actual_arrival_delay__avg'] > datetime.timedelta(minutes=5):
+                delayed_journey_delays.append((journey.pk, aggregated_journey_stops['actual_arrival_delay__avg']))
+
+    sorted_delayed_journey_delays = sorted(delayed_journey_delays, key=lambda x: x[1], reverse=True)
     cache.set("verspaeti_data", {
         "num_current_journeys": current_journeys.count(),
-        "num_delayed_journeys": len({d.journey.name for d in delayed_stops}),
-        "biggest_delay": delayed_stops[0] if len(delayed_stops) else 0,
-        "biggest_delay_time": int(delayed_stops[0].actual_departure_delay.seconds / 60) if len(delayed_stops) else 0,
-        "average_delay": round((sum([d.actual_departure_delay.seconds / 60 for d in delayed_stops]) / len(
-            delayed_stops))) if delayed_stops else None
+        "num_delayed_journeys": len(delayed_journey_delays),
+        "biggest_delay_name": JourneyStop.objects.get(pk=sorted_delayed_journey_delays[0][0]).journey.name if delayed_journey_delays else 0,
+        "biggest_delay_time": round(sorted_delayed_journey_delays[0][1].seconds / 60) if len(delayed_journey_delays) else 0,
+        "average_delay": round(
+            (sum(all_journey_delays, datetime.timedelta(0)) / len(all_journey_delays)).seconds / 60) if delayed_journey_delays else None
     }, 45 * 60)
