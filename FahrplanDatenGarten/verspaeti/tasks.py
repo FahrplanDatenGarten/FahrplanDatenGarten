@@ -36,7 +36,7 @@ def verspaeti_statistics():
     cache.set("verspaeti_data", {
         "num_current_journeys": current_journeys.count(),
         "num_delayed_journeys": len(delayed_journey_delays),
-        "biggest_delay_name": JourneyStop.objects.get(pk=sorted_delayed_journey_delays[0][0]).journey.name if delayed_journey_delays else 0,
+        "biggest_delay_name": Journey.objects.get(pk=sorted_delayed_journey_delays[0][0]).name if delayed_journey_delays else 0,
         "biggest_delay_time": round(sorted_delayed_journey_delays[0][1].seconds / 60) if len(delayed_journey_delays) else 0,
         "average_delay": round(
             (sum(all_journey_delays, datetime.timedelta(0)) / len(all_journey_delays)).seconds / 60) if delayed_journey_delays else None
