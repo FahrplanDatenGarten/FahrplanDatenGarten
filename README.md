@@ -35,12 +35,9 @@ If you want to re-enable the VEnv later, simply run `source .venv/bin/activate` 
 pip install -U -r requirements.txt
 ```
 
-## Set up the database *(optional)*
-Change the `DATABASE_URL` in `.env` basend on the `.env.example` and https://github.com/jacobian/dj-database-url. This is not needed in a development-enviroment.
+## Set up the database
+Copy `.env.example` to `.env` and change the `database` block.
 Now run
-```
-source .env
-```
 
 ## Migrate your database
 This and all later commands will have to be run from inside the folder `FahrplanDatenGarten`.

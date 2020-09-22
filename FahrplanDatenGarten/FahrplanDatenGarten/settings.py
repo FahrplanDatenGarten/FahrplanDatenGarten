@@ -83,11 +83,16 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        config.get(
-            'general',
-            'database_url',
-            fallback="sqlite:///../db.sqlite3"))}
+    'default': {
+        'ENGINE': 'django.db.backends.' + config.get('database', 'engine'),
+        'HOST': config.get('database', 'host', fallback=''),
+        'NAME': config.get('database', 'name'),
+        'USER': config.get('database', 'user', fallback=''),
+        'PASSWORD': config.get('database', 'password', fallback=''),
+        'PORT': config.get('database', 'port', fallback=''),
+        'CONN_MAX_AGE': 0 if config.get('database', 'engine') == 'sqlite3' else 120
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -139,7 +144,6 @@ COMPRESS_PRECOMPILERS = [
 ]
 LIBSASS_SOURCE_COMMENTS = False
 COMPRESS_ROOT = os.path.join(BASE_DIR, "static")
-
 
 CACHES = {
     'default': {
