@@ -9,10 +9,12 @@ from django.views.generic import View
 from lxml import etree
 
 import FGRFiller.utils
-from FGRFiller.forms.assistant_order_number import FGRFillerAsstiantOrderNumberForm
-from FGRFiller.forms.data import FGRFillerDataForm
-from FGRFiller.utils import FillFormFieldsBahnCard100SeasonTicket, FillFormFieldsCompensation
 from core.models import JourneyStop
+from FGRFiller.forms.assistant_order_number import \
+    FGRFillerAsstiantOrderNumberForm
+from FGRFiller.forms.data import FGRFillerDataForm
+from FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
+                             FillFormFieldsCompensation)
 
 
 class StartView(View):
@@ -32,7 +34,8 @@ class BookingNrAssistant1View(View):
         assistant_form = FGRFillerAsstiantOrderNumberForm(request.POST)
         if assistant_form.is_valid():
             xml = '<rqorder on="{}"/><authname tln="{}"/>'.format(
-                assistant_form.cleaned_data['order_number'], assistant_form.cleaned_data['last_name'])
+                assistant_form.cleaned_data['order_number'],
+                assistant_form.cleaned_data['last_name'])
             url = 'https://fahrkarten.bahn.de/mobile/dbc/xs.go'
             tnr = random.getrandbits(64)
             ts = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
@@ -56,14 +59,16 @@ class BookingNrAssistant1View(View):
                         train.find('arr').attrib['t'])
                     try:
                         if JourneyStop.objects.filter(
-                                journey__name=train.find('gat').text + " " + train.find('zugnr').text,
-                                stop__stopid__name=train.find('arr').find('nr').text,
-                                stop__stopid__kind__name="eva",
-                                planned_arrival_time=timezone.make_aware(datetime.datetime.fromisoformat(
+                            journey__name=train.find('gat').text + " " + train.find('zugnr').text,
+                            stop__stopid__name=train.find('arr').find('nr').text,
+                            stop__stopid__kind__name="eva",
+                            planned_arrival_time=timezone.make_aware(
+                                datetime.datetime.fromisoformat(
                                     train.find('arr').attrib['dt']).replace(
                                     hour=train_arrival_planned_time.hour,
                                     minute=train_arrival_planned_time.minute)),
-                        ).first().actual_arrival_delay >= datetime.timedelta(minutes=5):
+                        ).first().actual_arrival_delay >= datetime.timedelta(
+                                minutes=5):
                             first_delayed_train = train
                             break
                     except AttributeError:
@@ -108,10 +113,12 @@ class BookingNrAssistant1View(View):
                     "form": form
                 })
             else:
-                return render(request, "FGRFiller/start.html", {
-                    "assistant_order_number_form": assistant_form,
-                    "assistant_order_number_form_error": parsed_response.find('error').find('txt').text
-                })
+                return render(
+                    request,
+                    "FGRFiller/start.html",
+                    {
+                        "assistant_order_number_form": assistant_form,
+                        "assistant_order_number_form_error": parsed_response.find('error').find('txt').text})
         else:
             return render(request, "FGRFiller/start.html", {
                 "assistant_order_number_form": assistant_form
@@ -157,7 +164,7 @@ class GeneratePDFView(View):
                     form.cleaned_data['compensation'],
                     FillFormFieldsCompensation) else FillFormFieldsCompensation[
                     form.cleaned_data['compensation'].split('.')[1]] if form.cleaned_data[
-                                                                            'compensation'] != '' else None,
+                    'compensation'] != '' else None,
                 academic_title=form.cleaned_data['academic_title'],
                 company=form.cleaned_data['company'],
                 first_name=form.cleaned_data['first_name'],
@@ -173,7 +180,7 @@ class GeneratePDFView(View):
                     form.cleaned_data['bahncard_100_season_ticket'],
                     FillFormFieldsBahnCard100SeasonTicket) else FillFormFieldsBahnCard100SeasonTicket[
                     form.cleaned_data['bahncard_100_season_ticket'].split('.')[1]] if form.cleaned_data[
-                                                                                          'bahncard_100_season_ticket'] != '' else None,
+                    'bahncard_100_season_ticket'] != '' else None,
                 bahncard_100_season_ticket_number=form.cleaned_data['bahncard_100_season_ticket_number'],
                 date_of_birth=form.cleaned_data['date_of_birth'])
             return FileResponse(

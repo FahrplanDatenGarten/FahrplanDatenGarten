@@ -19,7 +19,7 @@ git submodule update
 
 ## Install Debian Requirements *(only on debian systems)*
 ```bash
-sudo apt install python3-dev python3-wheel python3-venv
+sudo apt install python3-dev python3-venv
 ```
 ## Set up the VEnv *(optional, but recommended)*
 Using an VEnv will help you to avoid dependency-(version)-conflicts.
@@ -37,7 +37,6 @@ pip install -U -r requirements.txt
 
 ## Set up the database
 Copy `.env.example` to `.env` and change the `database` block.
-Now run
 
 ## Migrate your database
 This and all later commands will have to be run from inside the folder `FahrplanDatenGarten`.

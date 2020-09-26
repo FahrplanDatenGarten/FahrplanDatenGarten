@@ -4,8 +4,8 @@ import pytz
 from pyhafas import HafasClient
 from pyhafas.profile import DBProfile
 
-from core.models import (Agency, Journey, Source, StopID,
-                         StopIDKind, JourneyStop)
+from core.models import (Agency, Journey, JourneyStop, Source, StopID,
+                         StopIDKind)
 
 
 class HafasImport:
@@ -56,7 +56,7 @@ class HafasImport:
     def import_journey(self, journey):
         try:
             trip = self.hafasclient.trip(journey.journey_id)
-        except:  # TODO: Implement correct Exception when pyhafas has them
+        except BaseException:  # TODO: Implement correct Exception when pyhafas has them
             return
         for stopover in trip.stopovers:
             eva_id = stopover.stop.id[-8:]
@@ -65,7 +65,9 @@ class HafasImport:
                 source=self.dbapis
             ).first()
             if dbStopID is None:
-                print("The Stop {} with ID {} could not be found!".format(stopover.stop.name, eva_id))
+                print(
+                    "The Stop {} with ID {} could not be found!".format(
+                        stopover.stop.name, eva_id))
                 continue
             dbStop = dbStopID.stop
             if JourneyStop.objects.filter(

@@ -164,22 +164,22 @@ if config.has_option('caching', 'redis_location'):
 # Celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html
 
-CELERY_RESULT_BACKEND = config.get(
+CELERYCONF_RESULT_BACKEND = config.get(
     'celery',
     'result_backend',
     fallback='redis://localhost/0')
 
-CELERY_BROKER_URL = config.get(
+CELERYCONF_BROKER_URL = config.get(
     'celery',
     'broker_url',
     fallback='redis://localhost/0')
 
-CELERY_TASK_SERIALIZER = 'json'
+CELERYCONF_TASK_SERIALIZER = 'json'
 
-CELERY_TASK_IGNORE_RESULT = config.getboolean(
+CELERYCONF_TASK_IGNORE_RESULT = config.getboolean(
     'celery', 'task_ignore_result', fallback=False)
 
-CELERY_TASK_STORE_ERRORS_EVEN_IF_IGNORED = config.getboolean(
+CELERYCONF_TASK_STORE_ERRORS_EVEN_IF_IGNORED = config.getboolean(
     'celery', 'task_store_errors_even_if_ignored', fallback=True)
 
 # FahrplanDatenGarten's custom configuration

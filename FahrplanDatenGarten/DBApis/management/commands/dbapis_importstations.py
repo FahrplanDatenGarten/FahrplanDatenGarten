@@ -6,9 +6,8 @@ import io
 import requests
 from django.core.management.base import BaseCommand
 
-
-from DBApis.tasks import dbapis_importstations_parse_station_row
 from core.models import Agency, Source, StopIDKind
+from DBApis.tasks import dbapis_importstations_parse_station_row
 
 
 class Command(BaseCommand):
@@ -37,4 +36,5 @@ class Command(BaseCommand):
         csv_file.seek(0)
         reader = csv.DictReader(csv_file, delimiter=';')
         for row in reader:
-            dbapis_importstations_parse_station_row.delay(row, agency.pk, source.pk, kind.pk)
+            dbapis_importstations_parse_station_row.delay(
+                row, agency.pk, source.pk, kind.pk)

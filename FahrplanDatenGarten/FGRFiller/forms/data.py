@@ -1,6 +1,7 @@
 from django import forms
 
-from FGRFiller.utils import FillFormFieldsCompensation, FillFormFieldsBahnCard100SeasonTicket
+from FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
+                             FillFormFieldsCompensation)
 
 
 class FGRFillerDataForm(forms.Form):
