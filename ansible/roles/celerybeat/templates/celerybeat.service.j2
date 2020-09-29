@@ -7,8 +7,8 @@ Type=simple
 User=celery
 Group=celery
 WorkingDirectory={{ fdg_base_path }}/FahrplanDatenGarten
-ExecStart=/bin/sh -c '{{ celery_bin }} beat \
-  -A {{ celery_app }} --pidfile={{ celerybeat_pid_file }} \
+ExecStart=/bin/sh -c '{{ celery_bin }} -A {{ celery_app }}  beat \
+  --pidfile={{ celerybeat_pid_file }} \
   --logfile={{ celerybeat_log_file }} --loglevel={{ celerybeat_log_level }} {{ celerybeat_opts }}'
 
 [Install]

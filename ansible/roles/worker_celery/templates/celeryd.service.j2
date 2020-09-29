@@ -8,13 +8,14 @@ User=celery
 Group=celery
 Restart=always
 WorkingDirectory={{ fdg_base_path }}/FahrplanDatenGarten
+Environment="CELERY_APP={{ celery_app }}"
 ExecStart=/bin/sh -c '{{ celery_bin }} multi start {{ celeryd_nodes }} \
-  -A {{ celery_app }} --pidfile={{ celeryd_pid_file }} \
+  --pidfile={{ celeryd_pid_file }} \
   --logfile={{ celeryd_log_file }} --loglevel={{ celeryd_log_level }} {{ celeryd_opts }}'
 ExecStop=/bin/sh -c '{{ celery_bin }} multi stopwait {{ celeryd_nodes }} \
   --pidfile={{ celeryd_pid_file }}'
 ExecReload=/bin/sh -c '{{ celery_bin }} multi restart {{ celeryd_nodes }} \
-  -A {{ celery_app }} --pidfile={{ celeryd_pid_file }} \
+  --pidfile={{ celeryd_pid_file }} \
   --logfile={{ celeryd_log_file }} --loglevel={{ celeryd_log_level }} {{ celeryd_opts }}'
 
 [Install]
