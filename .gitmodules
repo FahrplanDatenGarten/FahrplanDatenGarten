@@ -1,6 +1,6 @@
 [submodule "FahrplanDatenGarten/netzkarte"]
 	path = FahrplanDatenGarten/netzkarte
-	url = https://github.com/Jugendhackt/deutschlandkarte-a-la-bahn
+	url = https://github.com/FahrplanDatenGarten/deutschlandkarte-a-la-bahn
 [submodule "FahrplanDatenGarten/static/roboto"]
 	path = FahrplanDatenGarten/static/roboto
 	url = https://git.labcode.dev/static_libs/roboto.git
