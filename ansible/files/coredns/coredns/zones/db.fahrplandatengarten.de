@@ -52,3 +52,33 @@ www 3600 IN CNAME mars.het.nue.de
 {{ hostvars[host].inventory_hostname }}. 300 IN AAAA {{ hostvars[host].wireguard_address }}
 {% endif %}
 {% endfor %}
+
+
+;; Monitoring
+;;; Hosts
+neso.het.fks.de 3600 IN A 159.69.53.246
+neso.het.fks.de 3600 IN AAAA 2a01:4f8:c17:de59::1
+
+naiad.ncp.nue.de 3600 IN A 152.89.107.148
+naiad.ncp.nue.de 3600 IN AAAA 2a03:4000:39:7bf::1
+
+nereid.ovh.fra.de 3600 IN A 51.68.188.52
+nereid.ovh.fra.de 3600 IN AAAA 2001:41d0:701:1100::88e
+
+;;; Services
+neso.monitoring 3600 IN CNAME neso.het.fks.de
+naiad.monitoring 3600 IN CNAME naiad.ncp.nue.de
+nereid.monitoring 3600 IN CNAME nereid.ovh.fra.de
+
+monitoring 3600 IN CNAME neso.monitoring
+monitoring 3600 IN CNAME naiad.monitoring
+monitoring 3600 IN CNAME nereid.monitoring
+
+grafana.monitoring 3600 IN CNAME monitoring
+
+graphite.monitoring 3600 IN CNAME monitoring
+
+icinga.monitoring 3600 IN CNAME neso.monitoring
+icinga.monitoring 3600 IN CNAME naiad.monitoring
+
+prometheus.monitoring 3600 IN CNAME nereid.monitoring
