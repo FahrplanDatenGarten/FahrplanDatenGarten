@@ -50,7 +50,8 @@ class HafasImport:
                     source=self.dbapis,
                     agency=self.db,
                     date=leg.dateTime.date(),
-                    name=leg.name
+                    name=leg.name,
+                    cancelled=leg.cancelled
                 )
 
     def import_journey(self, journey):
@@ -78,7 +79,8 @@ class HafasImport:
                     planned_departure_time=stopover.departure,
                     actual_departure_delay=stopover.departureDelay,
                     planned_arrival_time=stopover.arrival,
-                    actual_arrival_delay=stopover.arrivalDelay)
+                    actual_arrival_delay=stopover.arrivalDelay,
+                    cancelled=stopover.cancelled)
             else:
                 journeyStop = JourneyStop.objects.get(
                     stop=dbStop, journey=journey)

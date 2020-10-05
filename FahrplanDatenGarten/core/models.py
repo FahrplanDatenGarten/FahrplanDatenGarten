@@ -84,6 +84,7 @@ class Journey(models.Model):
     journey_id = models.CharField(max_length=255, unique=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
+    cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         if self.name is not None:
@@ -102,6 +103,7 @@ class JourneyStop(models.Model):
     planned_departure_time = models.DateTimeField(null=True)
     actual_arrival_delay = models.DurationField(null=True)
     actual_departure_delay = models.DurationField(null=True)
+    cancelled = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["planned_arrival_time"]
