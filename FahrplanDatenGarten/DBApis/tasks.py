@@ -1,16 +1,13 @@
 import datetime
+from decimal import Decimal
 
 from celery.schedules import crontab
 from celery.utils.log import get_task_logger
+from core.models import Journey, Provider, Source, Stop, StopID, StopIDKind
+from DBApis.hafasImport import HafasImport
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from pyhafas import HafasClient
-from pyhafas.profile import DBProfile
 
 from FahrplanDatenGarten.celery import app
-from core.models import (Agency, Journey, Source, Stop, StopID, StopIDKind,
-                         StopLocation, StopName)
-from DBApis.hafasImport import HafasImport
 
 logger = get_task_logger(__name__)
 
@@ -33,7 +30,9 @@ def setup_dbapis_configure_periodic_tasks(sender, **kwargs):
 
 @app.task(name="import_all_timetables", ignore_result=True)
 def import_all_timetables():
-    for stop in Stop.objects.filter(stopid__kind__name='eva').all():
+    for stop in Stop.objects.filter(
+            provider__internal_name="db",
+            has_long_distance_traffic=True).all():
         import_timetable.delay(stop.pk)
 
 
@@ -46,7 +45,7 @@ def import_timetable(stop_pk):
 @app.task(name="import_all_journeys", ignore_result=True)
 def import_all_journeys():
     for journey in Journey.objects.filter(
-            agency__name='db',
+            source__internal_name='db_hafas',
             date__gte=datetime.date.today() - datetime.timedelta(days=1)
     ).all():
         import_journey.delay(journey.pk)
@@ -60,42 +59,43 @@ def import_journey(journey_pk):
 
 @app.task(name="dbapis_importstations_parse_station_row")
 def dbapis_importstations_parse_station_row(
-        row, agency_pk, source_pk, kind_pk):
-    hafas_client = HafasClient(DBProfile())
-
-    agency = Agency.objects.get(pk=agency_pk)
+        row, provider_pk, source_pk, kind_pk):
+    provider = Provider.objects.get(pk=provider_pk)
     source = Source.objects.get(pk=source_pk)
     kind = StopIDKind.objects.get(pk=kind_pk)
-    if row['EVA_NR'] == '':
+    if row['EVA_NR'] == '' or row['IFOPT'] == '':
         return
     stop = Stop.objects.filter(
-        stopid__name=row['EVA_NR'],
-        stopid__kind__in=agency.used_id_kind.all()
+        stopid__external_id=row['EVA_NR'],
+        stopid__kind=kind,
+        stopid__kind__provider=provider
     ).first()
-    if stop is None:
-        stop = Stop()
-        stop.save()
-    StopName.objects.get_or_create(
-        name=row['NAME'], stop=stop, source=source)
-    StopID.objects.get_or_create(
-        stop=stop,
-        name=row['EVA_NR'],
-        source=source,
-        kind=kind
-    )
-    try:
-        StopLocation.objects.get(
-            stop=stop,
-            source=source
-        )
-    except ObjectDoesNotExist:
-        try:
-            hafasLocation = hafas_client.locations(row['EVA_NR'])[0]
-            StopLocation.objects.create(
-                stop=stop,
-                latitude=hafasLocation.latitude,
-                longitude=hafasLocation.longitude,
-                source=source
+    if stop is None or stop.provider == provider:
+        if stop is None:
+            stop = Stop.objects.create(
+                ifopt=row['IFOPT'],
+                country=row['IFOPT'][:2],
+                latitude=Decimal(row['Breite'].replace(',', '.')),
+                longitude=Decimal(row['Laenge'].replace(',', '.')),
+                name=row['NAME'],
+                provider=provider,
+                has_long_distance_traffic=row['Verkehr'] == "FV"
             )
-        except IndexError:
-            return
+            StopID.objects.get_or_create(
+                stop=stop,
+                external_id=row['EVA_NR'],
+                source=source,
+                kind=kind
+            )
+        else:
+            stop.latitude = Decimal(row['Breite'].replace(',', '.'))
+            stop.longitude = Decimal(row['Laenge'].replace(',', '.'))
+            stop.name = row['NAME']
+            stop.has_long_distance_traffic = row['Verkehr'] == "FV"
+            stop.save()
+        StopID.objects.get_or_create(
+            stop=stop,
+            external_id=row['EVA_NR'],
+            source=source,
+            kind=kind
+        )

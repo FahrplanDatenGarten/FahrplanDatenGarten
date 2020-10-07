@@ -1,47 +1,47 @@
 import datetime
 
 from django.db import models
+from django_countries.fields import CountryField
 
-# Create your models here.
+
+class Provider(models.Model):
+    friendly_name = models.CharField(max_length=255)
+    internal_name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.friendly_name
+
+
+class Source(models.Model):
+    friendly_name = models.CharField(max_length=255)
+    internal_name = models.CharField(max_length=255, unique=True)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.friendly_name
 
 
 class Stop(models.Model):
-    pass
+    ifopt = models.CharField(max_length=255)
+    country = CountryField()
+    latitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True)
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True)
+    name = models.CharField(max_length=255)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+    has_long_distance_traffic = models.BooleanField()
 
 
 class StopIDKind(models.Model):
     name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Source(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-class Agency(models.Model):
-    name = models.CharField(max_length=255)
-    used_id_kind = models.ManyToManyField(StopIDKind, blank=True)
-
-    class Meta:
-        verbose_name_plural = "agencies"
-
-    def __str__(self):
-        return self.name
-
-
-class StopName(models.Model):
-    stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    priority = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ["-priority"]
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -49,32 +49,16 @@ class StopName(models.Model):
 
 class StopID(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    external_id = models.CharField(max_length=255)
     source = models.ForeignKey(
         Source,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True)
+        on_delete=models.CASCADE)
     kind = models.ForeignKey(
         StopIDKind,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True)
+        on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
-
-
-class StopLocation(models.Model):
-    stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
-    country = models.CharField(max_length=255, blank=True, null=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    priority = models.IntegerField(default=0)
-
-    class Meta:
-        ordering = ["-priority"]
+        return self.external_id
 
 
 class Journey(models.Model):
@@ -83,7 +67,6 @@ class Journey(models.Model):
     date = models.DateField(null=True)
     journey_id = models.CharField(max_length=255, unique=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
@@ -104,9 +87,6 @@ class JourneyStop(models.Model):
     actual_arrival_delay = models.DurationField(null=True)
     actual_departure_delay = models.DurationField(null=True)
     cancelled = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ["planned_arrival_time"]
 
     def earlier_time(self):
         if self.planned_arrival_time:

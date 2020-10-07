@@ -14,3 +14,4 @@ pyhafas==0.2.0
 
 lxml~=4.5.2
 django-redis~=4.12.1
+django-countries~=6.1.3

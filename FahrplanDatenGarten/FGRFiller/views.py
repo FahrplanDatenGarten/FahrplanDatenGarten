@@ -60,8 +60,9 @@ class BookingNrAssistant1View(View):
                     try:
                         if JourneyStop.objects.filter(
                             journey__name=train.find('gat').text + " " + train.find('zugnr').text,
-                            stop__stopid__name=train.find('arr').find('nr').text,
+                            stop__stopid__external_id=train.find('arr').find('nr').text,
                             stop__stopid__kind__name="eva",
+                            stop__stopid__kind__provider__internal_name="db",
                             planned_arrival_time=timezone.make_aware(
                                 datetime.datetime.fromisoformat(
                                     train.find('arr').attrib['dt']).replace(
@@ -77,8 +78,9 @@ class BookingNrAssistant1View(View):
                 try:
                     arrival_actual_datetime = JourneyStop.objects.filter(
                         journey__name=trainlist[-1].find('gat').text + " " + trainlist[-1].find('zugnr').text,
-                        stop__stopid__name=trainlist[-1].find('arr').find('nr').text,
+                        stop__stopid__external_id=trainlist[-1].find('arr').find('nr').text,
                         stop__stopid__kind__name="eva",
+                        stop__stopid__kind__provider__internal_name="db",
                         planned_arrival_time=timezone.make_aware(datetime.datetime.fromisoformat(trainlist[-1].find('arr').attrib['dt']).replace(
                             hour=arrival_planned_time.hour,
                             minute=arrival_planned_time.minute)),

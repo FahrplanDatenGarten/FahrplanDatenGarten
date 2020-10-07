@@ -2,11 +2,11 @@ import datetime
 from typing import List, Tuple
 
 from celery.schedules import crontab
+from core.models import Journey, JourneyStop
 from django.core.cache import cache
 from django.db.models import Avg
 
 from FahrplanDatenGarten.celery import app
-from core.models import Journey, JourneyStop
 
 
 @app.on_after_finalize.connect
