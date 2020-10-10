@@ -1,33 +1,31 @@
 import datetime
 
-import pytz
-from pyhafas import HafasClient
-from pyhafas.profile import DBProfile
-
-from core.models import (Agency, Journey, JourneyStop, Source, StopID,
+from core.models import (Journey, JourneyStop, Provider, Source, StopID,
                          StopIDKind)
+from pyhafas import GeneralHafasError, HafasClient
+from pyhafas.profile import DBProfile
 
 
 class HafasImport:
     def __init__(self):
         self.hafasclient = HafasClient(DBProfile())
-        self.db, _ = Agency.objects.get_or_create(name="db")
-        self.dbapis, _ = Source.objects.get_or_create(name="dbapis")
-        self.idkind, _ = StopIDKind.objects.get_or_create(name='eva')
-        self.timezone = pytz.timezone("Europe/Berlin")
+        self.provider = Provider.objects.get(internal_name="db")
+        self.source, _ = Source.objects.get_or_create(
+            internal_name="db_hafas",
+            friendly_name="Deutsche Bahn HAFAS",
+            provider=self.provider)
+        self.idkind, _ = StopIDKind.objects.get_or_create(
+            name='eva', provider=self.provider)
 
     def import_timetable(
             self,
             station,
             duration=90):
-        try:
-            stopid, _ = StopID.objects.get_or_create(
-                stop=station, kind=self.idkind)
-        except StopID.MultipleObjectsReturned:
-            stopid = StopID.objects.filter(
-                stop=station, kind=self.idkind).first()
+        stopid = StopID.objects.get(
+            stop=station,
+            kind=self.idkind)
         departure_legs = self.hafasclient.departures(
-            station=stopid.name,
+            station=stopid.external_id,
             date=datetime.datetime.now(),
             duration=duration,
             products={
@@ -44,37 +42,51 @@ class HafasImport:
             }
         )
         for leg in departure_legs:
-            if not Journey.objects.filter(journey_id=leg.id).exists():
+            current_db_journeys = Journey.objects.filter(
+                name=leg.name,
+                date=leg.dateTime.date(),
+                journey_id=leg.id,
+                source=self.source
+            )
+            if current_db_journeys.count() == 0:
                 Journey.objects.create(
-                    journey_id=leg.id,
-                    source=self.dbapis,
-                    agency=self.db,
-                    date=leg.dateTime.date(),
                     name=leg.name,
+                    date=leg.dateTime.date(),
+                    journey_id=leg.id,
+                    source=self.source,
                     cancelled=leg.cancelled
                 )
+            else:
+                journey = current_db_journeys.first()
+                if journey.cancelled != leg.cancelled:
+                    journey.cancelled = leg.cancelled
+                    journey.save()
 
     def import_journey(self, journey):
         try:
             trip = self.hafasclient.trip(journey.journey_id)
-        except BaseException:  # TODO: Implement correct Exception when pyhafas has them
+        except GeneralHafasError:
             return
         for stopover in trip.stopovers:
             eva_id = stopover.stop.id[-8:]
-            dbStopID = StopID.objects.filter(
-                name=eva_id,
-                source=self.dbapis
+            db_stop_id = StopID.objects.filter(
+                external_id=eva_id,
+                kind__name='eva',
+                kind__provider=self.provider
             ).first()
-            if dbStopID is None:
+            if db_stop_id is None:
                 print(
                     "The Stop {} with ID {} could not be found!".format(
                         stopover.stop.name, eva_id))
                 continue
-            dbStop = dbStopID.stop
-            if JourneyStop.objects.filter(
-                    stop=dbStop, journey=journey).count() == 0:
+            db_stop = db_stop_id.stop
+            current_db_journeystops = JourneyStop.objects.filter(
+                stop=db_stop,
+                journey=journey
+            )
+            if current_db_journeystops.count() == 0:
                 JourneyStop.objects.create(
-                    stop=dbStop,
+                    stop=db_stop,
                     journey=journey,
                     planned_departure_time=stopover.departure,
                     actual_departure_delay=stopover.departureDelay,
@@ -82,10 +94,11 @@ class HafasImport:
                     actual_arrival_delay=stopover.arrivalDelay,
                     cancelled=stopover.cancelled)
             else:
-                journeyStop = JourneyStop.objects.get(
-                    stop=dbStop, journey=journey)
+                journey_stop = current_db_journeystops.first()
+                if journey_stop.cancelled != stopover.cancelled:
+                    journey_stop.cancelled = stopover.cancelled
                 if stopover.departureDelay is not None:
-                    journeyStop.actual_departure_delay = stopover.departureDelay
+                    journey_stop.actual_departure_delay = stopover.departureDelay
                 if stopover.arrivalDelay is not None:
-                    journeyStop.actual_arrival_delay = stopover.arrivalDelay
-                journeyStop.save()
+                    journey_stop.actual_arrival_delay = stopover.arrivalDelay
+                journey_stop.save()

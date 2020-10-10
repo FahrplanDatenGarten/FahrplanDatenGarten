@@ -1,20 +1,12 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import (Agency, Journey, JourneyStop, Source, Stop, StopID,
-                     StopIDKind, StopLocation, StopName)
-
-
-class StopnameAdminInline(admin.TabularInline):
-    model = StopName
+from .models import (Journey, JourneyStop, Provider, Source, Stop, StopID,
+                     StopIDKind)
 
 
 class StopIDAdminInline(admin.TabularInline):
     model = StopID
-
-
-class StoplocationAdminInline(admin.TabularInline):
-    model = StopLocation
 
 
 class StopAdmin(admin.ModelAdmin):
@@ -22,7 +14,7 @@ class StopAdmin(admin.ModelAdmin):
         'primary_stop_name',
         'primary_stop_id',
         'primary_stop_location')
-    inlines = (StopnameAdminInline, StopIDAdminInline, StoplocationAdminInline)
+    inlines = [StopIDAdminInline]
 
     @staticmethod
     def primary_stop_name(obj):
@@ -38,24 +30,25 @@ class StopAdmin(admin.ModelAdmin):
 
 class JourneystopAdminInline(admin.TabularInline):
     model = JourneyStop
-    #fields = ('primary_stop_name', 'planned_arrival_time', 'planned_departure_time', 'actual_arrival_time', 'actual_departure_time')
+    # fields = ('primary_stop_name', 'planned_arrival_time', 'planned_departure_time', 'actual_arrival_time', 'actual_departure_time')
     fields = (
         'stop',
         'planned_arrival_time',
         'planned_departure_time',
         'actual_arrival_delay',
         'actual_departure_delay')
-    #readonly_fields = ('primary_stop_name', )
+
+    # readonly_fields = ('primary_stop_name', )
 
     def primary_stop_name(self, obj):
         return obj.stop.stopname_set.first().name
 
 
 class JourneyAdmin(admin.ModelAdmin):
-    inlines = (JourneystopAdminInline, )
+    inlines = (JourneystopAdminInline,)
 
 
 admin.site.register(Stop, StopAdmin)
 admin.site.register(Journey, JourneyAdmin)
-admin.site.register([StopID, StopIDKind, StopName,
-                     StopLocation, Source, Agency])
+admin.site.register([StopID, StopIDKind, Source])
+admin.site.register(Provider)

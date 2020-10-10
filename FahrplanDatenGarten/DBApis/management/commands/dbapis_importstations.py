@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-
-import csv
-import io
-
-import requests
-from django.core.management.base import BaseCommand
-
-from core.models import Agency, Source, StopIDKind
+from core.models import Provider, Source, StopIDKind
+from DBApis.csvImport import parse_db_opendata_stop_csv
 from DBApis.tasks import dbapis_importstations_parse_station_row
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -21,20 +15,16 @@ class Command(BaseCommand):
             default='http://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV')
 
     def handle(self, *args, **options):
-        agency, _ = Agency.objects.get_or_create(name="db")
-        source, _ = Source.objects.get_or_create(name="dbapis")
-        kind, _ = StopIDKind.objects.get_or_create(name='eva')
+        provider, _ = Provider.objects.get_or_create(
+            internal_name="db", friendly_name="Deutsche Bahn")
+        source, _ = Source.objects.get_or_create(
+            internal_name="db_csv",
+            friendly_name="DB Open-Data-Portal CSV",
+            provider=provider)
+        kind, _ = StopIDKind.objects.get_or_create(
+            name='eva', provider=provider)
 
-        agency.used_id_kind.add(kind)
-        agency.save()
-
-        r = requests.get(options.get('csv-url'))
-        r.encoding = 'utf-8'
-        csv_string = r.text
-        csv_file = io.StringIO()
-        csv_file.write(csv_string)
-        csv_file.seek(0)
-        reader = csv.DictReader(csv_file, delimiter=';')
-        for row in reader:
+        csv_reader = parse_db_opendata_stop_csv()
+        for row in csv_reader:
             dbapis_importstations_parse_station_row.delay(
-                row, agency.pk, source.pk, kind.pk)
+                row, provider.pk, source.pk, kind.pk)
