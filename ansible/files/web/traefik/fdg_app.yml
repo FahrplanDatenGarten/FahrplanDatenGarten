@@ -9,6 +9,7 @@ http:
         certResolver: "le_http"
       middlewares:
         - "fdg_app_static_prefixremove"
+        - "compress"
       priority: 2
     fdg_app-http:
       rule: "Host(`fahrplandatengarten.de`) || Host(`www.fahrplandatengarten.de`)"
@@ -22,6 +23,8 @@ http:
       service: "services-fdg_app@file"
       entryPoints:
         - "https"
+      middlewares:
+        - "compress"
       tls:
         certResolver: "le_http"
       priority: 1
@@ -39,3 +42,5 @@ http:
       stripPrefix:
         prefixes:
           - "/static"
+    compress:
+      compress: { }

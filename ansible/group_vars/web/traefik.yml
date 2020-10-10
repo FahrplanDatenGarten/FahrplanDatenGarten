@@ -1,7 +1,4 @@
 ---
-traefik_version: "v2.2.1"
-traefik_base_path: "/var/lib/traefik"
-traefik_config_directory: "/etc/traefik"
 traefik_tls_letsencrypt_challenges_http:
   enable: yes
   email: "letsencrypt@fahrplandatengarten.de"

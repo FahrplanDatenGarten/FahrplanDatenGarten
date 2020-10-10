@@ -6,4 +6,6 @@ nginx_vhosts:
     index: "index.html"
     state: "present"
     filename: "fdg_static.conf"
+    extra_parameters: |
+      add_header Cache-Control "public, max-age=24h";
 nginx_remove_default_vhost: true
