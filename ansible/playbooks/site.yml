@@ -62,7 +62,7 @@
     - name: Create wireguard peers config with host items
       set_fact:
         wireguard_wg_fdg_peers: "{{ wireguard_wg_fdg_peers | combine({ 'server_' + hostvars[item].ansible_facts.fqdn: hostvars[item].wireguard_peer }) }}"
-      when: "hostvars[item].ansible_facts.fqdn is defined and hostvars[item].ansible_facts.fqdn != ansible_fqdn"
+      when: "hostvars[item].ansible_facts.fqdn is defined and hostvars[item].ansible_fqdn != ansible_fqdn"
       with_items: "{{ groups['all'] }}"
   roles:
     - n0emis.wireguard

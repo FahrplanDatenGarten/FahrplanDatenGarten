@@ -1,5 +1,4 @@
 from django import forms
-
 from FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
                              FillFormFieldsCompensation)
 

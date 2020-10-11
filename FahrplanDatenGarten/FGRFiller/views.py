@@ -1,20 +1,19 @@
 import datetime
 import random
 
+import FGRFiller.utils
 import requests
+from core.models import JourneyStop
 from django.http import FileResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import View
-from lxml import etree
-
-import FGRFiller.utils
-from core.models import JourneyStop
 from FGRFiller.forms.assistant_order_number import \
     FGRFillerAsstiantOrderNumberForm
 from FGRFiller.forms.data import FGRFillerDataForm
 from FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
                              FillFormFieldsCompensation)
+from lxml import etree
 
 
 class StartView(View):
