@@ -14,13 +14,7 @@
                     <p class="card-header-title">Versp&auml;tung heute</p>
                 </div>
                 <div class="card-content">
-                    <ul class="flex-list top-vertical content-center center">
-                        <li class="border-box">
-                            {% autoescape off %}
-                                {{ plot_div }}
-                            {% endautoescape %}
-                        </li>
-                    </ul>
+                    <img src="data:image/png;base64,{{ plot_image_base64 }}" />
                 </div>
             </div>
             <div class="column card is-3 is-offset-1">
