@@ -1,0 +1,16 @@
+http:
+  routers:
+    internal_prometheus-http:
+      rule: "Host(`{{ ansible_fqdn }}`) && Path(`/metrics/prometheus`)"
+      service: "prometheus@internal"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "https_redirect"
+    internal_prometheus-https:
+      rule: "Host(`{{ ansible_fqdn }}`) && Path(`/metrics/prometheus`)"
+      service: "prometheus@internal"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: "le_http"
