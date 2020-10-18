@@ -37,3 +37,6 @@
 [submodule "ansible/roles/cloudalchemy.coredns"]
 	path = ansible/roles/cloudalchemy.coredns
 	url = https://github.com/em0lar/ansible-coredns.git
+[submodule "ansible/roles/fahrplandatengarten.icinga"]
+	path = ansible/roles/fahrplandatengarten.icinga
+	url = https://github.com/FahrplanDatenGarten/ansible-role-icinga

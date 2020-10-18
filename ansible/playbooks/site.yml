@@ -119,3 +119,9 @@
   tags: celerybeat
   roles:
     - celerybeat
+
+- hosts: monitored
+  become: yes
+  roles:
+    - fahrplandatengarten.icinga
+  tags: icinga,monitoring
