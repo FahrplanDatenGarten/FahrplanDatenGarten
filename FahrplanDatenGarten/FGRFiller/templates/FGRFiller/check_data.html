@@ -134,7 +134,7 @@
                             <p class="help is-danger">{{ form.errors.first_delayed_train_product_type.as_text }}</p>
                         </div>
                         <div class="field column is-6-desktop">
-                            <label class="label">Erster versp&auml;teter Zug - Nummer:</label>
+                            <label class="label" for="{{ form.first_delayed_train_product_number.id_for_label }}">{{ form.first_delayed_train_product_number.label }}</label>
                             <div class="control">
                                 {{ form.first_delayed_train_product_number }}
                             </div>

@@ -65,7 +65,7 @@ class FGRFillerDataForm(forms.Form):
         ),
     )
     first_delayed_train_product_type = forms.CharField(
-        label="Erster verspäteter Zug - Art (ICE/IC/RE...)",
+        label="Erster verspäteter/entfallender Zug - Art:",
         max_length=3,
         required=True,
         widget=forms.TextInput(
@@ -75,7 +75,7 @@ class FGRFillerDataForm(forms.Form):
         ),
     )
     first_delayed_train_product_number = forms.CharField(
-        label="Erster verspäteter Zug - Nummer:",
+        label="Erster verspäteter/entfallender Zug - Nummer:",
         max_length=5,
         required=True,
         widget=forms.TextInput(

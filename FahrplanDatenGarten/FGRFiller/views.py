@@ -57,7 +57,7 @@ class BookingNrAssistant1View(View):
                     train_arrival_planned_time = datetime.time.fromisoformat(
                         train.find('arr').attrib['t'])
                     try:
-                        if JourneyStop.objects.filter(
+                        train_journey_stop = JourneyStop.objects.filter(
                             journey__name=train.find('gat').text + " " + train.find('zugnr').text,
                             stop__stopid__external_id=train.find('arr').find('nr').text,
                             stop__stopid__kind__name="eva",
@@ -66,9 +66,9 @@ class BookingNrAssistant1View(View):
                                 datetime.datetime.fromisoformat(
                                     train.find('arr').attrib['dt']).replace(
                                     hour=train_arrival_planned_time.hour,
-                                    minute=train_arrival_planned_time.minute)),
-                        ).first().actual_arrival_delay >= datetime.timedelta(
-                                minutes=5):
+                                    minute=train_arrival_planned_time.minute)))
+                        if train_journey_stop.first().actual_arrival_delay >= datetime.timedelta(
+                                minutes=5) or train_journey_stop.cancelled:
                             first_delayed_train = train
                             break
                     except AttributeError:

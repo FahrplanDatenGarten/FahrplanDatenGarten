@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 
 from django.db import models
 from django_countries.fields import CountryField
@@ -95,8 +96,14 @@ class JourneyStop(models.Model):
         if self.planned_departure_time:
             return self.planned_departure_time
 
-    def get_actual_arrival_time(self) -> datetime.datetime:
-        return self.planned_arrival_time + self.actual_arrival_delay
+    def get_actual_arrival_time(self) -> Optional[datetime.datetime]:
+        if self.actual_arrival_delay is not None:
+            return self.planned_arrival_time + self.actual_arrival_delay
+        else:
+            return None
 
     def get_actual_departure_time(self) -> datetime.datetime:
-        return self.planned_departure_time + self.actual_departure_delay
+        if self.actual_arrival_delay is not None:
+            return self.planned_departure_time + self.actual_departure_delay
+        else:
+            return None
