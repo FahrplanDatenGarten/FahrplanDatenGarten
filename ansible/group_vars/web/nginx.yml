@@ -8,4 +8,15 @@ nginx_vhosts:
     filename: "fdg_static.conf"
     extra_parameters: |
       add_header Cache-Control "public, max-age=24h";
+  - listen: "8002"
+    server_name: "{{ ansible_fqdn }}"
+    index: "index.html"
+    state: "present"
+    filename: "repo.conf"
+    extra_parameters: |
+      autoindex on;
+
+      location /debian/monitoring {
+        alias /var/www/monitoring-check-plugins/repo/;
+      }
 nginx_remove_default_vhost: true

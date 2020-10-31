@@ -1,6 +1,6 @@
 $ORIGIN fahrplandatengarten.de.
 @ 3600 IN SOA ns.fahrplandatengarten.de. noc.fahrplandatengarten.de. (
-    {{ ('%y%m%d%H%M' | strftime) | int + 10050000 }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
+    {{ ('%y%m%d%H%M' | strftime) | int + 10000000 }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
     3600       ; refresh (1 hour)
     1800       ; retry (30 min)
     604800     ; expire (168 days)
@@ -44,6 +44,7 @@ mail 3600 IN CNAME cetus.het.hel.fi.labcode.de.
 ;; Pages
 @ 3600 IN CNAME mars.het.nue.de
 www 3600 IN CNAME mars.het.nue.de
+repo 3600 IN CNAME mars.het.nue.de
 
 ;; VPN
 ;;; Server

@@ -1,0 +1,20 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+      - python3-virtualenv
+      - devscripts
+      - debhelper
+      - reprepro
+
+- name: Clone monitoring-check-plugins repository
+  git:
+    repo: "https://github.com/FahrplanDatenGarten/monitoring-check-plugins"
+    dest: "/var/www/monitoring-check-plugins"
+
+- name: Install pip requirements
+  pip:
+    requirements: "/var/www/monitoring-check-plugins/requirements.txt"
+    virtualenv: "/var/www/monitoring-check-plugins/.venv"
+    virtualenv_command: "python3 -m venv"
+    extra_args: "--upgrade"

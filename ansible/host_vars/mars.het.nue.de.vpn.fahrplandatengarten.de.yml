@@ -3,3 +3,6 @@ autossh_remote_port: 2201
 wireguard_address: "fd59:974e:6ee8::1"
 wireguard_private_key: "{{ lookup('passwordstore', 'infra/wireguard') }}"
 wireguard_public_key: "{{ lookup('passwordstore', 'infra/wireguard subkey=public') }}"
+
+icinga2_check_packages:
+  - fdgmon-check-celery

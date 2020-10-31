@@ -96,7 +96,7 @@
     - fdg_app
 
 - hosts: web
-  tags: web
+  tags: web, nginx, traefik
   roles:
     - fdg_app_gunicorn
     - geerlingguy.nginx
@@ -125,3 +125,9 @@
   roles:
     - fahrplandatengarten.icinga
   tags: icinga,monitoring
+
+- hosts: web
+  become: yes
+  roles:
+    - debian_repo
+  tags: debian, repo
