@@ -15,6 +15,7 @@ nginx_vhosts:
     filename: "repo.conf"
     extra_parameters: |
       autoindex on;
+      absolute_redirect off;
 
       location /debian/monitoring {
         alias /var/www/monitoring-check-plugins/repo/;
