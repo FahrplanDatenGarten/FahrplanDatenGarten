@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import configparser
 import os
 
-import dj_database_url
-
 config = configparser.RawConfigParser()
 config.read_file(open('env.cfg', encoding='utf-8'))
 
@@ -82,15 +80,19 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+db_backend = config.get('database', 'backend', fallback='sqlite3')
+if db_backend == 'postgresql_psycopg2':
+    db_backend = 'postgresql'
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.' + config.get('database', 'engine'),
-        'HOST': config.get('database', 'host', fallback=''),
-        'NAME': config.get('database', 'name'),
+        'ENGINE': 'django.db.backends.' + db_backend,
+        'NAME': config.get('database', 'name', fallback='db.sqlite3'),
         'USER': config.get('database', 'user', fallback=''),
         'PASSWORD': config.get('database', 'password', fallback=''),
+        'HOST': config.get('database', 'host', fallback=''),
         'PORT': config.get('database', 'port', fallback=''),
-        'CONN_MAX_AGE': 0 if config.get('database', 'engine') == 'sqlite3' else 120
+        'CONN_MAX_AGE': 0 if db_backend == 'sqlite3' else 120
     }
 }
 
