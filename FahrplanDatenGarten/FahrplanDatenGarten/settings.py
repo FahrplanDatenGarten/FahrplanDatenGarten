@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'FahrplanDatenGarten.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-db_backend = config.get('database', 'backend', fallback='sqlite3')
+db_backend = config.get('database', 'engine', fallback='sqlite3')
 if db_backend == 'postgresql_psycopg2':
     db_backend = 'postgresql'
 
