@@ -18,6 +18,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
+from django.views.decorators.csrf import csrf_exempt
+
+from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path('', RedirectView.as_view(url=reverse_lazy('verspaeti:index'))),
@@ -26,4 +29,5 @@ urlpatterns = [
     path('fgr/', include('FGRFiller.urls', namespace='fgrfiller')),
     path('gtfs/', include('gtfs.urls', namespace='gtfs')),
     path('netzkarte/', include('netzkarte.urls', namespace='netzkarte')),
+    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]

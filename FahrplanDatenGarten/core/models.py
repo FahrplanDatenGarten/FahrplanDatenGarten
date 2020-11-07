@@ -23,6 +23,7 @@ class Source(models.Model):
 
 
 class Stop(models.Model):
+    name = models.CharField(max_length=255)
     ifopt = models.CharField(max_length=255)
     country = CountryField()
     latitude = models.DecimalField(
@@ -35,7 +36,6 @@ class Stop(models.Model):
         decimal_places=6,
         blank=True,
         null=True)
-    name = models.CharField(max_length=255)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
     has_long_distance_traffic = models.BooleanField()
 
@@ -106,7 +106,7 @@ class JourneyStop(models.Model):
             return None
 
     def get_actual_departure_time(self) -> datetime.datetime:
-        if self.actual_arrival_delay is not None:
+        if self.actual_departure_delay is not None:
             return self.planned_departure_time + self.actual_departure_delay
         else:
             return None

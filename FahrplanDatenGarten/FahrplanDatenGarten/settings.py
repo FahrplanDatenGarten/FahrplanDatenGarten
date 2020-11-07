@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'core',
     'DBApis',
     'FGRFiller',
@@ -190,3 +191,7 @@ PERIODIC_IMPORT_TIMETABLES = config.get(
 
 PERIODIC_IMPORT_JOURNEYS = config.get(
     "periodic", 'journeys', fallback="*,5").split(',')
+
+GRAPHENE = {
+    "SCHEMA": "FahrplanDatenGarten.schema.schema"
+}
