@@ -1,6 +1,6 @@
 import graphene
 from graphene import ObjectType
-from graphene.relay.node import Node, Field
+from graphene.relay.node import Field, Node
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
@@ -82,8 +82,10 @@ class JourneyStopNode(DjangoObjectType):
     actual_arrival_time = graphene.DateTime()
     actual_departure_time = graphene.DateTime()
 
-    actual_arrival_delay = graphene.String()    # TODO: Maybe find a nicer way here...
-    actual_departure_delay = graphene.String()  # TODO: See https://github.com/graphql-python/graphene-django/issues/348
+    # TODO: Maybe find a nicer way here...
+    # See https://github.com/graphql-python/graphene-django/issues/348
+    actual_arrival_delay = graphene.String()
+    actual_departure_delay = graphene.String()
 
     class Meta:
         model = JourneyStop
