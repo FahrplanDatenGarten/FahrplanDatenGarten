@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="title is-1 has-text-centered">Zugdetails zu {{ train_name }}</h1>
+    <p class="has-text-centered">Letzte planm&auml;&szlig;ige Strecke: <b>{{ trip.from }} - {{ trip.to }}</b></p>
+    <br>
+    <div class="columns">
+        <div class="column card">
+            <div class="card-header">
+                <div class="card-header-title">Verspätungsentwicklung (kurzzeitig)</div>
+            </div>
+            <div class="card-content">
+                <img src="{{ delay_graph_url }}" alt="">
+            </div>
+        </div>
+        <div class="column card is-offset-1">
+            <div class="card-header">
+                <div class="card-header-title">Langzeitverspätungsentwicklung</div>
+            </div>
+            <div class="card-content">
+                <img src="{{ long_term_delay_graph_url }}" alt="">
+            </div>
+        </div>
+    </div>
+    {% for journey in journeys %}
+        {{ journey }}<br>
+    {% endfor %}
+{% endblock %}

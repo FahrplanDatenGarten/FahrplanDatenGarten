@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'verspaeti',
     'gtfs',
     'netzkarte',
+    'details',
 ]
 
 MIDDLEWARE = [

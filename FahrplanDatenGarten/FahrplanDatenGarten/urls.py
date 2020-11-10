@@ -28,4 +28,5 @@ urlpatterns = [
     path('fgr/', include('FGRFiller.urls', namespace='fgrfiller')),
     path('gtfs/', include('gtfs.urls', namespace='gtfs')),
     path('netzkarte/', include('netzkarte.urls', namespace='netzkarte')),
+    path('details/', include('details.urls', namespace='details')),
 ]

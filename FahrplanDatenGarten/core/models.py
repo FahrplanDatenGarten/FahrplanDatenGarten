@@ -99,14 +99,30 @@ class JourneyStop(models.Model):
         if self.planned_departure_time:
             return self.planned_departure_time
 
+    def actual_earlier_time(self) -> Optional[datetime.datetime]:
+        if self.get_actual_arrival_time():
+            return self.get_actual_arrival_time()
+
+        if self.get_actual_departure_time():
+            return self.get_actual_departure_time()
+
+        return None
+
+    def get_delay(self):
+        if self.actual_departure_delay:
+            return self.actual_departure_delay
+        elif self.actual_arrival_delay:
+            return self.actual_arrival_delay
+        return None
+
     def get_actual_arrival_time(self) -> Optional[datetime.datetime]:
         if self.actual_arrival_delay is not None:
             return self.planned_arrival_time + self.actual_arrival_delay
         else:
             return None
 
-    def get_actual_departure_time(self) -> datetime.datetime:
-        if self.actual_arrival_delay is not None:
+    def get_actual_departure_time(self) -> Optional[datetime.datetime]:
+        if self.actual_departure_delay is not None:
             return self.planned_departure_time + self.actual_departure_delay
         else:
             return None
