@@ -46,6 +46,8 @@ class GenerateLongTermDelayGraph(View):
         return_delays: np.ndarray = np.array([])
         return_labels: np.ndarray = np.array([])
         for journey in journeys:
+            if journey.cancelled:
+                continue
             journeystops = JourneyStop.objects.filter(
                 journey=journey
             )
@@ -70,7 +72,7 @@ class GenerateLongTermDelayGraph(View):
         labels_argsort = np.argsort(labels)
         labels = labels[labels_argsort]
         delay_data = delay_data[labels_argsort]
-        xnew = np.linspace(labels.min(initial=0), labels.max(initial=0), 500)
+        xnew = np.linspace(labels.min(initial=-days), labels.max(initial=-days), 500)
 
         interpolate_function = interpolate.interp1d(
             labels, delay_data, kind='linear')
