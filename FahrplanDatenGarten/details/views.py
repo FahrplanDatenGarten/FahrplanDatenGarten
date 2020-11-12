@@ -108,8 +108,8 @@ class TrainDetailsByNameView(TemplateView):
             return_journeys_data.append({
                 "date": journey.date,
                 "cancelled": journey.cancelled,
-                "average_delay": average_delay,
-                "maximum_delay": max(delays)
+                "average_delay": round(average_delay.total_seconds() / 60, 1),
+                "maximum_delay": round(max(delays).total_seconds() / 60)
             })
         return return_journeys_data
 
@@ -123,7 +123,7 @@ class TrainDetailsByNameView(TemplateView):
             journey_paginator_page = journey_paginator.get_page(page_num)
             journeys_data = self.get_journeys_data(journey_paginator_page)
             delay_graph_query_parameters = "&".join(
-                [f"delays_per_date={journey_data['date']},{journey_data['average_delay'].total_seconds() / 60}" for
+                [f"delays_per_date={journey_data['date']},{journey_data['average_delay']}" for
                  journey_data in journeys_data])
             context['train_name'] = train_name
             context['trip'] = {

@@ -22,7 +22,23 @@
             </div>
         </div>
     </div>
-    {% for journey in journeys %}
-        {{ journey }}<br>
-    {% endfor %}
+    <br>
+    <div class="columns is-multiline">
+        {% for journey in journeys %}
+            <div class="column card is-one-quarter-desktop is-one-third-tablet" style="margin: 50px 4.15% 0">
+                <div class="card-header">
+                    <div class="card-header-title">{{ journey.date }}{% if journey.cancelled %} - entfallen{% endif %}</div>
+                </div>
+                <div class="card-content">
+                    Verspätung maximal: <b>{{ journey.maximum_delay }} min</b><br>
+                    Verspätung Durchschnitt: <b>{{ journey.average_delay }} min</b>
+                </div>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Details</a>
+                </footer>
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+
 {% endblock %}
