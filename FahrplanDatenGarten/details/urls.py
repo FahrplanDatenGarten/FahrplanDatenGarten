@@ -9,6 +9,10 @@ urlpatterns = [
         views.TrainDetailsByNameView.as_view(),
         name='traindetailsbyname'),
     path(
+        'traindetails/api/details/<int:journey_id>',
+        views.JourneyDetailsAPI.as_view(),
+        name='traindetailsapidetails'),
+    path(
         'traindetails/api/delay_graph',
         views.GenerateDelayJourneyGraph.as_view(),
         name='delaygraph'),

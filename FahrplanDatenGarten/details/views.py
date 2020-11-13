@@ -4,15 +4,40 @@ from typing import List
 
 import numpy as np
 from django import urls
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
-from django.http import FileResponse
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import FileResponse, JsonResponse, HttpResponseNotFound
 from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
 from scipy import interpolate
 
 from core.models import Journey, JourneyStop
+
+
+class JourneyDetailsAPI(View):
+    def get(self, request: WSGIRequest, journey_id: int, *args, **kwargs):
+        try:
+            journey = Journey.objects.get(pk=journey_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound("404 - Train not found")
+        journeystops = JourneyStop.objects.filter(
+            journey=journey
+        ).order_by('planned_departure_time')
+        stops = [{
+            "name": journeystop.stop.name,
+            "planned_time": journeystop.earlier_time().strftime("%H:%M") if journeystop.earlier_time() is not None else None,
+            "actual_delay_mins": journeystop.get_delay().total_seconds() / 60 if journeystop.get_delay() is not None else None,
+            "actual_time": journeystop.actual_earlier_time().strftime("%H:%M") if journeystop.actual_earlier_time() is not None else None,
+            "cancelled": journeystop.cancelled
+        } for journeystop in journeystops]
+        response_dict = {
+            "date": journey.date,
+            "stops": stops
+        }
+        return JsonResponse(response_dict)
 
 
 class GenerateDelayJourneyGraph(View):
@@ -106,6 +131,7 @@ class TrainDetailsByNameView(TemplateView):
             average_delay = sum(
                 delays, datetime.timedelta()) / len(journeystops)
             return_journeys_data.append({
+                "id": journey.id,
                 "date": journey.date,
                 "cancelled": journey.cancelled,
                 "average_delay": round(average_delay.total_seconds() / 60, 1),
