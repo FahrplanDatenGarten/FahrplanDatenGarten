@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import FileResponse, JsonResponse, HttpResponseNotFound
+from django.http import FileResponse, JsonResponse, HttpResponseNotFound, HttpResponse
 from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
@@ -59,7 +59,7 @@ class GenerateDelayJourneyGraph(View):
         plot_temporary_file = BytesIO()
         pyplot.savefig(plot_temporary_file, format='png')
         plot_temporary_file.seek(0)
-        return FileResponse(plot_temporary_file, filename="delays.png")
+        return HttpResponse(plot_temporary_file)
 
 
 class GenerateLongTermDelayGraph(View):
@@ -113,7 +113,7 @@ class GenerateLongTermDelayGraph(View):
         plot_temporary_file = BytesIO()
         pyplot.savefig(plot_temporary_file, format='png')
         plot_temporary_file.seek(0)
-        return FileResponse(plot_temporary_file, filename="delays.png")
+        return HttpResponse(plot_temporary_file)
 
 
 class TrainDetailsByNameView(TemplateView):
