@@ -158,6 +158,7 @@ class TrainDetailsByNameView(TemplateView):
                     planned_arrival_time__isnull=False
                 ).order_by('planned_arrival_time').last().stop.name}
             context['journeys'] = journeys_data
+            context['paginator_page'] = journey_paginator_page
             context['delay_graph_url'] = f"{urls.reverse('details:delaygraph')}?{delay_graph_query_parameters}"
             context['long_term_delay_graph_url'] = f"{urls.reverse('details:longtermdelaygraph', kwargs={'train_name': train_name})}"
         else:

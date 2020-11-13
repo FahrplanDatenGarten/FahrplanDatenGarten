@@ -60,6 +60,39 @@
         {% endfor %}
     </div>
     <br>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            {% if paginator_page.has_previous %}
+                <li>
+                    <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name '1' %}">1</a>
+                </li>
+                {% if paginator_page.number > 2 %}
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.number|add:-1 %}">{{ paginator_page.number|add:-1 }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+            <li>
+                <a class="pagination-link is-current">{{ paginator_page.number }}</a>
+            </li>
+            {% if paginator_page.has_next %}
+                <li>
+                    <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.next_page_number %}">{{ paginator_page.next_page_number }}</a>
+                </li>
+                {% if paginator_page.number|add:1 < paginator_page.paginator.num_pages %}
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.paginator.num_pages %}">{{ paginator_page.paginator.num_pages }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </nav>
     <script>
         const open_details_links_elements = document.getElementsByClassName('journey-card-details-open');
         for (let i = 0; i < open_details_links_elements.length; i++) {
