@@ -10,6 +10,10 @@ urlpatterns = [
         cache_page(60*5)(views.TrainDetailsByNameView.as_view()),
         name='traindetailsbyname'),
     path(
+        'traindetails/search',
+        cache_page(60*5)(views.TrainDetailsByNameSearchView.as_view()),
+        name='traindetailsbynamesearch'),
+    path(
         'traindetails/api/details/<int:journey_id>',
         cache_page(60 * 30)(views.JourneyDetailsAPI.as_view()),
         name='traindetailsapidetails'),

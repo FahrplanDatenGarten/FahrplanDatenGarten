@@ -1,4 +1,5 @@
 import datetime
+import re
 from io import BytesIO
 from typing import List
 
@@ -9,6 +10,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import FileResponse, JsonResponse, HttpResponseNotFound, HttpResponse
+from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
@@ -164,3 +166,15 @@ class TrainDetailsByNameView(TemplateView):
         else:
             context['error_message'] = "404 - Train not found"
         return context
+
+
+class TrainDetailsByNameSearchView(View):
+    def post(self, request: WSGIRequest):
+        trainname = request.POST.get('trainname')
+
+        if Journey.objects.filter(name=trainname).count() == 0:
+            trainname_regex_split = re.search('([a-zA-Z]*)( *)([0-9]*)', trainname).groups()
+            product_group = trainname_regex_split[0].upper()
+            trainname = f"{product_group} {trainname_regex_split[-1]}"
+
+        return redirect('details:traindetailsbyname', train_name=trainname, page_num=1)

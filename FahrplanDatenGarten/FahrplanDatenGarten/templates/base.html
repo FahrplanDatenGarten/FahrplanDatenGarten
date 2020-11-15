@@ -38,6 +38,20 @@
             <a class="navbar-item{% if request.resolver_match.namespace == "netzkarte" %} is-active{% endif %}" href="{% url "netzkarte:index" %}">
                 Netzkarte
             </a>
+
+            <form action="{% url 'details:traindetailsbynamesearch' %}" method="post">
+                {% csrf_token %}
+                <div class="navbar-item field has-addons" style="height: 100%">
+                    <p class="control">
+                        <input name="trainname" class="input" type="search" placeholder="Zugnummer (ICE 620)">
+                    </p>
+                    <p class="control">
+                        <button class="button">
+                            Suchen
+                        </button>
+                    </p>
+                </div>
+            </form>
         </div>
     </div>
 </nav>
