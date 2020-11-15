@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block body %}
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="/static/FDG_Logo_Blau_Burgundy_Grau.svg" style="max-height: 3rem">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item{% if request.resolver_match.namespace == "verspaeti" %} is-active{% endif %}" href="{% url "verspaeti:index" %}">
+                    Home
+                </a>
+
+                <a class="navbar-item{% if request.resolver_match.namespace == "fgrfiller" %} is-active{% endif %}" href="{% url "fgrfiller:index" %}">
+                    Fahrgastrechte
+                </a>
+                <a class="navbar-item{% if request.resolver_match.namespace == "netzkarte" %} is-active{% endif %}" href="{% url "netzkarte:index" %}">
+                    Netzkarte
+                </a>
+
+                <form action="{% url 'details:traindetailsbynamesearch' %}" method="post">
+                    {% csrf_token %}
+                    <div class="navbar-item field has-addons" style="height: 100%">
+                        <p class="control">
+                            <input name="trainname" class="input" type="search" placeholder="Zugnummer (ICE 620)">
+                        </p>
+                        <p class="control">
+                            <button class="button">
+                                Suchen
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static "script.js" %}"></script>
+{% endblock %}
