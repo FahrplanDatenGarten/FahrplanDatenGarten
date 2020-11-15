@@ -59,7 +59,7 @@ class GenerateDelayJourneyGraph(View):
         plot_temporary_file = BytesIO()
         pyplot.savefig(plot_temporary_file, format='png')
         plot_temporary_file.seek(0)
-        return HttpResponse(plot_temporary_file)
+        return HttpResponse(plot_temporary_file, content_type='image/png')
 
 
 class GenerateLongTermDelayGraph(View):
@@ -114,7 +114,7 @@ class GenerateLongTermDelayGraph(View):
         plot_temporary_file = BytesIO()
         pyplot.savefig(plot_temporary_file, format='png')
         plot_temporary_file.seek(0)
-        return HttpResponse(plot_temporary_file)
+        return HttpResponse(plot_temporary_file, content_type='image/png')
 
 
 class TrainDetailsByNameView(TemplateView):
