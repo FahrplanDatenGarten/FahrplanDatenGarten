@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <style>
+        .journey-card {
+            margin: 50px 4.15% 0
+        }
+        .journey-card.details-open {
+            width: 100% !important;
+            margin: 50px 0 0;
+
+        }
+        .is-loading {
+            color: #48c774 !important;
+            cursor: progress;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1 class="title is-1 has-text-centered">Zugdetails zu {{ train_name }}</h1>
+    <p class="has-text-centered">Letzte planm&auml;&szlig;ige Strecke: <b>{{ trip.from }} - {{ trip.to }}</b></p>
+    <br>
+    <div class="columns">
+        <div class="column card">
+            <div class="card-header">
+                <div class="card-header-title">Verspätungsentwicklung (kurzzeitig)</div>
+            </div>
+            <div class="card-content">
+                <img src="{{ delay_graph_url }}" alt="">
+            </div>
+        </div>
+        <div class="column card is-offset-1">
+            <div class="card-header">
+                <div class="card-header-title">Langzeitverspätungsentwicklung</div>
+            </div>
+            <div class="card-content">
+                <img src="{{ long_term_delay_graph_url }}" alt="">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="columns is-multiline">
+        {% for journey in journeys %}
+            <div class="column card is-one-quarter-desktop is-5-tablet journey-card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ journey.date }}{% if journey.cancelled %} - entfallen{% endif %}</div>
+                </div>
+                <div class="card-content">
+                    <b>Verspätung maximal:</b> {{ journey.maximum_delay }} min<br>
+                    <b>Verspätung Durchschnitt:</b> {{ journey.average_delay }} min<br>
+                    <br>
+                    <div class="card-content-details"></div>
+                </div>
+                <footer class="card-footer">
+                    <a data-detailsapiurl="{% url 'details:traindetailsapidetails' journey.id %}" class="card-footer-item journey-card-details-open">Details</a>
+                    <a class="card-footer-item journey-card-details-close is-hidden">Zur&uuml;ck zur &Uuml;bersicht</a>
+                </footer>
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            {% if paginator_page.has_previous %}
+                <li>
+                    <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name '1' %}">1</a>
+                </li>
+                {% if paginator_page.number > 2 %}
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.number|add:-1 %}">{{ paginator_page.number|add:-1 }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+            <li>
+                <a class="pagination-link is-current">{{ paginator_page.number }}</a>
+            </li>
+            {% if paginator_page.has_next %}
+                <li>
+                    <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.next_page_number %}">{{ paginator_page.next_page_number }}</a>
+                </li>
+                {% if paginator_page.number|add:1 < paginator_page.paginator.num_pages %}
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" href="{% url 'details:traindetailsbyname' train_name paginator_page.paginator.num_pages %}">{{ paginator_page.paginator.num_pages }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </nav>
+    <script>
+        const open_details_links_elements = document.getElementsByClassName('journey-card-details-open');
+        for (let i = 0; i < open_details_links_elements.length; i++) {
+            open_details_links_elements[i].addEventListener('click', openDetails);
+        }
+        const close_details_links_elements = document.getElementsByClassName('journey-card-details-close');
+        for (let i = 0; i < close_details_links_elements.length; i++) {
+            close_details_links_elements[i].addEventListener('click', closeDetails);
+        }
+
+        function openDetails(e) {
+            e.preventDefault();
+            e.target.classList.add("is-loading");
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    const json_response = JSON.parse(this.responseText);
+                    const journey_card_element = e.target.closest('.journey-card');
+                    journey_card_element.classList.add('details-open');
+                    const journey_card_content_details = journey_card_element.querySelector('.card-content-details');
+                    journey_card_content_details.innerHTML = ""
+                    json_response.stops.forEach((stop) => {
+                        if(stop.cancelled) {
+                            journey_card_content_details.innerHTML += `<span><b>${stop.name}</b>: ENTFALLEN - geplant: ${stop.planned_time || "keine Daten"}</span></br>`
+                        } else {
+                            journey_card_content_details.innerHTML += `<span><b>${stop.name}</b>: ${stop.actual_time !== null ? stop.actual_time : "keine Daten"} (+${stop.actual_delay_mins !== null ? stop.actual_delay_mins : "?"} min) - geplant: ${stop.planned_time !== null ? stop.planned_time : "keine Daten"}</span></br>`
+                        }
+                    })
+                    e.target.classList.remove("is-loading");
+                    e.target.classList.add("is-hidden");
+                    journey_card_element.querySelector('.journey-card-details-close').classList.remove('is-hidden')
+                }
+            };
+            xhttp.open("GET", e.target.dataset.detailsapiurl, true);
+            xhttp.send();
+        }
+        function closeDetails(e) {
+            e.preventDefault();
+            const journey_card_element = e.target.closest('.journey-card');
+            e.target.classList.add("is-hidden");
+            journey_card_element.querySelector('.card-content-details').innerHTML = ""
+            journey_card_element.classList.remove('details-open');
+            journey_card_element.querySelector('.journey-card-details-open').classList.remove('is-hidden')
+        }
+    </script>
+{% endblock %}
