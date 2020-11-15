@@ -8,7 +8,7 @@ from django import urls
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -22,7 +22,7 @@ class JourneyDetailsAPI(View):
         try:
             journey = Journey.objects.get(pk=journey_id)
         except ObjectDoesNotExist:
-            return HttpResponseNotFound("404 - Train not found")
+            raise Http404("Train not found")
         journeystops = JourneyStop.objects.filter(
             journey=journey
         ).order_by('planned_departure_time')
@@ -163,7 +163,7 @@ class TrainDetailsByNameView(TemplateView):
             context['delay_graph_url'] = f"{urls.reverse('details:delaygraph')}?{delay_graph_query_parameters}"
             context['long_term_delay_graph_url'] = f"{urls.reverse('details:longtermdelaygraph', kwargs={'train_name': train_name})}"
         else:
-            context['error_message'] = "404 - Train not found"
+            raise Http404("Train not found")
         return context
 
 
