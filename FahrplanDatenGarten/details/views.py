@@ -8,13 +8,11 @@ from django import urls
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import FileResponse, JsonResponse, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
-from scipy import interpolate
 
 from core.models import Journey, JourneyStop
 
@@ -92,7 +90,13 @@ class GenerateLongTermDelayGraph(View):
             "labels": return_labels
         }
 
-    def get(self, request: WSGIRequest, train_name: str, days: int = 90, *args, **kwargs):
+    def get(
+            self,
+            request: WSGIRequest,
+            train_name: str,
+            days: int = 90,
+            *args,
+            **kwargs):
         journeys_data = self.get_journey_delays(train_name, days)
         labels: np.ndarray = journeys_data['labels']
         delay_data: np.ndarray = journeys_data['delays']
@@ -168,8 +172,12 @@ class TrainDetailsByNameSearchView(View):
         trainname = request.POST.get('trainname')
 
         if Journey.objects.filter(name=trainname).count() == 0:
-            trainname_regex_split = re.search('([a-zA-Z]*)( *)([0-9]*)', trainname).groups()
+            trainname_regex_split = re.search(
+                '([a-zA-Z]*)( *)([0-9]*)', trainname).groups()
             product_group = trainname_regex_split[0].upper()
             trainname = f"{product_group} {trainname_regex_split[-1]}"
 
-        return redirect('details:traindetailsbyname', train_name=trainname, page_num=1)
+        return redirect(
+            'details:traindetailsbyname',
+            train_name=trainname,
+            page_num=1)
