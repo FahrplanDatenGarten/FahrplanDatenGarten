@@ -118,7 +118,7 @@
                         if(stop.cancelled) {
                             journey_card_content_details.innerHTML += `<span><b>${stop.name}</b>: ENTFALLEN - geplant: ${stop.planned_time || "keine Daten"}</span></br>`
                         } else {
-                            journey_card_content_details.innerHTML += `<span><b>${stop.name}</b>: ${stop.actual_time || "keine Daten"} (+${stop.actual_delay_mins || "?"} min) - geplant: ${stop.planned_time  || "keine Daten"}</span></br>`
+                            journey_card_content_details.innerHTML += `<span><b>${stop.name}</b>: ${stop.actual_time !== null ? stop.actual_time : "keine Daten"} (+${stop.actual_delay_mins !== null ? stop.actual_delay_mins : "?"} min) - geplant: ${stop.planned_time !== null ? stop.planned_time : "keine Daten"}</span></br>`
                         }
                     })
                     e.target.classList.remove("is-loading");

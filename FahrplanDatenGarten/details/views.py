@@ -99,16 +99,11 @@ class GenerateLongTermDelayGraph(View):
         labels_argsort = np.argsort(labels)
         labels = labels[labels_argsort]
         delay_data = delay_data[labels_argsort]
-        xnew = np.linspace(labels.min(initial=-days), labels.max(initial=-days), 500)
-
-        interpolate_function = interpolate.interp1d(
-            labels, delay_data, kind='linear')
-        ynew = interpolate_function(xnew)
 
         plot_figure, plot_axes = pyplot.subplots()
         plot_figure.subplots_adjust(bottom=0.18, top=0.95)
 
-        pyplot.plot(xnew, ynew)
+        pyplot.plot(labels, delay_data)
         pyplot.xlabel(
             f"Tage seit dem {datetime.date.today().strftime('%d.%m.%Y')}")
         pyplot.ylabel('Verspätung in Minuten')
