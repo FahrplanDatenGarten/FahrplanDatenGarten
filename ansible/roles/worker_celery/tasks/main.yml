@@ -22,6 +22,9 @@
     dest: "/etc/logrotate.d/celeryd"
     mode: 0644
 
+- name: Run previous handlers
+  meta: flush_handlers
+
 - name: Ensure celeryd service is enabled and started
   systemd:
     daemon_reload: yes
