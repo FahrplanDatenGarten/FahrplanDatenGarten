@@ -42,6 +42,10 @@ class HafasImport:
             }
         )
         for leg in departure_legs:
+            if "Flug" in leg.name or "Os " in leg.name or "BUS" in leg.name or "R " in leg.name or "RB " in leg.name \
+                    or "RE " in leg.name or "Sp " in leg.name or "STR " in leg.name or "BRB" in leg.name \
+                    or "ARV" in leg.name or "S " in leg.name or "M " in leg.name:
+                continue
             current_db_journeys = Journey.objects.filter(
                 name=leg.name,
                 date=leg.dateTime.date(),
