@@ -1,9 +1,13 @@
 import datetime
+import json
+from json.decoder import JSONDecodeError
+
+import requests
+from pyhafas import GeneralHafasError, HafasClient
+from pyhafas.profile import DBProfile
 
 from core.models import (Journey, JourneyStop, Provider, Source, StopID,
                          StopIDKind)
-from pyhafas import GeneralHafasError, HafasClient
-from pyhafas.profile import DBProfile
 
 
 class HafasImport:
@@ -49,14 +53,12 @@ class HafasImport:
             current_db_journeys = Journey.objects.filter(
                 name=leg.name,
                 date=leg.dateTime.date(),
-                journey_id=leg.id,
                 source=self.source
             )
             if current_db_journeys.count() == 0:
                 Journey.objects.create(
                     name=leg.name,
                     date=leg.dateTime.date(),
-                    journey_id=leg.id,
                     source=self.source,
                     cancelled=leg.cancelled
                 )
@@ -66,10 +68,37 @@ class HafasImport:
                     journey.cancelled = leg.cancelled
                     journey.save()
 
-    def import_journey(self, journey):
+    def get_trip_id(self, journey: Journey):
+        lid_request = requests.get(
+            url="https://reiseauskunft.bahn.de/bin/trainsearch.exe/dn",
+            params={
+                "L": "vs_json",
+                "stationFilter": 80,
+                "productClassFilter": 3,
+                "date": journey.date.strftime("%d.%m.%Y"),
+                "trainname": journey.name
+            }
+        )
         try:
-            trip = self.hafasclient.trip(journey.journey_id)
-        except GeneralHafasError:
+            parsed_response = json.loads(lid_request.text[11:-1])
+        except JSONDecodeError:
+            return None
+        trains = parsed_response['suggestions']
+        if len(trains) == 0:
+            return None
+        first_train = trains[0]
+        first_train_date = datetime.datetime.strptime(first_train['depDate'], '%d.%m.%Y').strftime('%d%m%Y')
+        trip_id = f"1|{first_train['id']}|{first_train['cycle']}|{first_train['pool']}|{first_train_date}"
+        return trip_id
+
+
+    def import_journey(self, journey: Journey):
+        trip_id = self.get_trip_id(journey)
+        if trip_id is None:
+            return
+        try:
+            trip = self.hafasclient.trip(trip_id)
+        except GeneralHafasError as e:
             return
         for stopover in trip.stopovers:
             eva_id = stopover.stop.id[-8:]

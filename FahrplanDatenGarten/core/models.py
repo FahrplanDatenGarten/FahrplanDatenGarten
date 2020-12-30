@@ -69,14 +69,11 @@ class Journey(models.Model):
     name = models.CharField(max_length=255, null=True)
     stop = models.ManyToManyField(Stop, through='JourneyStop')
     date = models.DateField(null=True)
-    journey_id = models.CharField(max_length=255, unique=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.name is not None:
-            return self.name
-        return self.journey_id
+        return self.name
 
     def first_date(self):
         return sorted(self.journeystop_set.all(),

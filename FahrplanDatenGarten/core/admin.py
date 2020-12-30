@@ -36,7 +36,6 @@ class JourneyAdmin(admin.ModelAdmin):
         'name',
         'date',
         'cancelled',
-        'journey_id',
         'source',
     )
 
