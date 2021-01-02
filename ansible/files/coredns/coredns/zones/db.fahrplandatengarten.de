@@ -1,6 +1,6 @@
 $ORIGIN fahrplandatengarten.de.
 @ 3600 IN SOA ns.fahrplandatengarten.de. noc.fahrplandatengarten.de. (
-    {{ ('%y%m%d%H%M' | strftime) | int + 10000000 }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
+    {{ ('%y%m%d%H%M' | strftime) }} ; serial ;;; UPDATE THIS AFTER EACH EDIT!
     3600       ; refresh (1 hour)
     1800       ; retry (30 min)
     604800     ; expire (168 days)
