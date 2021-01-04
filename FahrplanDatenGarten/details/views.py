@@ -10,6 +10,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Page, Paginator
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
@@ -28,9 +29,9 @@ class JourneyDetailsAPI(View):
         ).order_by('planned_departure_time')
         stops = [{
             "name": journeystop.stop.name,
-            "planned_time": journeystop.earlier_time().strftime("%H:%M") if journeystop.earlier_time() is not None else None,
+            "planned_time": timezone.localtime(journeystop.earlier_time()).strftime("%H:%M") if journeystop.earlier_time() is not None else None,
             "actual_delay_mins": journeystop.get_delay().total_seconds() / 60 if journeystop.get_delay() is not None else None,
-            "actual_time": journeystop.actual_earlier_time().strftime("%H:%M") if journeystop.actual_earlier_time() is not None else None,
+            "actual_time": timezone.localtime(journeystop.actual_earlier_time()).strftime("%H:%M") if journeystop.actual_earlier_time() is not None else None,
             "cancelled": journeystop.cancelled
         } for journeystop in journeystops]
         response_dict = {
