@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'gtfs',
     'netzkarte',
     'details',
+    'wagenreihung',
     'debug_toolbar'
 ]
 
