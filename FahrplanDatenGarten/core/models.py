@@ -88,6 +88,8 @@ class JourneyStop(models.Model):
     actual_arrival_delay = models.DurationField(null=True)
     actual_departure_delay = models.DurationField(null=True)
     cancelled = models.BooleanField(default=False)
+    planned_platform = models.CharField(null=True, max_length=255)
+    actual_platform = models.CharField(null=True, max_length=255)
 
     def earlier_time(self):
         if self.planned_arrival_time:
@@ -123,3 +125,9 @@ class JourneyStop(models.Model):
             return self.planned_departure_time + self.actual_departure_delay
         else:
             return None
+
+    def get_actual_platform(self) -> Optional[str]:
+        if self.actual_platform:
+            return self.actual_platform
+        else:
+            return self.planned_platform
