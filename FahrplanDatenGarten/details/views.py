@@ -128,17 +128,18 @@ class TrainDetailsByNameView(TemplateView):
             journeystops = JourneyStop.objects.filter(
                 journey=journey
             )
-            delays: List[datetime.timedelta] = [journeystop.get_delay() if journeystop.get_delay(
-            ) is not None else datetime.timedelta() for journeystop in journeystops]
-            average_delay = sum(
-                delays, datetime.timedelta()) / len(journeystops)
-            return_journeys_data.append({
-                "id": journey.id,
-                "date": journey.date,
-                "cancelled": journey.cancelled,
-                "average_delay": round(average_delay.total_seconds() / 60, 1),
-                "maximum_delay": round(max(delays).total_seconds() / 60)
-            })
+            if journeystops.count() != 0:
+                delays: List[datetime.timedelta] = [journeystop.get_delay() if journeystop.get_delay(
+                ) is not None else datetime.timedelta() for journeystop in journeystops]
+                average_delay = sum(
+                    delays, datetime.timedelta()) / len(journeystops)
+                return_journeys_data.append({
+                    "id": journey.id,
+                    "date": journey.date,
+                    "cancelled": journey.cancelled,
+                    "average_delay": round(average_delay.total_seconds() / 60, 1),
+                    "maximum_delay": round(max(delays).total_seconds() / 60)
+                })
         return return_journeys_data
 
     def get_context_data(self, train_name: str, page_num: int, **kwargs):
