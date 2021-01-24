@@ -7,6 +7,7 @@ wireguard_public_key: "{{ lookup('passwordstore', 'infra/wireguard subkey=public
 icinga2_check_packages:
   - fdgmon-check-celery
   - fdgmon-check-celery-tasks
+  - fdgmon-check-borgmatic-last-run
 
 oh_my_zsh_plugins:
   - git
