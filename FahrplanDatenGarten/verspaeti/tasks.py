@@ -55,6 +55,7 @@ def verspaeti_statistics():
         num_delayed_journeys,
         num_delayed_journeys]
     plot_figure, plot_axes = pyplot.subplots(figsize=(5, 6))
+    plot_figure.subplots_adjust(bottom=0.3, top=0.95)
 
     plot_wedges, _, plot_autotexts = pyplot.pie(
         values,
@@ -66,12 +67,12 @@ def verspaeti_statistics():
         labels,
         loc="lower center",
         fontsize="xx-large",
-        bbox_to_anchor=(0.5, -0.1)
+        bbox_to_anchor=(0.5, -.3)
     )
     pyplot.setp(plot_autotexts, size=20)
     pyplot.axis('equal')
     plot_temporary_file = BytesIO()
-    pyplot.savefig(plot_temporary_file, format='png')
+    pyplot.savefig(plot_temporary_file, format='png', transparent=True)
 
     cache.set(
         "verspaeti_data", {
