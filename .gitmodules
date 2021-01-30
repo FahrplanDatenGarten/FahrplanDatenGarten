@@ -1,12 +1,6 @@
 [submodule "FahrplanDatenGarten/netzkarte"]
 	path = FahrplanDatenGarten/netzkarte
 	url = https://github.com/FahrplanDatenGarten/deutschlandkarte-a-la-bahn
-[submodule "FahrplanDatenGarten/static/roboto"]
-	path = FahrplanDatenGarten/static/roboto
-	url = https://git.labcode.dev/static_libs/roboto.git
-[submodule "FahrplanDatenGarten/static/bulma"]
-	path = FahrplanDatenGarten/static/bulma
-	url = https://git.labcode.dev/static_libs/bulma.git
 [submodule "ansible/roles/n0emis.base"]
 	path = ansible/roles/n0emis.base
 	url = https://github.com/n0emis/ansible-role-base

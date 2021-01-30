@@ -7,6 +7,11 @@ class FGRFillerDataForm(forms.Form):
     travel_date = forms.DateField(
         label="Reisedatum:",
         required=True,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date'
+            }
+        ),
     )
     departure_stop_name = forms.CharField(
         label="Startbahnhof:",
@@ -14,13 +19,18 @@ class FGRFillerDataForm(forms.Form):
         max_length=26,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
     departure_planned_time = forms.TimeField(
         label="Abfahrt laut Fahrplan:",
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Bsp. 13:37'
+            }
+        ),
     )
     arrival_stop_name = forms.CharField(
         label="Zielbahnhof:",
@@ -28,21 +38,36 @@ class FGRFillerDataForm(forms.Form):
         max_length=26,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
     arrival_planned_time = forms.TimeField(
         label="Ankunft laut Fahrplan:",
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Bsp. 13:37'
+            }
+        ),
     )
     arrival_actual_date = forms.DateField(
         label="Echtes Ankunftsdatum:",
-        required=True
+        required=True,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date'
+            }
+        ),
     )
     arrival_actual_time = forms.TimeField(
         label="Echte Ankunftsuhrzeit:",
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Bsp. 13:37'
+            }
+        ),
     )
     arrival_actual_product_type = forms.CharField(
         label="Letzter Zug (Ankunftszug) - Art (ICE/IC/RE...):",
@@ -50,7 +75,7 @@ class FGRFillerDataForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -60,7 +85,7 @@ class FGRFillerDataForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -70,7 +95,7 @@ class FGRFillerDataForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -80,13 +105,18 @@ class FGRFillerDataForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
     first_delayed_train_departure_planned = forms.TimeField(
         label="Geplante Abfahrt des ersten verspäteten Zugs:",
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Bsp. 13:37'
+            }
+        ),
     )
     changed_train = forms.BooleanField(
         label="Umgestiegen?",
@@ -95,9 +125,9 @@ class FGRFillerDataForm(forms.Form):
     changed_train_last_station = forms.CharField(
         required=False,
         max_length=14,
+        label="",
         widget=forms.TextInput(
             attrs={
-                'class': 'input',
                 'placeholder': 'Letzter Umstiegsbahnhof'
             }
         ),
@@ -109,6 +139,7 @@ class FGRFillerDataForm(forms.Form):
     connecting_train_missed_station = forms.CharField(
         required=False,
         max_length=14,
+        label="",
         widget=forms.TextInput(
             attrs={
                 'class': 'input',
@@ -123,6 +154,7 @@ class FGRFillerDataForm(forms.Form):
     journey_not_start_or_cut_short_station = forms.CharField(
         required=False,
         max_length=14,
+        label="",
         widget=forms.TextInput(
             attrs={
                 'class': 'input',
@@ -136,6 +168,7 @@ class FGRFillerDataForm(forms.Form):
     journey_cut_short_additional_costs_station = forms.CharField(
         required=False,
         max_length=14,
+        label="",
         widget=forms.TextInput(
             attrs={
                 'class': 'input',
@@ -147,7 +180,11 @@ class FGRFillerDataForm(forms.Form):
         choices=[(tag, tag.value) for tag in FillFormFieldsCompensation],
         label="Art der Erstattung:",
         required=False,
-        widget=forms.RadioSelect()
+        widget=forms.RadioSelect(
+            attrs={
+                'class': 'form-check-inline'
+            }
+        )
     )
     first_name = forms.CharField(
         label="Vorname:",
@@ -155,7 +192,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -165,7 +202,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -175,7 +212,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -185,7 +222,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -195,7 +232,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -205,7 +242,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -215,7 +252,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -225,7 +262,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -235,7 +272,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -245,7 +282,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -255,7 +292,7 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
@@ -263,7 +300,11 @@ class FGRFillerDataForm(forms.Form):
         choices=[(tag, tag.value) for tag in FillFormFieldsBahnCard100SeasonTicket],
         required=False,
         label="BahnCard 100 oder Zeitkarte vorhanden?:",
-        widget=forms.RadioSelect()
+        widget=forms.RadioSelect(
+            attrs={
+                'class': 'form-check-inline'
+            }
+        )
     )
     bahncard_100_season_ticket_number = forms.CharField(
         label="BahnCard 100-/Zeitkarten-Nr:",
@@ -271,11 +312,16 @@ class FGRFillerDataForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'input'
+                'placeholder': ''
             }
         ),
     )
     date_of_birth = forms.DateField(
         label="Geburtsdatum (nur bei BC100)",
-        required=False
+        required=False,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date'
+            }
+        )
     )

@@ -1,36 +1,40 @@
 {% extends "base_with_navbar.html" %}
 
 {% block content %}
-    <h1 class="title is-1 has-text-centered">Statistik</h1>
+    <h1>Statistik</h1>
     <br>
     {% if error_message %}
-    <div class="notification is-warning">
-      {{ error_message }}
-    </div>
+        <div class="notification is-warning">
+            {{ error_message }}
+        </div>
     {% else %}
-        <div class="columns">
-            <div class="column card is-3 is-offset-1">
-                <div class="card-header">
-                    <p class="card-header-title">Versp&auml;tung heute</p>
-                </div>
-                <div class="card-content">
-                    <img src="data:image/png;base64,{{ plot_image_base64 }}" />
-                </div>
-            </div>
-            <div class="column card is-3 is-offset-1">
-                <div class="card-header">
-                    <div class="card-header-title">H&ouml;chste Versp&auml;tung</div>
-                </div>
-                <div class="card-content">
-                    <p><b>{{ biggest_delay_name }}</b> ist <b>{{ biggest_delay_time }}</b> Minuten zu spät und damit der verspäteste Zug der letzten 24h!</p>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">Höchste Verspätung</h4>
+                        <p class="card-text">
+                            <b>{{ biggest_delay_name }}</b> ist <b>{{ biggest_delay_time }}</b> Minuten zu spät und damit
+                            der verspäteste Zug der letzten 24h!</p>
+                    </div>
                 </div>
             </div>
-            <div class="column card is-3 is-offset-1">
-                <div class="card-header">
-                    <div class="card-header-title">Durchschnittsversp&auml;tung</div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">Verspätung heute</h4>
+                        <img width="100%" src="data:image/png;base64,{{ plot_image_base64 }}"/>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <p>Alle Z&uuml;ge der letzten 24h sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">Durchschnittsverspätung</h4>
+                        <p class="card-text">
+                            Alle Z&uuml;ge der letzten 24h sind durchschnittlich <b>{{ average_delay }}</b> Minuten zu spät!
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
