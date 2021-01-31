@@ -1,0 +1,9 @@
+repo.fahrplandatengarten.de {
+  route /debian/monitoring/* {
+    uri strip_prefix /debian/monitoring
+    file_server {
+        root /var/www/monitoring-check-plugins/repo
+        browse
+    }
+  }
+}

@@ -1,0 +1,15 @@
+www.fahrplandatengarten.de {
+  redir https://fahrplandatengarten.de
+}
+
+fahrplandatengarten.de {
+  import hsts
+  route /static/* {
+    uri strip_prefix /static
+    header * Cache-Control "max-age=86400"
+    file_server {
+        root {{ fdg_static_root_path }}
+    }
+  }
+  reverse_proxy http://localhost:8000
+}

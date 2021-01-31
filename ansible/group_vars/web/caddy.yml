@@ -1,0 +1,4 @@
+---
+caddy_config_file: "../files/web/caddy/Caddyfile"
+caddy_config_sites_paths: "../files/web/caddy/sites.d/*"
+caddy_config_sites_clear: yes

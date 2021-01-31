@@ -25,12 +25,6 @@
 [submodule "ansible/roles/geerlingguy.postgresql"]
 	path = ansible/roles/geerlingguy.postgresql
 	url = https://github.com/geerlingguy/ansible-role-postgresql.git
-[submodule "ansible/roles/em0lar.traefik"]
-	path = ansible/roles/em0lar.traefik
-	url = https://github.com/em0lar/ansible-role-traefik.git
-[submodule "ansible/roles/geerlingguy.nginx"]
-	path = ansible/roles/geerlingguy.nginx
-	url = https://github.com/geerlingguy/ansible-role-nginx.git
 [submodule "ansible/roles/n0emis.wireguard"]
 	path = ansible/roles/n0emis.wireguard
 	url = https://github.com/n0emis/ansible-wireguard.git
@@ -40,3 +34,6 @@
 [submodule "ansible/roles/fahrplandatengarten.icinga"]
 	path = ansible/roles/fahrplandatengarten.icinga
 	url = https://github.com/FahrplanDatenGarten/ansible-role-icinga
+[submodule "ansible/roles/em0lar.caddy"]
+	path = ansible/roles/em0lar.caddy
+	url = https://git.em0lar.de/ansible_roles/caddy.git

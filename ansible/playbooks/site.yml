@@ -96,19 +96,10 @@
     - fdg_app
 
 - hosts: web
-  tags: web, nginx, traefik
+  tags: web, caddy
   roles:
     - fdg_app_gunicorn
-    - geerlingguy.nginx
-    - em0lar.traefik
-  tasks:
-    - name: Add dynamic traefik configs to server
-      template:
-        dest: "{{ traefik_dynamic_config_directory }}"
-        src: "{{ item }}"
-        owner: "{{ traefik_user }}"
-        group: "{{ traefik_group }}"
-      with_fileglob: '../files/web/traefik/*'
+    - em0lar.caddy
 
 - hosts: worker
   tags: worker,celery
