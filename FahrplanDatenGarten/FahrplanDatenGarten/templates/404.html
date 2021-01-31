@@ -3,6 +3,14 @@
 
 {% block head %}
     <style>
+        @media screen and (max-width: 576px) {
+            .img-bg {
+                display: none;
+            }
+            .text-col {
+                text-align: center;
+            }
+        }
         @media screen and (max-width: 1920px) and (max-height: 1268px) {
             .img-bg {
                 background-image: url('{% static '404_1920.jpg' %}');
@@ -26,17 +34,17 @@
 {% endblock %}
 
 {% block body %}
-    <div class="columns" style="min-height: 100vh; margin: 0">
-        <div class="column is-flex is-align-items-center is-justify-content-center">
+    <div class="row" style="min-height: 100vh; margin: 0">
+        <div class="col d-flex align-items-center justify-content-center text-col">
             <div>
-                <h1 class="is-size-1">404</h1>
-                <h3 class="is-size-3">Zug nicht gefunden</h3>
+                <h1 class="display-1">404</h1>
+                <h2>Zug nicht gefunden</h2>
                 <br>
-                <a href="/" class="button">Zur Startseite</a>
+                <a href="/" class="btn btn-primary">Zur Startseite</a>
             </div>
 
         </div>
-        <div class="column img-bg">
+        <div class="col img-bg">
         </div>
     </div>
 {% endblock %}
