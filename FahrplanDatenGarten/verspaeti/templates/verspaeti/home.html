@@ -9,8 +9,8 @@
         </div>
     {% else %}
         <div class="row">
-            <div class="col-lg-4">
-                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="col-lg-4 col-sm-12">
+                <div class="card border-secondary mb-3">
                     <div class="card-body">
                         <h4 class="card-title">Höchste Verspätung</h4>
                         <p class="card-text">
@@ -19,16 +19,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="col-lg-4 col-sm-12">
+                <div class="card border-secondary mb-3">
                     <div class="card-body">
                         <h4 class="card-title">Verspätung heute</h4>
-                        <img width="100%" src="data:image/png;base64,{{ plot_image_base64 }}"/>
+                        <img style="max-width: 100%; max-height: 100%" src="data:image/png;base64,{{ plot_image_base64 }}"/>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="col-lg-4 col-sm-12">
+                <div class="card border-secondary mb-3">
                     <div class="card-body">
                         <h4 class="card-title">Durchschnittsverspätung</h4>
                         <p class="card-text">
