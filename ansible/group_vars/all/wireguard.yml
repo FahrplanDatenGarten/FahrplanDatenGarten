@@ -5,6 +5,7 @@ wireguard_wg_fdg_interface:
   listen_port: 40000
   address: "{{ wireguard_address }}/128"
   private_key: "{{ wireguard_private_key }}"
+  mtu: 1300
 
 wireguard_wg_fdg_peers:
   main:
