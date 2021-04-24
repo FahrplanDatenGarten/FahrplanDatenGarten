@@ -69,8 +69,6 @@ nereid.monitoring 3600 IN CNAME nereid.ovh.fra.de
 
 monitoring 3600 IN A 159.69.53.246 ; neso.monitoring
 monitoring 3600 IN AAAA 2a01:4f8:c17:de59::1
-monitoring 3600 IN A 51.68.188.52 ; nereid.monitoring
-monitoring 3600 IN AAAA 2001:41d0:701:1100::88e
 
 grafana.monitoring 3600 IN CNAME monitoring
 
@@ -78,8 +76,6 @@ graphite.monitoring 3600 IN CNAME monitoring
 
 icinga.monitoring 3600 IN A 159.69.53.246 ; neso.monitoring
 icinga.monitoring 3600 IN AAAA 2a01:4f8:c17:de59::1
-icinga.monitoring 3600 IN A 51.68.188.52 ; nereid.monitoring
-icinga.monitoring 3600 IN AAAA 2001:41d0:701:1100::88e
 
 prometheus.monitoring 3600 IN CNAME neso.monitoring
 
