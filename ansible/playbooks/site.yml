@@ -4,7 +4,7 @@
   roles:
     - worker_autossh
     - n0emis.base
-    - em0lar.oh-my-zsh
+    - leona.oh-my-zsh
     - jnv.unattended-upgrades
 
 - hosts: all
@@ -99,7 +99,7 @@
   tags: web, caddy
   roles:
     - fdg_app_gunicorn
-    - em0lar.caddy
+    - leona.caddy
 
 - hosts: worker
   tags: worker,celery

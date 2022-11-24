@@ -7,12 +7,9 @@
 [submodule "ansible/roles/jnv.unattended-upgrades"]
 	path = ansible/roles/jnv.unattended-upgrades
 	url = https://github.com/jnv/ansible-role-unattended-upgrades
-[submodule "ansible/roles/em0lar.oh-my-zsh"]
-	path = ansible/roles/em0lar.oh-my-zsh
-	url = https://git.labcode.dev/ansible_roles/oh-my-zsh.git
-[submodule "FahrplanDatenGarten/static/bulma-calender"]
-	path = FahrplanDatenGarten/static/bulma-calender
-	url = https://git.labcode.dev/static_libs/bulma-calender
+[submodule "ansible/roles/leona.oh-my-zsh"]
+	path = ansible/roles/leona.oh-my-zsh
+	url = https://git.n0emis.eu/leona/oh-my-zsh.git
 [submodule "ansible/roles/geerlingguy.redis"]
 	path = ansible/roles/geerlingguy.redis
 	url = https://github.com/geerlingguy/ansible-role-redis.git
@@ -24,10 +21,10 @@
 	url = https://github.com/n0emis/ansible-wireguard.git
 [submodule "ansible/roles/cloudalchemy.coredns"]
 	path = ansible/roles/cloudalchemy.coredns
-	url = https://github.com/em0lar/ansible-coredns.git
+	url = https://github.com/leona-ya/ansible-coredns.git
 [submodule "ansible/roles/fahrplandatengarten.icinga"]
 	path = ansible/roles/fahrplandatengarten.icinga
 	url = https://github.com/FahrplanDatenGarten/ansible-role-icinga
-[submodule "ansible/roles/em0lar.caddy"]
-	path = ansible/roles/em0lar.caddy
-	url = https://git.em0lar.de/ansible_roles/caddy.git
+[submodule "ansible/roles/leona.caddy"]
+	path = ansible/roles/leona.caddy
+	url = https://git.n0emis.eu/leona/caddy.git
