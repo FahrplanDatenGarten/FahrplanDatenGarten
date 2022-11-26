@@ -40,7 +40,7 @@ class Stop(models.Model):
     has_long_distance_traffic = models.BooleanField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.pk})"
 
 
 class StopIDKind(models.Model):
@@ -131,3 +131,6 @@ class JourneyStop(models.Model):
             return self.actual_platform
         else:
             return self.planned_platform
+
+    def __str__(self):
+        return f"{self.journey.name}@{self.stop.name} ({self.pk})"

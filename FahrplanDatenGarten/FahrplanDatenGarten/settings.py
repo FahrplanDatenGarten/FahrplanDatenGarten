@@ -196,7 +196,10 @@ CELERYCONF_TASK_STORE_ERRORS_EVEN_IF_IGNORED = config.getboolean(
 
 # FahrplanDatenGarten's custom configuration
 PERIODIC_IMPORT_TIMETABLES = config.get(
-    "periodic", 'timetables', fallback="*,15").split(',')
+    "periodic", 'timetables', fallback="*,*/15").split(',')
 
 PERIODIC_IMPORT_JOURNEYS = config.get(
-    "periodic", 'journeys', fallback="*,5").split(',')
+    "periodic", 'journeys', fallback="*,*/5").split(',')
+
+PERIODIC_IMPORT_WAGENREIHUNGEN = config.get(
+    "periodic", 'wagenreihungen', fallback="*,*/15").split(',')
