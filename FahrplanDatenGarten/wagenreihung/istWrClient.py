@@ -27,8 +27,10 @@ class IstWrClient():
 
         for group in d['data']['istformation']['allFahrzeuggruppe']:
             for coach in group['allFahrzeug']:
+                if coach['fahrzeugnummer'] == "":
+                    continue
                 c = Coach.objects.filter(data__uic=coach['fahrzeugnummer']).first()
-                if not c or coach['fahrzeugnummer'] == "":
+                if not c:
                     c = Coach(data={'uic': coach['fahrzeugnummer']})
                 c.data['type'] = coach['fahrzeugtyp']
                 c.save()
