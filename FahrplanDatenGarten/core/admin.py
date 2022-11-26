@@ -38,6 +38,11 @@ class JourneyAdmin(admin.ModelAdmin):
         'cancelled',
         'source',
     )
+    list_filter = (
+        'date',
+        'cancelled',
+    )
+    search_fields = ('name',)
 
 
 admin.site.register(Stop, StopAdmin)
