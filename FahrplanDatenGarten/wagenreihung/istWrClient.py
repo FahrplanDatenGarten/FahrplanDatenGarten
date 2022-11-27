@@ -28,7 +28,7 @@ class IstWrClient():
         for group in d['data']['istformation']['allFahrzeuggruppe']:
             # TODO: delete coachjourneystops, which are no longer used
             for coach in group['allFahrzeug']:
-                if coach['fahrzeugnummer'] == "":
+                if coach['fahrzeugnummer'] == '':
                     continue
                 c = Coach.objects.filter(data__uic=coach['fahrzeugnummer']).first()
                 if not c:
@@ -36,8 +36,16 @@ class IstWrClient():
                 c.data['type'] = coach['fahrzeugtyp']
                 c.save()
 
+                if coach['wagenordnungsnummer'] != '':
+                    cjs = CoachJourneyStop.objects.filter(journeystop=self.journeystop, data__sequence_number=coach['wagenordnungsnummer']).first()
+                    if not cjs:
+                        cjs = CoachJourneyStop(journeystop=self.journeystop, coach=c)
+                    elif cjs.coach != c:
+                        cjs.coach = c
+                else:
+                    cjs, _ = CoachJourneyStop.objects.get_or_create(journeystop=self.journeystop, coach=c)
+                    # TODO: better approach...
 
-                cjs, _ = CoachJourneyStop.objects.get_or_create(journeystop=self.journeystop, coach=c)
                 cjs.data['trainset'] = group['fahrzeuggruppebezeichnung']
                 cjs.data['sequence_number'] = coach['wagenordnungsnummer']
                 cjs.save()
