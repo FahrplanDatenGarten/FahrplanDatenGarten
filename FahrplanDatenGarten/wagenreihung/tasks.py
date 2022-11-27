@@ -4,6 +4,7 @@ from celery.schedules import crontab
 from celery.utils.log import get_task_logger
 from core.models import JourneyStop
 from django.conf import settings
+from django.db.models import Q
 
 from FahrplanDatenGarten.celery import app
 from wagenreihung.istWrClient import IstWrClient
@@ -22,7 +23,8 @@ def setup_wagenreihung_configure_periodic_tasks(sender, **kwargs):
 
 @app.task(name="import_all_wagenreihungen", ignore_result=True)
 def import_all_wagenreihungen():
-    for journeystop in JourneyStop.objects.filter(journey__date=datetime.date.today()).all():
+    wr_after = datetime.datetime.now() - datetime.timedelta(hours=3)
+    for journeystop in JourneyStop.objects.filter(Q(planned_arrival_time__gte=wr_after) | Q(planned_departure_time__gte=wr_after)).all():
         import_wagenreihung.delay(journeystop.pk)
 
 @app.task(name="import_wagenreihung")

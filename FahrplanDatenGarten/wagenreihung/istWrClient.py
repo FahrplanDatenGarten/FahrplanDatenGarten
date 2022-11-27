@@ -26,6 +26,7 @@ class IstWrClient():
         d = requests.get(self.url).json()
 
         for group in d['data']['istformation']['allFahrzeuggruppe']:
+            # TODO: delete coachjourneystops, which are no longer used
             for coach in group['allFahrzeug']:
                 if coach['fahrzeugnummer'] == "":
                     continue
