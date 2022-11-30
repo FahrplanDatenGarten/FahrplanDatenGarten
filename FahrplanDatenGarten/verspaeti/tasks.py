@@ -24,10 +24,18 @@ def setup_dbapis_configure_periodic_tasks(sender, **kwargs):
 
 @app.task(name="verspaeti_statistics", ignore_result=True)
 def verspaeti_statistics():
-    current_journeys = Journey.objects.filter(
-        journeystop__planned_arrival_time__gte=datetime.datetime.now() -
-        datetime.timedelta(
-            days=1)).distinct().all()
+    current_journeys = (
+        Journey.objects.filter(
+            journeystop__planned_arrival_time__gte=datetime.datetime.now()
+            - datetime.timedelta(days=1)
+        )
+        .filter(
+            journeystop__planned_arrival_time__lte=datetime.datetime.now()
+            + datetime.timedelta(hours=2)
+        )
+        .distinct()
+        .all()
+    )
     all_journey_delays: List[datetime.timedelta] = []
     delayed_journey_delays: List[Tuple[int, datetime.timedelta]] = []
 
@@ -37,23 +45,23 @@ def verspaeti_statistics():
         ).aggregate(Avg('actual_arrival_delay'))
         if aggregated_journey_stops['actual_arrival_delay__avg'] is not None:
             all_journey_delays.append(
-                aggregated_journey_stops['actual_arrival_delay__avg'])
-            if aggregated_journey_stops['actual_arrival_delay__avg'] > datetime.timedelta(
-                    minutes=5):
+                aggregated_journey_stops["actual_arrival_delay__avg"]
+            )
+            if aggregated_journey_stops[
+                "actual_arrival_delay__avg"
+            ] > datetime.timedelta(minutes=5):
                 delayed_journey_delays.append(
                     (journey.pk, aggregated_journey_stops['actual_arrival_delay__avg']))
 
     sorted_delayed_journey_delays = sorted(
-        delayed_journey_delays, key=lambda x: x[1], reverse=True)
+        delayed_journey_delays, key=lambda x: x[1], reverse=True
+    )
     num_delayed_journeys = len(delayed_journey_delays)
     num_current_journeys = current_journeys.count()
 
     colors = ('#63a615', '#ec0016')
     labels = ('Pünktlich', 'Zu spät')
-    values = [
-        num_current_journeys -
-        num_delayed_journeys,
-        num_delayed_journeys]
+    values = [num_current_journeys - num_delayed_journeys, num_delayed_journeys]
     plot_figure, plot_axes = pyplot.subplots(figsize=(5, 6))
     plot_figure.subplots_adjust(bottom=0.3, top=0.95)
 
@@ -67,7 +75,7 @@ def verspaeti_statistics():
         labels,
         loc="lower center",
         fontsize="xx-large",
-        bbox_to_anchor=(0.5, -.3)
+        bbox_to_anchor=(0.5, -0.3),
     )
     pyplot.setp(plot_autotexts, size=20)
     pyplot.axis('equal')
@@ -75,20 +83,32 @@ def verspaeti_statistics():
     pyplot.savefig(plot_temporary_file, format='png', transparent=True)
 
     cache.set(
-        "verspaeti_data", {
+        "verspaeti_data",
+        {
             "num_current_journeys": num_current_journeys,
             "num_delayed_journeys": num_delayed_journeys,
             "biggest_delay_name": Journey.objects.get(
-                pk=sorted_delayed_journey_delays[0][0]).name if delayed_journey_delays else 0,
+                pk=sorted_delayed_journey_delays[0][0]
+            ).name
+            if delayed_journey_delays
+            else 0,
             "biggest_delay_time": round(
-                sorted_delayed_journey_delays[0][1].seconds /
-                60) if len(delayed_journey_delays) else 0,
+                sorted_delayed_journey_delays[0][1].seconds / 60
+            )
+            if len(delayed_journey_delays)
+            else 0,
             "average_delay": round(
-                (sum(
-                    all_journey_delays,
-                    datetime.timedelta(0)) /
-                 len(all_journey_delays)).seconds /
-                60) if delayed_journey_delays else None,
+                (
+                    sum(all_journey_delays, datetime.timedelta(0))
+                    / len(all_journey_delays)
+                ).seconds
+                / 60
+            )
+            if delayed_journey_delays
+            else None,
             "plot_image_base64": base64.b64encode(
-                plot_temporary_file.getvalue()).decode('utf-8')},
-        2700)
+                plot_temporary_file.getvalue()
+            ).decode("utf-8"),
+        },
+        2700,
+    )
