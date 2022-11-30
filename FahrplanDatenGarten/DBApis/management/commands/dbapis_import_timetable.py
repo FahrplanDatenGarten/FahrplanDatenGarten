@@ -13,4 +13,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         hafasimport = HafasImport()
-        hafasimport.import_timetable(Stop.objects.get(pk=options['stop_pk']))
+        hafasimport.import_timetable(Stop.objects.get(pk=options['stop_pk']), duration=900)
