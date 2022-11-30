@@ -1,6 +1,7 @@
 import datetime
 import json
 from json.decoder import JSONDecodeError
+import pytz
 
 import requests
 from pyhafas import GeneralHafasError, HafasClient
@@ -128,6 +129,10 @@ class HafasImport:
                     cancelled=stopover.cancelled)
             else:
                 journey_stop = current_db_journeystops.first()
+                if stopover.departure is not None and journey_stop.planned_departure_time != stopover.departure.astimezone(pytz.timezone('Europe/Berlin')):
+                    journey_stop.planned_departure_time = stopover.departure
+                if stopover.arrival is not None and journey_stop.planned_arrival_time != stopover.arrival.astimezone(pytz.timezone('Europe/Berlin')):
+                    journey_stop.planned_arrival_time = stopover.arrival
                 if journey_stop.cancelled != stopover.cancelled:
                     journey_stop.cancelled = stopover.cancelled
                 if stopover.departureDelay is not None:
