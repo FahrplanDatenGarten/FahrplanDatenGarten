@@ -49,6 +49,14 @@
     - restart celerybeat service
   become_user: "fdg"
 
+- name: Update pip in venv
+  pip:
+    name: "pip"
+    virtualenv: "{{ fdg_base_path }}/.venv"
+    virtualenv_command: "python3 -m venv"
+    extra_args: "--upgrade"
+  become_user: "fdg"
+
 - name: Install pip requirements
   pip:
     requirements: "{{ fdg_base_path }}/requirements.txt"
@@ -56,6 +64,10 @@
     virtualenv_command: "python3 -m venv"
     extra_args: "--upgrade"
   become_user: "fdg"
+  notify:
+    - reload celeryd service
+    - reload gunicorn service
+    - restart celerybeat service
 
 - name: copy app configuration
   template:

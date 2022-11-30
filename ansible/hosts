@@ -17,9 +17,9 @@ mars.het.nue.de.vpn.fahrplandatengarten.de
 mars.het.nue.de.vpn.fahrplandatengarten.de
 
 [worker]
-saturn.int.sig.de.vpn.fahrplandatengarten.de #em0lar
-jupiter.int.goe.de.vpn.fahrplandatengarten.de #n0emis
-#neptun.local.vpn.fahrplandatengarten.de #e1mo
+saturn.int.sig.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::1
+jupiter.int.goe.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::1:1
+merkur.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::2:1
 
 [monitored]
-mars.het.nue.de.vpn.fahrplandatengarten.de
+mars.het.nue.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8::1
