@@ -20,6 +20,7 @@ mars.het.nue.de.vpn.fahrplandatengarten.de
 saturn.int.sig.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::1
 jupiter.int.goe.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::1:1
 merkur.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8:10::2:1
+franzbroetchen.vpn.fahrplandatengarten.de ansible_host=franzbroetchen.unix-ag.uni-kl.de
 
 [monitored]
 mars.het.nue.de.vpn.fahrplandatengarten.de ansible_host=fd59:974e:6ee8::1
