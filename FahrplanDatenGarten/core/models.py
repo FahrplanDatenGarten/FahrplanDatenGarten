@@ -22,6 +22,19 @@ class Source(models.Model):
         return self.friendly_name
 
 
+class Remark(models.Model):
+    remark_type = models.CharField(null=True, max_length=50)
+    code = models.TextField(null=True)
+    subject = models.TextField(null=True)
+    text = models.TextField(null=True)
+    priority = models.IntegerField(null=True)
+    trip_id = models.CharField(null=True, max_length=50)
+
+    def __str__(self):
+        print(self.__dict__)
+        return " - ".join([str(v) for k, v in self.__dict__.items() if v is not None and k not in ['_state', 'id']])
+
+
 class Stop(models.Model):
     ifopt = models.CharField(max_length=255)
     country = CountryField()
@@ -66,11 +79,13 @@ class StopID(models.Model):
 
 
 class Journey(models.Model):
+    trip_id = models.CharField(max_length=255, null=True)
     name = models.CharField(max_length=255, null=True)
     stop = models.ManyToManyField(Stop, through='JourneyStop')
     date = models.DateField(null=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
+    remarks = models.ManyToManyField(Remark)
 
     def __str__(self):
         return self.name
@@ -90,6 +105,7 @@ class JourneyStop(models.Model):
     cancelled = models.BooleanField(default=False)
     planned_platform = models.CharField(null=True, max_length=255)
     actual_platform = models.CharField(null=True, max_length=255)
+    remarks = models.ManyToManyField(Remark)
 
     def earlier_time(self):
         if self.planned_arrival_time:
