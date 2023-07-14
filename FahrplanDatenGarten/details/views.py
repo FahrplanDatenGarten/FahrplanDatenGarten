@@ -145,7 +145,8 @@ class TrainDetailsByNameView(TemplateView):
     def get_context_data(self, train_name: str, page_num: int, **kwargs):
         context = super().get_context_data(**kwargs)
         db_journeys = Journey.objects.filter(
-            name=train_name
+            name=train_name,
+            journeystop__isnull=False
         ).order_by('-date')
         if len(db_journeys) != 0:
             journey_paginator = Paginator(db_journeys, 9)

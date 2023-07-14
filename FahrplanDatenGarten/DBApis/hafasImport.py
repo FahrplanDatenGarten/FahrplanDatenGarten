@@ -104,14 +104,26 @@ class HafasImport:
         remarks = []
         existing_remark_pks = [r.pk for r in obj.remarks.all()]
         for rem in rems:
-            remark, _ = Remark.objects.get_or_create(
-                remark_type=rem.remark_type,
-                code=rem.code,
-                subject=rem.subject,
-                text=rem.text,
-                priority=rem.priority,
-                trip_id=rem.trip_id
-            )
+            remark = None
+            try:
+                remark = Remark.objects.filter(
+                    remark_type=rem.remark_type,
+                    code=rem.code,
+                    subject=rem.subject,
+                    text=rem.text,
+                    priority=rem.priority,
+                    trip_id=rem.trip_id
+                )[0]
+            except IndexError:
+                remark = Remark(
+                    remark_type=rem.remark_type,
+                    code=rem.code,
+                    subject=rem.subject,
+                    text=rem.text,
+                    priority=rem.priority,
+                    trip_id=rem.trip_id
+                )
+                remark.save()
             remarks.append(remark)
             if remark.pk not in existing_remark_pks:
                 obj.remarks.add(remark)
