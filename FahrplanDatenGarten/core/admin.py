@@ -10,6 +10,7 @@ class StopIDAdminInline(admin.TabularInline):
 
 
 class StopAdmin(admin.ModelAdmin):
+    search_fields = ['name']
     list_display = (
         'name',
         'primary_stop_id')
@@ -22,7 +23,7 @@ class StopAdmin(admin.ModelAdmin):
 
 class JourneystopAdminInline(admin.TabularInline):
     model = JourneyStop
-    autocomplete_fields = ['remarks']
+    autocomplete_fields = ['stop', 'remarks']
     fields = (
         'stop',
         'planned_arrival_time',
