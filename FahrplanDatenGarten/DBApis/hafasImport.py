@@ -8,7 +8,7 @@ from pyhafas import GeneralHafasError, HafasClient
 from pyhafas.profile import DBProfile
 
 from core.models import (Journey, JourneyStop, Provider, Source, StopID,
-                         StopIDKind)
+                         StopIDKind, Remark)
 
 
 class HafasImport:
@@ -58,6 +58,7 @@ class HafasImport:
             )
             if current_db_journeys.count() == 0:
                 Journey.objects.create(
+                    trip_id=leg.id,
                     name=leg.name,
                     date=leg.dateTime.date(),
                     source=self.source,
@@ -70,6 +71,9 @@ class HafasImport:
                     journey.save()
 
     def get_trip_id(self, journey: Journey):
+        if journey.trip_id is not None:
+            return journey.trip_id
+
         lid_request = requests.get(
             url="https://reiseauskunft.bahn.de/bin/trainsearch.exe/dn",
             params={
@@ -90,7 +94,30 @@ class HafasImport:
         first_train = trains[0]
         first_train_date = datetime.datetime.strptime(first_train['depDate'], '%d.%m.%Y').strftime('%d%m%Y')
         trip_id = f"1|{first_train['id']}|{first_train['cycle']}|{first_train['pool']}|{first_train_date}"
+
+        journey.trip_id = trip_id
+        journey.save()
+
         return trip_id
+
+    def import_remarks(self, rems, obj):
+        remarks = []
+        existing_remark_pks = [r.pk for r in obj.remarks.all()]
+        for rem in rems:
+            remark, _ = Remark.objects.get_or_create(
+                remark_type=rem.remark_type,
+                code=rem.code,
+                subject=rem.subject,
+                text=rem.text,
+                priority=rem.priority,
+                trip_id=rem.trip_id
+            )
+            remarks.append(remark)
+            if remark.pk not in existing_remark_pks:
+                obj.remarks.add(remark)
+
+        for pk in set(existing_remark_pks) - set([r.pk for r in remarks]):
+            obj.remarks.remove(pk)
 
 
     def import_journey(self, journey: Journey):
@@ -101,6 +128,9 @@ class HafasImport:
             trip = self.hafasclient.trip(trip_id)
         except GeneralHafasError as e:
             return
+
+        self.import_remarks(trip.remarks, journey)
+
         for stopover in trip.stopovers:
             eva_id = stopover.stop.id[-8:]
             db_stop_id = StopID.objects.filter(
@@ -119,7 +149,7 @@ class HafasImport:
                 journey=journey
             )
             if current_db_journeystops.count() == 0:
-                JourneyStop.objects.create(
+                journey_stop = JourneyStop.objects.create(
                     stop=db_stop,
                     journey=journey,
                     planned_departure_time=stopover.departure,
@@ -140,3 +170,5 @@ class HafasImport:
                 if stopover.arrivalDelay is not None:
                     journey_stop.actual_arrival_delay = stopover.arrivalDelay
                 journey_stop.save()
+
+            self.import_remarks(stopover.remarks, journey_stop)
