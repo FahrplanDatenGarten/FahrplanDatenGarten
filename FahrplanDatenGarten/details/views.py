@@ -147,7 +147,7 @@ class TrainDetailsByNameView(TemplateView):
         db_journeys = Journey.objects.filter(
             name=train_name,
             journeystop__isnull=False
-        ).order_by('-date')
+        ).distinct().order_by('-date')
         if len(db_journeys) != 0:
             journey_paginator = Paginator(db_journeys, 9)
             journey_paginator_page = journey_paginator.get_page(page_num)
