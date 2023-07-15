@@ -128,10 +128,6 @@ class HafasImport:
             if remark.pk not in existing_remark_pks:
                 obj.remarks.add(remark)
 
-        for pk in set(existing_remark_pks) - set([r.pk for r in remarks]):
-            obj.remarks.remove(pk)
-
-
     def import_journey(self, journey: Journey):
         trip_id = self.get_trip_id(journey)
         if trip_id is None:
