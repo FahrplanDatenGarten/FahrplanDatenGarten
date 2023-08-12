@@ -14,6 +14,15 @@
                     fdfgen = super.fdfgen.overridePythonAttrs (old: {
                         buildInputs = (old.buildInputs or []) ++ [super.setuptools];
                     });
+                    pyhafas = super.pyhafas.overridePythonAttrs (old: {
+                        buildInputs = (old.buildInputs or []) ++ [super.setuptools];
+                    });
+                    django-bootstrap4 = super.django-bootstrap4.overridePythonAttrs (old: {
+                        buildInputs = (old.buildInputs or []) ++ [super.hatchling];
+                    });
+                    contourpy = super.contourpy.override {
+                      preferWheel = true;
+                    };
                 });
             }).env;
         });
