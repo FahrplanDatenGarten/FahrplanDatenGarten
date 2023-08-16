@@ -9,7 +9,7 @@ from django.db.models import Avg
 from matplotlib import pyplot
 
 from core.models import Journey, JourneyStop
-from FahrplanDatenGarten.celery import app
+from fahrplandatengarten.fahrplandatengarten.celery import app
 
 
 @app.on_after_finalize.connect

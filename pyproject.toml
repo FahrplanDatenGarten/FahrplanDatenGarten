@@ -25,10 +25,10 @@ django-bootstrap4 = "^23.2"
 numpy = "^1.25.1"
 # actually a dependency of matplotplib, but nixos doesn't work with 1.1.0, so we lock to an older version
 contourpy = "1.0.7"
-
-
-[tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^4.1.0"
+2
+[tool.poetry.scripts]
+fdg-manage = "fahrplandatengarten.fahrplandatengarten.manage:main"
 
 [build-system]
 requires = ["poetry-core"]
