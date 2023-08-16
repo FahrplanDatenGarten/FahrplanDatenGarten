@@ -1,5 +1,5 @@
-[submodule "FahrplanDatenGarten/netzkarte"]
-	path = FahrplanDatenGarten/netzkarte
+[submodule "fahrplandatengarten/netzkarte"]
+	path = fahrplandatengarten/netzkarte
 	url = https://github.com/FahrplanDatenGarten/deutschlandkarte-a-la-bahn
 [submodule "ansible/roles/n0emis.base"]
 	path = ansible/roles/n0emis.base
