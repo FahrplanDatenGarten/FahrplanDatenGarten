@@ -12,9 +12,31 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import configparser
 import os
+import logging
 
 config = configparser.RawConfigParser()
-config.read_file(open('env.cfg', encoding='utf-8'))
+try:
+    if 'FDG_CONFIG_FILE' in os.environ:
+        # Use read to avoid failing when file is not existing. This allows for auto creation in the given directory
+        config.read(os.environ.get('FDG_CONFIG_FILE', ''), encoding='utf-8')
+    else:
+        config.read(['fdg.cfg', '/etc/fdg/fdg.cfg'], encoding='utf-8')
+except configparser.Error as e:
+    logging.critical((
+        '{0} occured while parsing the configuration at {1}:{2}:\n'
+        '{3}\nNote: {4}'
+    ).format(
+        type(e).__name__,
+        e.source,
+        e.lineno,
+        e,
+        type(e).__doc__.splitlines()[0]
+    ))
+    exit(1)
+
+if not len(config.sections()):
+    logging.critical("No configuration file could be found!")
+    exit(1)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
