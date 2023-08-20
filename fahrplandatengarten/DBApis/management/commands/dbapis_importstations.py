@@ -1,6 +1,6 @@
-from core.models import Provider, Source, StopIDKind
-from DBApis.csvImport import parse_db_opendata_stop_csv
-from DBApis.tasks import dbapis_importstations_parse_station_row
+from fahrplandatengarten.core.models import Provider, Source, StopIDKind
+from fahrplandatengarten.DBApis.csvImport import parse_db_opendata_stop_csv
+from fahrplandatengarten.DBApis.tasks import dbapis_importstations_parse_station_row
 from django.core.management.base import BaseCommand
 
 

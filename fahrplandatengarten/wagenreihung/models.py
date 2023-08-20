@@ -1,6 +1,6 @@
 from django.db import models
 
-from core.models import JourneyStop
+from fahrplandatengarten.core.models import JourneyStop
 
 
 class Coach(models.Model):

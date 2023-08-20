@@ -1,7 +1,7 @@
 import requests
 import pytz
 
-from core.models import Journey, Stop, JourneyStop
+from fahrplandatengarten.core.models import Journey, Stop, JourneyStop
 from wagenreihung.models import Coach, CoachJourneyStop
 
 

@@ -2,7 +2,7 @@ import datetime
 
 from celery.schedules import crontab
 from celery.utils.log import get_task_logger
-from core.models import JourneyStop
+from fahrplandatengarten.core.models import JourneyStop
 from django.conf import settings
 from django.db.models import Q
 

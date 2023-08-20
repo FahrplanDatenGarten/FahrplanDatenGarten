@@ -1,5 +1,5 @@
-from core.models import Stop
-from DBApis.hafasImport import HafasImport
+from fahrplandatengarten.core.models import Stop
+from fahrplandatengarten.DBApis.hafasImport import HafasImport
 from django.core.management.base import BaseCommand
 
 

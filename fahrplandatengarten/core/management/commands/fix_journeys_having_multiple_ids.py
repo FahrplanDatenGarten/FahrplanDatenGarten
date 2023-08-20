@@ -3,7 +3,7 @@ from typing import Dict
 from django.core.management.base import BaseCommand
 from django.db.models import Count
 
-from core.models import (Source, Journey, JourneyStop)
+from fahrplandatengarten.core.models import (Source, Journey, JourneyStop)
 
 
 class Command(BaseCommand):

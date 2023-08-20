@@ -15,7 +15,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from matplotlib import pyplot
 
-from core.models import Journey, JourneyStop
+from fahrplandatengarten.core.models import Journey, JourneyStop
 
 
 class JourneyDetailsAPI(View):

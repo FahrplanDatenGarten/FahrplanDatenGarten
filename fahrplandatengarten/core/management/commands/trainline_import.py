@@ -4,7 +4,7 @@ import csv
 import io
 
 import requests
-from core.models import (Agency, Source, Stop, StopID, StopIDKind,
+from fahrplandatengarten.core.models import (Agency, Source, Stop, StopID, StopIDKind,
                          StopLocation, StopName)
 from django.core.management.base import BaseCommand, CommandError
 
