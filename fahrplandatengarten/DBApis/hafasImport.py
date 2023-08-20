@@ -7,7 +7,7 @@ import requests
 from pyhafas import GeneralHafasError, HafasClient
 from pyhafas.profile import DBProfile
 
-from core.models import (Journey, JourneyStop, Provider, Source, StopID,
+from fahrplandatengarten.core.models import (Journey, JourneyStop, Provider, Source, StopID,
                          StopIDKind, Remark)
 
 

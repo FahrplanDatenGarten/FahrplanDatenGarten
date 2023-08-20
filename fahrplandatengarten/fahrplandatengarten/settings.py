@@ -67,14 +67,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'core',
-    'DBApis',
-    'FGRFiller',
-    'verspaeti',
-    'gtfs',
-    'netzkarte',
-    'details',
-    'wagenreihung',
+    'fahrplandatengarten.core',
+    'fahrplandatengarten.DBApis',
+    'fahrplandatengarten.FGRFiller',
+    'fahrplandatengarten.verspaeti',
+    'fahrplandatengarten.gtfs',
+    'fahrplandatengarten.netzkarte',
+    'fahrplandatengarten.details',
+    'fahrplandatengarten.wagenreihung',
     'debug_toolbar'
 ]
 
@@ -94,7 +94,7 @@ ROOT_URLCONF = 'fahrplandatengarten.fahrplandatengarten.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['fahrplandatengarten/templates/'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

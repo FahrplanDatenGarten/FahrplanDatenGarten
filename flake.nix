@@ -20,11 +20,10 @@
       };
     in {
       overlay = final: prev: {
-        fahrplandatengarten-app = prev.poetry2nix.mkPoetryApplication {
+        fahrplandatengarten = prev.poetry2nix.mkPoetryApplication {
           projectDir = self;
           overrides = prev.poetry2nix.defaultPoetryOverrides.extend (self: super: (overrides super));
         };
-        fahrplandatengarten = final.fahrplandatengarten-app.dependencyEnv;
       };
     } // flake-utils.lib.eachDefaultSystem(system:
       let

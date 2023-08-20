@@ -2,7 +2,7 @@ import csv
 import io
 from zipfile import ZipFile
 
-from core import models
+from fahrplandatengarten.core import models
 from django.core.cache import cache
 from django.http import HttpResponse
 

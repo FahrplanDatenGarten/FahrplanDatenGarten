@@ -20,15 +20,15 @@ from django.contrib import admin
 from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
 
-handler404 = 'core.views.page_not_found_view'
+handler404 = 'fahrplandatengarten.core.views.page_not_found_view'
 
 urlpatterns = [
     path('', RedirectView.as_view(url=reverse_lazy('verspaeti:index'))),
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('verspaeti/', include('verspaeti.urls', namespace='verspaeti')),
-    path('fgr/', include('FGRFiller.urls', namespace='fgrfiller')),
-    path('gtfs/', include('gtfs.urls', namespace='gtfs')),
-    path('netzkarte/', include('netzkarte.urls', namespace='netzkarte')),
-    path('details/', include('details.urls', namespace='details')),
+    path('verspaeti/', include('fahrplandatengarten.verspaeti.urls', namespace='verspaeti')),
+    path('fgr/', include('fahrplandatengarten.FGRFiller.urls', namespace='fgrfiller')),
+    path('gtfs/', include('fahrplandatengarten.gtfs.urls', namespace='gtfs')),
+    path('netzkarte/', include('fahrplandatengarten.netzkarte.urls', namespace='netzkarte')),
+    path('details/', include('fahrplandatengarten.details.urls', namespace='details')),
 ]

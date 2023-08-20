@@ -2,7 +2,7 @@ from decimal import Decimal
 
 import django.db.models.deletion
 import django_countries.fields
-from DBApis.csvImport import parse_db_opendata_stop_csv
+from fahrplandatengarten.DBApis.csvImport import parse_db_opendata_stop_csv
 from django.db import migrations, models
 from django.db.models import Model
 

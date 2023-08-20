@@ -8,7 +8,7 @@ from django.core.cache import cache
 from django.db.models import Avg
 from matplotlib import pyplot
 
-from core.models import Journey, JourneyStop
+from fahrplandatengarten.core.models import Journey, JourneyStop
 from fahrplandatengarten.fahrplandatengarten.celery import app
 
 

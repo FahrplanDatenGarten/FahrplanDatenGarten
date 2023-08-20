@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from celery.schedules import crontab
 from celery.utils.log import get_task_logger
-from core.models import Journey, Provider, Source, Stop, StopID, StopIDKind
-from DBApis.hafasImport import HafasImport
+from fahrplandatengarten.core.models import Journey, Provider, Source, Stop, StopID, StopIDKind
+from fahrplandatengarten.DBApis.hafasImport import HafasImport
 from django.conf import settings
 
 from fahrplandatengarten.celery import app

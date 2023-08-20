@@ -1,17 +1,17 @@
 import datetime
 import random
 
-import FGRFiller.utils
+import fahrplandatengarten.FGRFiller.utils
 import requests
-from core.models import JourneyStop
+from fahrplandatengarten.core.models import JourneyStop
 from django.http import FileResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import View
-from FGRFiller.forms.assistant_order_number import \
+from fahrplandatengarten.FGRFiller.forms.assistant_order_number import \
     FGRFillerAsstiantOrderNumberForm
-from FGRFiller.forms.data import FGRFillerDataForm
-from FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
+from fahrplandatengarten.FGRFiller.forms.data import FGRFillerDataForm
+from fahrplandatengarten.FGRFiller.utils import (FillFormFieldsBahnCard100SeasonTicket,
                              FillFormFieldsCompensation)
 from lxml import etree
 
@@ -138,7 +138,7 @@ class GeneratePDFView(View):
     def post(self, request, *args, **kwargs):
         form = FGRFillerDataForm(request.POST)
         if form.is_valid():
-            form_fields = FGRFiller.utils.fill_form_fields(
+            form_fields = fahrplandatengarten.FGRFiller.utils.fill_form_fields(
                 travel_date=form.cleaned_data['travel_date'],
                 departure_stop_name=form.cleaned_data['departure_stop_name'],
                 departure_planned_time=form.cleaned_data['departure_planned_time'],
@@ -185,7 +185,7 @@ class GeneratePDFView(View):
                 bahncard_100_season_ticket_number=form.cleaned_data['bahncard_100_season_ticket_number'],
                 date_of_birth=form.cleaned_data['date_of_birth'])
             return FileResponse(
-                FGRFiller.utils.generate_form(form_fields),
+                fahrplandatengarten.FGRFiller.utils.generate_form(form_fields),
                 filename='fahrgastrechte.pdf')
         else:
             return render(request, "FGRFiller/check_data.html", {

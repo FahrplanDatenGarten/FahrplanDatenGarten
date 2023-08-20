@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DbhafasConfig(AppConfig):
-    name = 'DBApis'
+    name = 'fahrplandatengarten.DBApis'
