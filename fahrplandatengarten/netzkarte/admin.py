@@ -1,7 +1,7 @@
 from fahrplandatengarten.core.admin import StopAdmin
 from django.contrib import admin
 
-from .models import Connection
+from fahrplandatengarten.netzkarte.models import Connection
 
 
 class ConnectionAdmin(admin.ModelAdmin):

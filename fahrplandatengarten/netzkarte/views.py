@@ -3,8 +3,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 from django.http import JsonResponse
 
-from . import STOPS
-from .models import Connection
+from fahrplandatengarten.netzkarte import STOPS
+from fahrplandatengarten.netzkarte.models import Connection
 
 
 def convert_toJson(request):

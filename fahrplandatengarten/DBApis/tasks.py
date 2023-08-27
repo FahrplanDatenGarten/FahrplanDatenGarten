@@ -7,7 +7,7 @@ from fahrplandatengarten.core.models import Journey, Provider, Source, Stop, Sto
 from fahrplandatengarten.DBApis.hafasImport import HafasImport
 from django.conf import settings
 
-from fahrplandatengarten.celery import app
+from fahrplandatengarten.fahrplandatengarten.celery import app
 
 logger = get_task_logger(__name__)
 

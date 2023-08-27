@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from fahrplandatengarten.core.models import JourneyStop
-from wagenreihung.istWrClient import IstWrClient
+from fahrplandatengarten.wagenreihung.istWrClient import IstWrClient
 
 
 class Command(BaseCommand):

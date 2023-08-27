@@ -2,7 +2,7 @@ import requests
 import pytz
 
 from fahrplandatengarten.core.models import Journey, Stop, JourneyStop
-from wagenreihung.models import Coach, CoachJourneyStop
+from fahrplandatengarten.wagenreihung.models import Coach, CoachJourneyStop
 
 
 class IstWrClient():
