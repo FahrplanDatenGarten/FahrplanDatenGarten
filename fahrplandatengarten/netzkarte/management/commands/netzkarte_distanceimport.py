@@ -8,8 +8,8 @@ from django.core.management.base import BaseCommand
 from pyhafas import HafasClient
 from pyhafas.profile import DBProfile
 
-from ... import STOPS
-from ...models import Connection
+from fahrplandatengarten.netzkarte import STOPS
+from fahrplandatengarten.netzkarte.models import Connection
 
 
 class Command(BaseCommand):

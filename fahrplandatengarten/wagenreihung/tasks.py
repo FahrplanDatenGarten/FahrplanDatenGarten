@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 
 from fahrplandatengarten.fahrplandatengarten.celery import app
-from wagenreihung.istWrClient import IstWrClient
+from fahrplandatengarten.wagenreihung.istWrClient import IstWrClient
 
 logger = get_task_logger(__name__)
 
