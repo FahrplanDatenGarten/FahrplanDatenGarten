@@ -25,6 +25,9 @@ class IstWrClient():
     def import_wr(self):
         d = requests.get(self.url).json()
 
+        if "data" not in d:
+            return
+
         for group in d['data']['istformation']['allFahrzeuggruppe']:
             # TODO: delete coachjourneystops, which are no longer used
             for coach in group['allFahrzeug']:
