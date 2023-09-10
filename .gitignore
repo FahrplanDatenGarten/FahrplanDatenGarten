@@ -1,7 +1,8 @@
 .DS_Store
 DBApis/migrations/python3*/
 *.pid
-
+.direnv
+.envrc
 *.sqlite*
 
 # Created by https://www.gitignore.io/api/django

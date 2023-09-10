@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "fahrplandatengarten"
+version = "0.1.0"
+description = ""
+authors = ["Leona Maroni <dev@leona.is>, Ember Keske <dev@n0emis.eu>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "4.2.0"
+requests = "^2.31.0"
+fdfgen = "~=0.16.1"
+pycryptodome = "^3.9.9"
+celery = "^5.3.1"
+redis = "~=3.5.3"
+pytz = "^2023.3"
+psycopg2-binary = "^2.8.6"
+pyhafas = "^0.4.0"
+lxml = "^4.9.3"
+django-redis = "^5.3.0"
+django-countries = "^7.5.1"
+matplotlib = "^3.7.2"
+django-bootstrap4 = "^23.2"
+numpy = "^1.25.1"
+# actually a dependency of matplotplib, but nixos doesn't work with 1.1.0, so we lock to an older version
+contourpy = "1.0.7"
+django-debug-toolbar = "^4.1.0"
+
+[tool.poetry.scripts]
+fdg-manage = "fahrplandatengarten.fahrplandatengarten.manage:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
