@@ -23,12 +23,12 @@ class Source(models.Model):
 
 
 class Remark(models.Model):
-    remark_type = models.CharField(null=True, max_length=50)
-    code = models.TextField(null=True)
-    subject = models.TextField(null=True)
-    text = models.TextField(null=True)
-    priority = models.IntegerField(null=True)
-    trip_id = models.CharField(null=True, max_length=50)
+    remark_type = models.CharField(null=True, blank=True, max_length=50)
+    code = models.TextField(null=True, blank=True)
+    subject = models.TextField(null=True, blank=True)
+    text = models.TextField(null=True, blank=True)
+    priority = models.IntegerField(null=True, blank=True)
+    trip_id = models.CharField(null=True, blank=True, max_length=50)
 
     def __str__(self):
         print(self.__dict__)
@@ -79,10 +79,10 @@ class StopID(models.Model):
 
 
 class Journey(models.Model):
-    trip_id = models.CharField(max_length=255, null=True)
-    name = models.CharField(max_length=255, null=True)
+    trip_id = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
     stop = models.ManyToManyField(Stop, through='JourneyStop')
-    date = models.DateField(null=True)
+    date = models.DateField(null=True, blank=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
     remarks = models.ManyToManyField(Remark)
@@ -98,13 +98,13 @@ class Journey(models.Model):
 class JourneyStop(models.Model):
     stop = models.ForeignKey(Stop, on_delete=models.CASCADE)
     journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-    planned_arrival_time = models.DateTimeField(null=True)
-    planned_departure_time = models.DateTimeField(null=True)
-    actual_arrival_delay = models.DurationField(null=True)
-    actual_departure_delay = models.DurationField(null=True)
+    planned_arrival_time = models.DateTimeField(null=True, blank=True)
+    planned_departure_time = models.DateTimeField(null=True, blank=True)
+    actual_arrival_delay = models.DurationField(null=True, blank=True)
+    actual_departure_delay = models.DurationField(null=True, blank=True)
     cancelled = models.BooleanField(default=False)
-    planned_platform = models.CharField(null=True, max_length=255)
-    actual_platform = models.CharField(null=True, max_length=255)
+    planned_platform = models.CharField(null=True, blank=True, max_length=255)
+    actual_platform = models.CharField(null=True, blank=True, max_length=255)
     remarks = models.ManyToManyField(Remark)
 
     def earlier_time(self):
