@@ -81,11 +81,11 @@ class StopID(models.Model):
 class Journey(models.Model):
     trip_id = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
-    stop = models.ManyToManyField(Stop, through='JourneyStop')
+    stop = models.ManyToManyField(Stop, through='JourneyStop', blank=True)
     date = models.DateField(null=True, blank=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     cancelled = models.BooleanField(default=False)
-    remarks = models.ManyToManyField(Remark)
+    remarks = models.ManyToManyField(Remark, blank=True)
 
     def __str__(self):
         return self.name
@@ -105,7 +105,7 @@ class JourneyStop(models.Model):
     cancelled = models.BooleanField(default=False)
     planned_platform = models.CharField(null=True, blank=True, max_length=255)
     actual_platform = models.CharField(null=True, blank=True, max_length=255)
-    remarks = models.ManyToManyField(Remark)
+    remarks = models.ManyToManyField(Remark, blank=True)
 
     def earlier_time(self):
         if self.planned_arrival_time:
