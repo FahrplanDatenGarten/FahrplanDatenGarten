@@ -15,13 +15,16 @@
         p2n = (inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; });
         overrides = prev: {
           fdfgen = prev.fdfgen.overridePythonAttrs (old: {
-              buildInputs = (old.buildInputs or []) ++ [prev.setuptools];
+              buildInputs = (old.buildInputs or []) ++ [ prev.setuptools ];
           });
           pyhafas = prev.pyhafas.overridePythonAttrs (old: {
-              buildInputs = (old.buildInputs or []) ++ [prev.setuptools];
+              buildInputs = (old.buildInputs or []) ++ [ prev.setuptools ];
           });
           django-bootstrap4 = prev.django-bootstrap4.overridePythonAttrs (old: {
-              buildInputs = (old.buildInputs or []) ++ [prev.hatchling];
+              buildInputs = (old.buildInputs or []) ++ [ prev.hatchling ];
+          });
+          urllib3 = prev.urllib3.overridePythonAttrs (old: {
+              buildInputs = (old.buildInputs or []) ++ [ prev.hatch-vcs ];
           });
           contourpy = prev.contourpy.override {
             preferWheel = true;
@@ -45,4 +48,3 @@
       };
     };
 }
-
