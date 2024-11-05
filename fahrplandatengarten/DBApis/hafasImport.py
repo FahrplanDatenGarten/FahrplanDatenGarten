@@ -7,6 +7,7 @@ import requests
 from pyhafas import GeneralHafasError, HafasClient
 from pyhafas.profile import DBProfile
 
+from fahrplandatengarten.DBApis import risStationsImport
 from fahrplandatengarten.core.models import (Journey, JourneyStop, Provider, Source, StopID,
                          StopIDKind, Remark)
 
@@ -146,12 +147,16 @@ class HafasImport:
                 kind__name='eva',
                 kind__provider=self.provider
             ).first()
+            db_stop = db_stop_id.stop if db_stop_id else None
             if db_stop_id is None:
-                print(
-                    "The Stop {} with ID {} could not be found!".format(
-                        stopover.stop.name, eva_id))
-                continue
-            db_stop = db_stop_id.stop
+                try:
+                    db_stop = risStationsImport.import_by_eva(eva_id)
+                except risStationsImport.RisStationImportError:
+                    print(
+                        "The Stop {} with ID {} could not be found!".format(
+                            stopover.stop.name, eva_id))
+                    continue
+
             current_db_journeystops = JourneyStop.objects.filter(
                 stop=db_stop,
                 journey=journey
