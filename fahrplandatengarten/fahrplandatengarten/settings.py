@@ -225,3 +225,9 @@ PERIODIC_IMPORT_JOURNEYS = config.get(
 
 PERIODIC_IMPORT_WAGENREIHUNGEN = config.get(
     "periodic", 'wagenreihungen', fallback="*,*/15").split(',')
+
+RIS_APIS = {section.split('.')[1]: {
+    "url": config.get(section, "url"),
+    "client_id": config.get(section, "client_id"),
+    "api_key": config.get(section, "api_key"),
+} for section in filter(lambda name: name.startswith("ris."), config.sections())}

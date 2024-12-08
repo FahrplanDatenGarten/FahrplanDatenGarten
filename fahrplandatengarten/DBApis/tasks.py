@@ -31,8 +31,10 @@ def setup_dbapis_configure_periodic_tasks(sender, **kwargs):
 @app.task(name="import_all_timetables", ignore_result=True)
 def import_all_timetables():
     for stop in Stop.objects.filter(
-            provider__internal_name="db",
-            has_long_distance_traffic=True).all():
+        provider__internal_name="db",
+        has_long_distance_traffic=True,
+        country="DE",
+    ).all():
         import_timetable.delay(stop.pk)
 
 
