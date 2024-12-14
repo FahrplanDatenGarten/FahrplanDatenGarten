@@ -30,10 +30,6 @@ def import_by_eva(eva_id):
     resp.raise_for_status()
     keys = {key['type']: key['key'] for key in resp.json()['keys']}
 
-    if not keys.get('IFOPT'):
-        print(keys)
-        raise RisStationImportError()
-
     provider, _ = Provider.objects.get_or_create(
         internal_name='db', friendly_name='Deutsche Bahn')
     source, _ = Source.objects.get_or_create(
@@ -59,7 +55,7 @@ def import_by_eva(eva_id):
         if stop is None:
             stop = Stop.objects.create(
                 provider=provider,
-                ifopt=keys['IFOPT'],
+                ifopt=keys.get('IFOPT'),
                 **data
             )
             StopID.objects.get_or_create(

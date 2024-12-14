@@ -36,7 +36,7 @@ class Remark(models.Model):
 
 
 class Stop(models.Model):
-    ifopt = models.CharField(max_length=255)
+    ifopt = models.CharField(max_length=255, null=True, blank=True)
     country = CountryField()
     latitude = models.DecimalField(
         max_digits=9,
