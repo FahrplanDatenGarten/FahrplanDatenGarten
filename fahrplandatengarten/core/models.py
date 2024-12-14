@@ -28,7 +28,7 @@ class Remark(models.Model):
     subject = models.TextField(null=True, blank=True)
     text = models.TextField(null=True, blank=True)
     priority = models.IntegerField(null=True, blank=True)
-    trip_id = models.CharField(null=True, blank=True, max_length=50)
+    trip_id = models.CharField(null=True, blank=True, max_length=200)
 
     def __str__(self):
         print(self.__dict__)
